@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+</head>
+<body>
+<input style="width:200px" type="text" value="" id="email" />
+<input style="width:200px" type="text" value="" id="password" />
+<button type="button" onclick="login()">登陆</button><br/><br/>
+
+<input style="width:200px" type="text" value="" id="remail" />
+<button type="button" onclick="checkEmail()">验证邮箱</button><br/><br/><br/>
+<input style="width:200px" type="text" value="" id="repassword" />
+<button type="button" onclick="register()">注册</button><br/><br/><br/>
+
+<script type="text/javascript">
+    function register(){
+        var email = $("#remail").val();
+        var password = $("#repassword").val();
+        $.ajax({
+            type:"POST",
+            url:"http://localhost:8080/register",
+            data:{
+                email:email,
+                password:password
+            },
+            dataType:"json",
+            success:function(result){
+                console.log(result);
+            }
+        });
+    }
+function login(){
+    var email = $("#email").val();
+    var password = $("#password").val();
+    $.ajax({
+        type:"POST",
+        url:"http://localhost:8080/login/check",
+        data:{
+            email:email,
+            password:password
+        },
+        dataType:"json",
+        success:function(result){
+            console.log(result);
+        }
+    });
+}
+function checkEmail(){
+    var remail = $("#remail").val();
+    $.ajax({
+        type:"POST",
+        url:"http://localhost:8080/register/checkEmail",
+        data:{
+            remail:remail
+        },
+        dataType:"json",
+        success:function(result){
+            console.log(result);
+        }
+    });
+}
+    </script>
+</body>
+</html>
