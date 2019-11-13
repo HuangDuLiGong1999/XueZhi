@@ -13,7 +13,7 @@ target/
 *.iws
 *.iml
 *.ipr
-
+code/endpoint/target
 
 out/
 
@@ -22,9 +22,10 @@ out/
 jars/
 
 # dependencies
-/node_modules
-/.pnp
-.pnp.js
+code/xuezhi-fronter/node_modules
+code/xuezhi-fronter/.pnp
+code/xuezhi-fronter.pnp.js
+code/xuezhi-fronter/package-lock.json
 
 # testing
 /coverage
