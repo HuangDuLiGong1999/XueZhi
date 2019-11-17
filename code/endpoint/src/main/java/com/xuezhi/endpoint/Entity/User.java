@@ -1,6 +1,5 @@
 package com.xuezhi.endpoint.Entity;
 
-import com.mongodb.gridfs.GridFS;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,6 +11,15 @@ public class User {
     private String telephone;
     private String name;
     private String password;
+    private String signature;
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
 
     public String getPassword() {
         return password;
@@ -22,8 +30,7 @@ public class User {
     }
 
     public User(){}
-    public User(String id, String email, String telephone, String name, int age, String sex, String university, String password) {
-        this.id = id;
+    public User(String email, String telephone, String name, int age, String sex, String university, String password, String signature) {
         this.email = email;
         this.telephone = telephone;
         this.name = name;
@@ -31,6 +38,7 @@ public class User {
         this.sex = sex;
         this.university = university;
         this.password = password;
+        this.signature = signature;
     }
 
     public String getId() {

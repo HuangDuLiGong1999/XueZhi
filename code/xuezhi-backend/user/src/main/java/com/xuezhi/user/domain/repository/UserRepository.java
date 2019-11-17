@@ -5,7 +5,7 @@ import com.xuezhi.user.domain.entity.User;
 public interface UserRepository {
     void addUser(String email, String password);
 
-    void updateUser(String id);
+    void updateUser(String id, String name, int age, String sex, String signature);
 
     User getUserById(String id);
 

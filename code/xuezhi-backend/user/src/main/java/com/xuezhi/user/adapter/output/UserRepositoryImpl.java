@@ -37,8 +37,14 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void updateUser(String id){
+    public void updateUser(String id, String name, int age, String sex, String signature){
         //todo
+        User user = userRepositor.findUserById(id);
+        user.setName(name);
+        user.setAge(age);
+        user.setSex(sex);
+        user.setSignature(signature);
+        userRepositor.save(user);
     }
 
     @Override

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 
 @RestController
+@CrossOrigin
 @RequestMapping(value="/register")
 public class RegisterController {
     private UsersApplication usersApplication;
@@ -16,10 +17,12 @@ public class RegisterController {
         this.usersApplication = usersApplication;
     }
 
-    @GetMapping("/check")
+
+    @PostMapping("/check")
     public String checkAndSendMail(@RequestParam String email) throws IOException {
         return usersApplication.checkAndSendMail(email);
     }
+
 
     @PostMapping("/addUser")
     public void addUser(@RequestParam String email, @RequestParam String password)

@@ -15,7 +15,7 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public boolean login(String email, String password){
-        System.out.println(email+" "+password);
+        /*
         User user = userRepository.findByEmail(email);
         if (user == null){
             return false;
@@ -26,10 +26,28 @@ public class UserDaoImpl implements UserDao{
         else{
             return false;
         }
+
+         */
+
+        return !(userRepository.findByEmailAndPassword(email, password) == null);
     }
 
     @Override
     public User findByEmail(String email){
         return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public User addUser(String email, String password){
+        User user = new User();
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setName("");
+        user.setSex("");
+        user.setTelephone("");
+        user.setUniversity("");
+        user.setSignature("");
+        mongoTemplate.save(user);
+        return user;
     }
 }

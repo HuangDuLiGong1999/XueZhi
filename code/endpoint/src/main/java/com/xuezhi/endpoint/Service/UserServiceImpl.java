@@ -12,6 +12,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public boolean login(String email, String password){
+
         return userDao.login(email, password);
     }
 
@@ -20,5 +21,9 @@ public class UserServiceImpl implements UserService{
         return userDao.findByEmail(email);
     }
 
+    @Override
+    public User addUser(String email, String password){
+        return userDao.addUser(email, password);
+    }
 
 }

@@ -8,4 +8,5 @@ public interface UserService {
     public boolean login(String email, String password);
     //public boolean editPassword(String password);
     public User findByEmail(String email);
+    public User addUser(String email, String password);
 }

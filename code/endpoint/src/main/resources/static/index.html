@@ -10,28 +10,29 @@
 <input style="width:200px" type="text" value="" id="password" />
 <button type="button" onclick="login()">登陆</button><br/><br/>
 
-<input style="width:200px" type="text" value="" id="remail" />
-<button type="button" onclick="checkEmail()">验证邮箱</button><br/><br/><br/>
+<input style="width:200px" type="text" value="" id="remail" /><br/>
+<input style="width:200px" type="text" value="" id="checknode" />
+<button type="button" onclick="checkEmail()">发送验证码</button><br/><br/><br/>
+
 <input style="width:200px" type="text" value="" id="repassword" />
-<button type="button" onclick="register()">注册</button><br/><br/><br/>
+<button type="button" onclick="register()">注册</button><br/><br/><br/><br/><br/><br/><br/><br/>
+
+<div>
+    <h1 id="h1"></h1>
+    <p id="content1"></p>
+</div>
 
 <script type="text/javascript">
-    function register(){
-        var email = $("#remail").val();
-        var password = $("#repassword").val();
-        $.ajax({
-            type:"POST",
-            url:"http://localhost:8080/register",
-            data:{
-                email:email,
-                password:password
-            },
-            dataType:"json",
-            success:function(result){
-                console.log(result);
-            }
-        });
-    }
+    $.ajax({
+        type:"GET",
+        url:"http://localhost:8080/questions",
+        success:function (result) {
+            console.log(result);
+            document.getElementById("h1").innerHTML = result[0].title;
+            document.getElementById("content1").innerHTML = result[0].description;
+
+        }
+    });
 function login(){
     var email = $("#email").val();
     var password = $("#password").val();
@@ -48,6 +49,8 @@ function login(){
         }
     });
 }
+
+var checkcode = "";
 function checkEmail(){
     var remail = $("#remail").val();
     $.ajax({
@@ -59,8 +62,33 @@ function checkEmail(){
         dataType:"json",
         success:function(result){
             console.log(result);
+            if (result !== "failed"){
+                checkcode = result;
+            }
         }
     });
+}
+function register(){
+    var node = $("#checknode").val();
+    if (node == checkcode){
+        var email = $("#remail").val();
+        var password = $("#repassword").val();
+        $.ajax({
+            type:"POST",
+            url:"http://localhost:8080/register",
+            data:{
+                email:email,
+                password:password
+            },
+            dataType:"json",
+            success:function(result){
+                console.log(result);
+            }
+        });
+    }
+    else{
+        alert("验证码错误");
+    }
 }
     </script>
 </body>

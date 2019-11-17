@@ -27,9 +27,9 @@ public class UsersApplication {
         userRepository.addUser(email,password);
     }
 
-    public void updateUser(String id){
+    public void updateUser(String id, String name, int age, String sex, String signature){
         //TODO
-        userRepository.updateUser(id);
+        userRepository.updateUser(id, name, age, sex, signature);
     }
 
     public User getUserById(String id){
