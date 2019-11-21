@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+</head>
+<body>
+<input style="width:200px" type="text" value="" id="email" />
+<input style="width:200px" type="text" value="" id="password" />
+<button type="button" onclick="login()">登陆</button><br/><br/>
+
+
+
+<div>
+    <h1 id="h1"></h1>
+    <p id="content1"></p>
+</div>
+
+<script type="text/javascript">
+    function login(){
+        var email = $("#email").val();
+        var password = $("#password").val();
+        $.ajax({
+            type:"POST",
+            url:"http://localhost:8081/login/check",
+            data:{
+                email:email,
+                password:password
+            },
+            dataType:"json",
+            success:function(result){
+                document.cookie="username=" + result.name + ";path=/";
+                document.cookie="id=" + result.id + ";path=/";
+                alert("登陆成功!");
+                window.open("mainpage.html","_self");
+            },
+            error:function(err){
+                alert("账号或密码错误，请重新输入!");
+                window.location.reload();
+            }
+        });
+    }
+    </script>
+</body>
+</html>

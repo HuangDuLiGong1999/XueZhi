@@ -18,13 +18,13 @@ public class RegisterController {
     }
 
 
-    @PostMapping("/check")
+    @PostMapping("/checkcode")
     public String checkAndSendMail(@RequestParam String email) throws IOException {
         return usersApplication.checkAndSendMail(email);
     }
 
 
-    @PostMapping("/addUser")
+    @PostMapping
     public void addUser(@RequestParam String email, @RequestParam String password)
     {
         usersApplication.addUser(email, password);

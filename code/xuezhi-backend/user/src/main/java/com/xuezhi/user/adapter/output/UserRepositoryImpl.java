@@ -51,4 +51,19 @@ public class UserRepositoryImpl implements UserRepository {
     public User getUserByEmail(String email) {
         return userRepositor.findByEmail(email);
     }
+
+    @Override
+    public void setAvatar(String id){
+        User user = userRepositor.findUserById(id);
+        //todo
+
+        userRepositor.save(user);
+    }
+
+    @Override
+    public void modifyPassword(String id, String password){
+        User user = userRepositor.findUserById(id);
+        user.setPassword(password);
+        userRepositor.save(user);
+    }
 }

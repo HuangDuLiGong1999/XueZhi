@@ -20,7 +20,6 @@ public class UsersApplication {
     @Autowired
     public UsersApplication(UserRepository userRepository){
         this.userRepository = userRepository;
-
     }
 
     public void addUser(String email, String password){
@@ -36,25 +35,45 @@ public class UsersApplication {
         return userRepository.getUserById(id);
     }
 
-    public boolean getUserByEmailAndPassword(String email, String password){
-
-        return !(userRepository.getUserByEmailAndPassword(email, password) == null);
+    public User getUserByEmailAndPassword(String email, String password){
+        return userRepository.getUserByEmailAndPassword(email, password);
+        //return !(userRepository.getUserByEmailAndPassword(email, password) == null);
     }
 
     public String checkAndSendMail(String email) throws IOException {
         if(userRepository.getUserByEmail(email)==null) {
-            String temp;    //todo email service
-
-            URL restURL = new URL("http://localhost:8083/getCheckCode"+"?email="+email);
+            String temp;
+            URL restURL = new URL("http://localhost:8083/checkcode"+"?email="+email);
             HttpURLConnection conn = (HttpURLConnection)restURL.openConnection();
             conn.setRequestMethod("GET"); // POST GET PUT DELETE
             conn.setRequestProperty("Accept", "application/json");
-
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             temp = br.readLine();
             System.out.println(temp);
             return temp;
         }
         else return "fail";
+    }
+
+    //todo
+    public void setAvatar(String id){
+        userRepository.setAvatar(id);
+    }
+
+    public String sendModifyMail(String id) throws IOException{
+        User user = userRepository.getUserById(id);
+        String email = user.getEmail();
+        URL restURL = new URL("http://localhost:8083/password_checkcode"+"?email="+email);
+        HttpURLConnection conn = (HttpURLConnection)restURL.openConnection();
+        conn.setRequestMethod("GET"); // POST GET PUT DELETE
+        conn.setRequestProperty("Accept", "application/json");
+        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        String temp = br.readLine();
+        System.out.println(temp);
+        return temp;
+    }
+
+    public void modifyPassword(String id, String password){
+        userRepository.modifyPassword(id, password);
     }
 }
