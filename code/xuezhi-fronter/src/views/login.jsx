@@ -28,7 +28,7 @@ export default class Login extends React.Component {
     LoginFetch(){
         const _this = this;
 
-        const url = "http://localhost:8085/user/login/check";
+        const url = "http://localhost:8085/v1/user/login";
 
         var code;
 
@@ -38,7 +38,7 @@ export default class Login extends React.Component {
         axios.post(url, data)
             .then(function (response) {
                 // handle success
-                code = response.data;
+                code = response.data.status;
                 console.log(code);
                 console.log(response);
             })
