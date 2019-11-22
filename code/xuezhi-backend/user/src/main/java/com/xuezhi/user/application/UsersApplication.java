@@ -43,7 +43,7 @@ public class UsersApplication {
     public String checkAndSendMail(String email) throws IOException {
         if(userRepository.getUserByEmail(email)==null) {
             String temp;
-            URL restURL = new URL("http://localhost:8083/checkcode"+"?email="+email);
+            URL restURL = new URL("http://localhost:8083/checkcode/" + email);
             HttpURLConnection conn = (HttpURLConnection)restURL.openConnection();
             conn.setRequestMethod("GET"); // POST GET PUT DELETE
             conn.setRequestProperty("Accept", "application/json");
@@ -63,7 +63,7 @@ public class UsersApplication {
     public String sendModifyMail(String id) throws IOException{
         User user = userRepository.getUserById(id);
         String email = user.getEmail();
-        URL restURL = new URL("http://localhost:8083/password_checkcode"+"?email="+email);
+        URL restURL = new URL("http://localhost:8083/password_checkcode/" + email);
         HttpURLConnection conn = (HttpURLConnection)restURL.openConnection();
         conn.setRequestMethod("GET"); // POST GET PUT DELETE
         conn.setRequestProperty("Accept", "application/json");

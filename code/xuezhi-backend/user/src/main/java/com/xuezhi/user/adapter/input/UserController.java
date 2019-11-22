@@ -37,6 +37,7 @@ public class UserController {
     @PutMapping("/information")
     public boolean updateUser(@RequestParam String id, @RequestParam String name, @RequestParam int age, @RequestParam String sex, @RequestParam String signature){
         //TODO
+        System.out.println(id);
         usersApplication.updateUser(id, name, age, sex, signature);
         return true;
     }
