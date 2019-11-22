@@ -1,17 +1,23 @@
 import React,{Component} from 'react'
 import axios from 'axios'
+import $ from 'jquery'
+import cookie from 'react-cookies'
 
 export default  class Login extends Component{
     constructor(props){
         super(props);
         this.state={
-            username:"",
-            birthday:"",
-            sex:"",
-            university:"",
-            userstate:"",
+            username:axios.get("http://localhost:8081/users/"+cookie.load('userId')).then(response => this.setState({username: response.data.name}))
+                .catch(error => console.log("get data error")),
+            age:axios.get("http://localhost:8081/users/"+cookie.load('userId')).then(response => this.setState({age: response.data.age}))
+                .catch(error => console.log("get data error")),
+            sex:axios.get("http://localhost:8081/users/"+cookie.load('userId')).then(response => this.setState({sex: response.data.sex}))
+                .catch(error => console.log("get data error")),
+            userstate:axios.get("http://localhost:8081/users/"+cookie.load('userId')).then(response => this.setState({userstate: response.data.signature}))
+                .catch(error => console.log("get data error")),
         }
     }
+
     getUsername(){
         const usernameVal=window.event.target.value;
         this.setState({
@@ -19,21 +25,15 @@ export default  class Login extends Component{
         });
     }
     getBirthday(){
-        const birthdayVal=window.event.target.value;
+        const ageVal=window.event.target.value;
         this.setState({
-            birthday:birthdayVal
+            age:ageVal
         });
     }
     getSex(){
         const sexVal=window.event.target.value;
         this.setState({
             sex:sexVal
-        });
-    }
-    getUniversity(){
-        const universityVal=window.event.target.value;
-        this.setState({
-            university:universityVal
         });
     }
     getUserstate(){
@@ -86,28 +86,27 @@ export default  class Login extends Component{
         };
     }
     componentDidMount(){
+
         window.localStorage.setItem("username","");
-        window.localStorage.setItem("birthday","");
+        window.localStorage.setItem("age","");
         window.localStorage.setItem("sex","");
-        window.localStorage.setItem("university","");
         window.localStorage.setItem("userstate","");
     }
-
 
     LoginFetch(){
         const _this = this;
 
-        const url = "http://localhost:8081/login/check";
+        const url = "http://localhost:8081/users/information";
 
         var code;
 
         let data = new URLSearchParams();
-        data.append('username',_this.state.username);
-        data.append('birthday',_this.state.birthday);
+        data.append('id',cookie.load('userId'));
+        data.append('name',_this.state.username);
+        data.append('age',_this.state.age);
         data.append('sex',_this.state.sex);
-        data.append('university',_this.state.university);
-        data.append('userstate',_this.state.userstate);
-        axios.post(url, data)
+        data.append('signature',_this.state.userstate);
+        axios.put(url, data)
             .then(function (response) {
                 // handle success
                 code = response.data;
@@ -122,18 +121,11 @@ export default  class Login extends Component{
                 console.log(code);
                 switch (code) {
                     //成功登录，跳转页面
-                    case false: alert("修改成功");break;
-                    case true: alert("修改失败");break;
-                    default: alert("请输入用户名和密码！"); break;
+                    case false: alert("修改失败");break;
+                    case true: alert("修改成功");break;
                 }
             });}
-    submit = (event)=> {
-        if(this.state.sex==1){
-            alert('录入成功');
-        }else{
-            alert('请输入正确的用户名或密码');
-        }
-    }
+
     render() {
         return(
             <div>
@@ -141,7 +133,7 @@ export default  class Login extends Component{
                         <h3>用户信息管理</h3>
                         <div className="form-group">
                             <label>用户名</label>
-                            <input type="text" className="form-control" placeholder="请输入你的用户名" onChange={this.getUsername.bind(this)}/>
+                            <input type="text" id="8964" className="form-control" placeholder="请输入你的用户名" value={this.state.username} onChange={this.getUsername.bind(this)}/>
                         </div>
                         <div className="con4">
                             <canvas id="cvs" width="200" height="200"></canvas>
@@ -149,22 +141,18 @@ export default  class Login extends Component{
                         </div>
                         <div className="form-group">
                             <label>出生日期</label>
-                            <input type="text" className="form-control" placeholder="请输入你的生日" onChange={this.getBirthday.bind(this)}/>
+                            <input type="text" className="form-control" placeholder="请输入你的生日"  value={this.state.age} onChange={this.getBirthday.bind(this)}/>
                         </div>
 
                         <div className="form-group">
                             <label>性别</label>
-                            <input type="text" className="form-control" placeholder="请输入你的性别" onChange={this.getSex.bind(this)}/>
-                        </div>
-                        <div className="form-group">
-                            <label>所在学校</label>
-                            <input type="text" className="form-control" placeholder="请再次输入你的学校" onChange={this.getUniversity.bind(this)}/>
+                            <input type="text" className="form-control" placeholder="请输入你的性别" value={this.state.sex} onChange={this.getSex.bind(this)}/>
                         </div>
                         <div className="form-group">
                             <label>个人简介</label>
-                            <input type="text" className="form-control" placeholder="请输入你的用户简介" onChange={this.getUserstate.bind(this)}/>
+                            <input type="text" className="form-control" placeholder="请输入你的用户简介" value={this.state.userstate} onChange={this.getUserstate.bind(this)}/>
                         </div>
-                        <button type="submit" className="btn btn-primary" onClick={this.LoginFetch.bind(this)}>注册</button>
+                        <button type="button" className="btn btn-primary" onClick={this.LoginFetch.bind(this)}>修改</button>
                 </form>
             </div>
 

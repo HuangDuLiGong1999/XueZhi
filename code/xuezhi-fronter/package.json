@@ -1,13 +1,17 @@
 {
-  "name": "xuezhi-fronter",
+  "name": "untitled8",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "antd-mobile": "^2.3.1",
+    "axios": "^0.19.0",
+    "cookie-parser": "^1.4.4",
+    "jquery": "^3.4.1",
     "react": "^16.11.0",
+    "react-cookie": "^4.0.1",
+    "react-cookies": "^0.1.1",
     "react-dom": "^16.11.0",
-    "react-scripts": "3.2.0",
-    "axios": "latest",
-    "jquery": "^3.4.1"
+    "react-scripts": "3.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

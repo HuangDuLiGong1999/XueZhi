@@ -78,7 +78,7 @@ export default  class Registe extends Component{
     }
     getMailCheck(){
         const _this = this;
-        const url = "http://localhost:8081/register/check";
+        const url = "http://localhost:8081/register/checkcode";
         let data = new URLSearchParams();
         data.append('email',_this.state.email);
         var code;
@@ -108,7 +108,7 @@ export default  class Registe extends Component{
     }
     LoginFetch(){
         const _this = this;
-        const url = "http://localhost:8081/register/addUser";
+        const url = "http://localhost:8081/register";
         var code;
         let data = new URLSearchParams();
         data.append('email',_this.state.email);

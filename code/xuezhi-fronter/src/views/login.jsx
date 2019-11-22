@@ -1,12 +1,14 @@
 import React from "react";
-import axios from "axios"
+import axios from "axios";
+import cookie from "react-cookies"
+import {Redirect} from "react-router-dom"
 
 export default class Login extends React.Component {
     constructor(props){
         super(props);
         this.state={
             account:"",
-            pwd:""
+            pwd:"",
         }
     }
     getUserName(){
@@ -25,10 +27,11 @@ export default class Login extends React.Component {
         window.localStorage.setItem("account","");
         window.localStorage.setItem("email","");
     }
-    LoginFetch(){
+    LoginFetch(userId){
         const _this = this;
 
         const url = "http://localhost:8085/v1/user/login";
+
 
         var code;
 
@@ -48,16 +51,18 @@ export default class Login extends React.Component {
             })
             .then(function () {
                 console.log(code);
-                switch (code) {
+                switch (code.status) {
                     //成功登录，跳转页面
                     case false: alert("failed");break;
-                    case true: alert("success");break;
-                    default: alert("请输入用户名和密码！"); break;
+                    case true: alert("success");
+                    let date = new Date();
+                        var user=code.user;
+                        date.setTime(date.getTime() + (7 * 24 * 60 * 60 * 1000));
+                        cookie.save('userId', user.id, { expires: date ,path: '/' });
+                        break;
+                    default: alert("请输入邮箱和密码");break;
                 }
             });
-
-
-
     }
 
 
@@ -75,9 +80,6 @@ export default class Login extends React.Component {
                     <input type="password" class="formControl" onChange={this.getPwd.bind(this)} />
                 </div>
                 <div className="btnGroup">
-                    <div className="textGroup">
-                        <a href="/regin">注册账号</a>
-                    </div>
                     <button type="button" className="btn btn-primary" onClick={this.LoginFetch.bind(this)}>登录</button>
                 </div>
             </div>
