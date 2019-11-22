@@ -23,21 +23,40 @@
         var password = $("#password").val();
         $.ajax({
             type:"POST",
-            url:"http://localhost:8081/login/check",
+            url:"http://localhost:8081/login",
             data:{
                 email:email,
                 password:password
             },
             dataType:"json",
             success:function(result){
-                document.cookie="username=" + result.name + ";path=/";
-                document.cookie="id=" + result.id + ";path=/";
-                alert("登陆成功!");
-                window.open("mainpage.html","_self");
+                //console.log(result.user.age);
+                if (result.status){
+                    document.cookie="username=" + result.user.name + ";path=/";
+                    document.cookie="id=" + result.user.id + ";path=/";
+                    alert("登陆成功!");
+                    window.open("mainpage.html","_self");
+                }
+                else{
+                    alert("账号或密码错误，请重新输入!");
+                    window.location.reload();
+                }
+
+
             },
-            error:function(err){
+            error:function(jqXHR, textStatus, errorThrown){
+                /*
                 alert("账号或密码错误，请重新输入!");
                 window.location.reload();
+
+                 */
+                alert(jqXHR.responseText);
+                alert(jqXHR.status);
+                alert(jqXHR.readyState);
+                alert(jqXHR.statusText);
+                /*弹出其他两个参数的信息*/
+                alert(textStatus);
+                alert(errorThrown);
             }
         });
     }
