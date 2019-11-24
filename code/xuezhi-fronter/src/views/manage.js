@@ -2,18 +2,20 @@ import React,{Component} from 'react'
 import axios from 'axios'
 import $ from 'jquery'
 import cookie from 'react-cookies'
+import ReactCanvasNest from 'react-canvas-nest';
+import Particles from "reactparticles.js";
 
 export default  class Login extends Component{
     constructor(props){
         super(props);
         this.state={
-            username:axios.get("http://localhost:8081/users/"+cookie.load('userId')).then(response => this.setState({username: response.data.name}))
+            username:axios.get("http://localhost:8085/v1/user/users/"+cookie.load('userId')).then(response => this.setState({username: response.data.name}))
                 .catch(error => console.log("get data error")),
-            age:axios.get("http://localhost:8081/users/"+cookie.load('userId')).then(response => this.setState({age: response.data.age}))
+            age:axios.get("http://localhost:8085/v1/user/users/"+cookie.load('userId')).then(response => this.setState({age: response.data.age}))
                 .catch(error => console.log("get data error")),
-            sex:axios.get("http://localhost:8081/users/"+cookie.load('userId')).then(response => this.setState({sex: response.data.sex}))
+            sex:axios.get("http://localhost:8085/v1/user/users/"+cookie.load('userId')).then(response => this.setState({sex: response.data.sex}))
                 .catch(error => console.log("get data error")),
-            userstate:axios.get("http://localhost:8081/users/"+cookie.load('userId')).then(response => this.setState({userstate: response.data.signature}))
+            userstate:axios.get("http://localhost:8085/v1/user/users/"+cookie.load('userId')).then(response => this.setState({userstate: response.data.signature}))
                 .catch(error => console.log("get data error")),
         }
     }
@@ -42,49 +44,6 @@ export default  class Login extends Component{
             userstate:userstateVal
         });
     }
-    getImage()
-    {
-        var input1 = document.getElementById("upload");
-        if(typeof FileReader === 'undefined') {
-            //result.innerHTML = "抱歉，你的浏览器不支持 FileReader";
-            input1.setAttribute('disabled', 'disabled');
-        } else {
-            input1.addEventListener('change', readFile, false);
-
-        }
-
-        function readFile() {
-            var file = this.files[0]; //获取上传文件列表中第一个文件
-            if(!/image\/\w+/.test(file.type)) {
-                //图片文件的type值为image/png或image/jpg
-                alert("文件必须为图片！");
-                return false;
-            }
-            // console.log(file);
-            var reader = new FileReader(); //实例一个文件对象
-            reader.readAsDataURL(file); //把上传的文件转换成url
-            //当文件读取成功便可以调取上传的接口
-            reader.onload = function(e) {
-
-                var image = new Image();
-                // 设置src属性
-                image.src = e.target.result;
-                var max = 200;
-                // 绑定load事件处理器，加载完成后执行，避免同步问题
-                image.onload = function() {
-                    // 获取 canvas DOM 对象
-                    var canvas = document.getElementById("cvs");
-                    // 获取 canvas的 2d 环境对象,
-                    var ctx = canvas.getContext("2d");
-                    // canvas清屏
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                    ctx.drawImage(image, 0, 0, 200, 200);
-
-                };
-            }
-        };
-    }
     componentDidMount(){
 
         window.localStorage.setItem("username","");
@@ -96,7 +55,7 @@ export default  class Login extends Component{
     LoginFetch(){
         const _this = this;
 
-        const url = "http://localhost:8081/users/information";
+        const url = "http://localhost:8085/v1/user/users/information";
 
         var code;
 
@@ -129,35 +88,47 @@ export default  class Login extends Component{
     render() {
         return(
             <div>
-                <form onSubmit={this.submit}>
-                        <h3>用户信息管理</h3>
-                        <div className="form-group">
-                            <label>用户名</label>
-                            <input type="text" id="8964" className="form-control" placeholder="请输入你的用户名" value={this.state.username} onChange={this.getUsername.bind(this)}/>
-                        </div>
-                        <div className="con4">
-                            <canvas id="cvs" width="200" height="200"></canvas>
-                            <span className="btn upload">上传头像<input type="file" className="upload_pic" id="upload" onClick={this.getImage.bind(this)}/></span>
-                        </div>
-                        <div className="form-group">
-                            <label>出生日期</label>
-                            <input type="text" className="form-control" placeholder="请输入你的生日"  value={this.state.age} onChange={this.getBirthday.bind(this)}/>
-                        </div>
+                <Particles
+                    id="config-1"
+                    config="新建文本文档.json"
+                    style={{
+                        width: "100%",
+                        height: "100%",
+                        backgroundColor: "white",
+                        opacity: "0.5",
+                        zIndex:"-99",
 
-                        <div className="form-group">
-                            <label>性别</label>
-                            <input type="text" className="form-control" placeholder="请输入你的性别" value={this.state.sex} onChange={this.getSex.bind(this)}/>
-                        </div>
-                        <div className="form-group">
-                            <label>个人简介</label>
-                            <input type="text" className="form-control" placeholder="请输入你的用户简介" value={this.state.userstate} onChange={this.getUserstate.bind(this)}/>
-                        </div>
-                        <button type="button" className="btn btn-primary" onClick={this.LoginFetch.bind(this)}>修改</button>
+                    }}
+
+                    className="particles-class-name"
+                />
+            <div style={{height:'751px',width:'70%',marginLeft:'15%',WebkitTapHighlightColor:'rgba(26,26,26,0)',boxShadow: '0 1px 3px rgba(26,26,26,1)'}}>
+                <form onSubmit={this.submit} style={{zIndex:'1'}}>
+                    <div className="form-group" style={{height:'180px'}}>
+                        <img style={{height:'150px',width:'150px',marginLeft:'-455px',backgroundColor:'white'}}></img>
+                        <input style={{marginTop:'-200px',height:'40px',textAlign:'middle',width:'40%',border:'0px',zIndex:'2',fontSize:'30px',backgroundColor:'transparent'}} type="text" id="8964" className="form-control" placeholder="请输入你的用户名" value={this.state.username} onChange={this.getUsername.bind(this)}/>
+                    </div>
+                    <hr style={{marginLeft:'150px',width:'85%',border:'1 solid #c0c0c0'}}/>
+                    <div className="form-group"style={{height:'180px'}}>
+                        <label style={{marginTop:'70px',height:'40px',marginLeft:'-475px',fontSize:'15px'}}>生日</label>
+                        <input style={{marginTop:'70px',height:'40px',border:'1px',marginLeft:'50px',backgroundColor:'transparent'}} type="text" className="form-control" placeholder="请输入你的生日"  value={this.state.age} onChange={this.getBirthday.bind(this)}/>
+                    </div>
+                    <hr style={{marginLeft:'150px',width:'85%',border:'1 solid #c0c0c0'}}/>
+                    <div className="form-group" style={{height:'180px'}}>
+                        <label style={{marginTop:'70px',height:'40px',marginLeft:'-475px',fontSize:'15px'}}>性别</label>
+                        <input style={{marginTop:'70px',height:'40px',border:'1px',marginLeft:'50px',backgroundColor:'transparent'}} type="text" className="form-control" placeholder="请输入你的性别" value={this.state.sex} onChange={this.getSex.bind(this)}/>
+                    </div>
+                    <hr style={{marginLeft:'150px',width:'85%',border:'1 solid #c0c0c0'}}/>
+                    <div className="form-group" style={{height:'180px'}}>
+                        <label style={{marginTop:'70px',height:'40px',marginLeft:'-475px',fontSize:'15px'}}>个人简介</label>
+                        <input style={{marginTop:'70px',height:'40px',border:'1px',marginLeft:'30px',backgroundColor:'transparent'}} type="text" className="form-control" placeholder="请输入你的用户简介" value={this.state.userstate} onChange={this.getUserstate.bind(this)}/>
+                    </div>
+                    <button type="button" className="submit_btn" style={{width:'100px',marginLeft:'450px',marginTop:'-38px'}}onClick={this.LoginFetch.bind(this)}>修改</button>
                 </form>
+            </div>
             </div>
 
         )
 
     }
 }
-

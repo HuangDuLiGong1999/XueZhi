@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 
 @Service("mailService")
-@CrossOrigin
 public class MailService {
     @Value("${spring.mail.username}")
     private String from;

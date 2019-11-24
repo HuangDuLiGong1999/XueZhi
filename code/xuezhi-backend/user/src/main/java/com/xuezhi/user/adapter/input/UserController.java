@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 
 @RestController
-@CrossOrigin
+//@CrossOrigin(origins = "http://localhost:8085/")
 @RequestMapping(value="/users")
 public class UserController {
 

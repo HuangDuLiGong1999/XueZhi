@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import findDOMNode from 'react-dom'
 import jquery from 'jquery'
 import $ from  'jquery'
+import Particles from "reactparticles.js";
 export default  class Registe extends Component{
     constructor(props){
         super(props);
@@ -24,7 +25,7 @@ export default  class Registe extends Component{
             });
             $("#nmsl").text("");
         }else{
-            $("#nmsl").text("邮箱格式不正确");
+            $("#nmsl").text("邮箱格式不正确!");
         }
     }
     getCheckin(){
@@ -61,14 +62,14 @@ export default  class Registe extends Component{
         this.setState({
             checkpass:checkpassVal
         });
-        if(checkpassVal==this.state.password)
-            {
-                $("#258").text("");
-            }
-            else
-            {
-                $("#258").text("两次密码不一致");
-            }
+        if(checkpassVal===this.state.password)
+        {
+            $("#258").text("");
+        }
+        else
+        {
+            $("#258").text("两次密码不一致");
+        }
     }
     componentDidMount(){
         window.localStorage.setItem("email","");
@@ -78,7 +79,7 @@ export default  class Registe extends Component{
     }
     getMailCheck(){
         const _this = this;
-        const url = "http://localhost:8081/register/checkcode";
+        const url = "http://localhost:8085/v1/user/register/checkcode";
         let data = new URLSearchParams();
         data.append('email',_this.state.email);
         var code;
@@ -108,7 +109,7 @@ export default  class Registe extends Component{
     }
     LoginFetch(){
         const _this = this;
-        const url = "http://localhost:8081/register";
+        const url = "http://localhost:8085/v1/user/register";
         var code;
         let data = new URLSearchParams();
         data.append('email',_this.state.email);
@@ -130,36 +131,59 @@ export default  class Registe extends Component{
                     //成功登录，跳转页面
                     case false: alert("注册成功");break;
                     case true: alert("注册失败");break;
+                    default:alert("注册成功");
                 }
+
             });}
     render() {
         return(
-            <div>
-                        <h3>用户注册</h3>
-                        <div className="form-group">
-                            <label>邮箱</label>
-                            <input type="text" className="form-control" placeholder="请输入你的邮箱" id="123" onChange={this.getEmail.bind(this)}/>
-                            <button type="button" onClick={this.getMailCheck.bind(this)}>点击验证</button>
-                            <div id="nmsl"></div>
-                        </div>
-                        <div className="form-group">
-                            <label>验证码</label>
-                            <input type="text" className="form-control" placeholder="请输入你的验证码" onChange={this.getCheckin.bind(this)}/>
-                            <button type="button" onClick={this.Checkinput.bind(this)}>点击验证</button>
-                        </div>
-                        <div className="form-group">
-                            <label>密码</label>
-                            <input type="password" className="form-control" placeholder="请输入你的密码" onChange={this.getPass.bind(this)}/>
-                            <div id="6324"></div>
-                        </div>
-                        <div className="form-group">
-                            <label>验证密码</label>
-                            <input type="password" className="form-control" placeholder="请再次输入你的密码" onChange={this.getCheckpass.bind(this)}/>
-                            <div id="258"></div>
-                        </div>
-                        <button type="button" className="btn btn-primary" onClick={this.LoginFetch.bind(this)}>注册</button>
+            <div style={{width:'100%'}} >
+                <Particles
+                    id="config-1"
+                    config="新建文本文档.json"
+                    style={{
+                        width: "100%",
+                        height: "100%",
+                        backgroundColor: "white",
+                        opacity: "0.5",
+                        zIndex:"-99",
 
+                    }}
 
+                    className="particles-class-name"
+                />
+                <div id="wrapper">
+                <nav className="switch_nav">
+                    <a href='http://localhost:3000/#/login' id="switch_signup" className="switch_btn">登录</a>
+                    <a href='http://localhost:3000/#/registe' id="switch_login" className="switch_btn on">注册</a>
+                    <div className="switch_bottom" id="switch_bottom"></div>
+                </nav>
+                <div className="loginBox"  >
+                <ul className="group_input" >
+                    <li style={{marginTop:'2px'}}>
+                    <input type="text" className="form-control" placeholder="请输入你的邮箱" id="123" onChange={this.getEmail.bind(this)}/>
+                        <button type="button" style={{marginTop:'-150px',height:'30px',marginLeft:'-70px',border:'0px',backgroundColor:'#eeeeee',opacity:'0.9',borderRadius:'3px'}} onClick={this.getMailCheck.bind(this)}>验证邮箱</button>
+                    </li>
+                    <div id="nmsl" style={{fontSize:'15px',color:'#FF0000',marginLeft:'95px'}}></div>
+                <li style={{marginTop:'2px'}}>
+                    <input type="text" className="form-control" placeholder="请输入你的验证码" onChange={this.getCheckin.bind(this)}/>
+                    <button type="button" style={{marginTop:'-150px',height:'30px',marginLeft:'-70px',border:'0px',backgroundColor:'#eeeeee',opacity:'0.9',borderRadius:'3px'}} onClick={this.Checkinput.bind(this)}>点击验证</button>
+                </li>
+                <li style={{marginTop:'2px'}}>
+                    <input type="password" className="form-control" placeholder="请输入你的密码" onChange={this.getPass.bind(this)}/>
+                </li>
+                    <div id="6324" style={{fontSize:'15px',color:'#FF0000',marginLeft:'95px'}}></div>
+                <li style={{marginTop:'2px'}}>
+
+                    <input type="password" className="form-control" placeholder="请再次输入你的密码" onChange={this.getCheckpass.bind(this)}/>
+                </li>
+                    <div id="258" style={{fontSize:'15px',color:'#FF0000',marginLeft:'95px'}}></div>
+
+                </ul>
+                <button type="button" id="btnSubmit" class="submit_btn" style={{marginTop:'30px',width:'300px'}} onClick={this.LoginFetch.bind(this)}>注册</button>
+                </div>
+                <span className="agreement-tip" style={{marginBottom:'-100px',marginLeft:'0px'}}>点击「注册」按钮，即代表你同意<a href="javascript:;">《学·知协议》</a></span>
+                </div>
             </div>
         )
     }

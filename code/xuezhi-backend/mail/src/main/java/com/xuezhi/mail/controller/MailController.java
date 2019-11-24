@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Random;
 
-@CrossOrigin
 @RestController
 public class MailController {
 

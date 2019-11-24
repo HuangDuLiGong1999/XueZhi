@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 
 @RestController
-@CrossOrigin
+//@CrossOrigin(origins = "http://localhost:8085/")
 @RequestMapping(value="/register")
 public class RegisterController {
     private UsersApplication usersApplication;
@@ -27,7 +27,7 @@ public class RegisterController {
     @PostMapping
     public void addUser(@RequestParam String email, @RequestParam String password)
     {
-        usersApplication.addUser(email, password);
+       usersApplication.addUser(email, password);
     }
 
 }
