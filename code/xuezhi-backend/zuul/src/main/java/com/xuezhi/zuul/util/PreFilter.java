@@ -21,22 +21,27 @@ public class PreFilter extends ZuulFilter {
         // 获取Request上下文
         RequestContext rc = RequestContext.getCurrentContext();
         HttpServletRequest request = rc.getRequest();
-        logger.info("LogFilter .... 请求的路径是{},请求提交的方式是{}", request.getRequestURL().toString(),request.getMethod());
+        logger.info("LogFilter .... 请求的路径是{},请求提交的方式是{}", request.getRequestURL().toString(), request.getMethod());
         String url = request.getHeader("REFERER");
-        if(url.equals("http://localhost:3000/"))
+        if (url.equals("http://localhost:3000/") && isIllegal(request.getRequestURL().toString()))
         {
             rc.setSendZuulResponse(true);
             rc.setResponseStatusCode(200);
-            rc.set("isSuccess",true);
+            rc.set("isSuccess", true);
             return null;
-        }
-        else
-        {
+        } else {
             rc.setSendZuulResponse(false);
             rc.setResponseStatusCode(401);
-            rc.set("isSuccess",false);
+            rc.set("isSuccess", false);
             return null;
         }
+
+
+    }
+
+    private boolean isIllegal(String url)
+    {
+        return !url.startsWith("http://localhost:8081/") && !url.startsWith("http://localhost:8083/") && !url.startsWith("http://localhost:8087/");
     }
 
     /**
