@@ -34,7 +34,7 @@ export default class Login extends React.Component {
     LoginFetch(){
         const _this = this;
 
-        const url = "http://localhost:8085/v1/user/login";
+        const url = "http://49.234.73.158:8085/v1/user/login";
 
         var code;
 
@@ -88,8 +88,8 @@ export default class Login extends React.Component {
                 />
             <div id="wrapper">
                 <nav className="switch_nav">
-                    <a href='http://localhost:3000/#/login' id="switch_signup" className="switch_btn on">登录</a>
-                    <a href='http://localhost:3000/#/registe' id="switch_login" className="switch_btn">注册</a>
+                    <a href='#/login' id="switch_signup" className="switch_btn on">登录</a>
+                    <a href='#/register' id="switch_login" className="switch_btn">注册</a>
                     <div className="switch_bottom" id="switch_bottom"></div>
                 </nav>
             <div className="loginBox">

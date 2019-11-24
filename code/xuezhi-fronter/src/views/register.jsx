@@ -79,7 +79,7 @@ export default  class Registe extends Component{
     }
     getMailCheck(){
         const _this = this;
-        const url = "http://localhost:8085/v1/user/register/checkcode";
+        const url = "http://49.234.73.158:8085/v1/user/register/checkcode";
         let data = new URLSearchParams();
         data.append('email',_this.state.email);
         var code;
@@ -109,7 +109,7 @@ export default  class Registe extends Component{
     }
     LoginFetch(){
         const _this = this;
-        const url = "http://localhost:8085/v1/user/register";
+        const url = "http://49.234.73.158:8085/v1/user/register";
         var code;
         let data = new URLSearchParams();
         data.append('email',_this.state.email);
@@ -154,8 +154,8 @@ export default  class Registe extends Component{
                 />
                 <div id="wrapper">
                 <nav className="switch_nav">
-                    <a href='http://localhost:3000/#/login' id="switch_signup" className="switch_btn">登录</a>
-                    <a href='http://localhost:3000/#/registe' id="switch_login" className="switch_btn on">注册</a>
+                    <a href='#/login' id="switch_signup" className="switch_btn">登录</a>
+                    <a href='#/register' id="switch_login" className="switch_btn on">注册</a>
                     <div className="switch_bottom" id="switch_bottom"></div>
                 </nav>
                 <div className="loginBox"  >

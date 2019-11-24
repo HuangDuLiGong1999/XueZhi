@@ -9,13 +9,13 @@ export default  class Login extends Component{
     constructor(props){
         super(props);
         this.state={
-            username:axios.get("http://localhost:8085/v1/user/users/"+cookie.load('userId')).then(response => this.setState({username: response.data.name}))
+            username:axios.get("http://49.234.73.158:8085/v1/user/users/"+cookie.load('userId')).then(response => this.setState({username: response.data.name}))
                 .catch(error => console.log("get data error")),
-            age:axios.get("http://localhost:8085/v1/user/users/"+cookie.load('userId')).then(response => this.setState({age: response.data.age}))
+            age:axios.get("http://49.234.73.158:8085/v1/user/users/"+cookie.load('userId')).then(response => this.setState({age: response.data.age}))
                 .catch(error => console.log("get data error")),
-            sex:axios.get("http://localhost:8085/v1/user/users/"+cookie.load('userId')).then(response => this.setState({sex: response.data.sex}))
+            sex:axios.get("http://49.234.73.158:8085/v1/user/users/"+cookie.load('userId')).then(response => this.setState({sex: response.data.sex}))
                 .catch(error => console.log("get data error")),
-            userstate:axios.get("http://localhost:8085/v1/user/users/"+cookie.load('userId')).then(response => this.setState({userstate: response.data.signature}))
+            userstate:axios.get("http://49.234.73.158:8085/v1/user/users/"+cookie.load('userId')).then(response => this.setState({userstate: response.data.signature}))
                 .catch(error => console.log("get data error")),
         }
     }
@@ -55,7 +55,7 @@ export default  class Login extends Component{
     LoginFetch(){
         const _this = this;
 
-        const url = "http://localhost:8085/v1/user/users/information";
+        const url = "http://49.234.73.158:8085/v1/user/users/information";
 
         var code;
 

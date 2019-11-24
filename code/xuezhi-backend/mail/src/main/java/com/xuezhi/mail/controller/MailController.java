@@ -14,7 +14,6 @@ public class MailController {
     private MailService mailService;
 
     @GetMapping("/checkcode/{email}")
-    @CrossOrigin
     public String getCheckCode(@PathVariable("email") String email)
     {
         String checkCode = String.valueOf(new Random().nextInt(799999) + 100000);
@@ -28,7 +27,6 @@ public class MailController {
     }
 
     @GetMapping("/password_checkcode/{email}")
-    @CrossOrigin
     public String getUpdateCheckCode(@PathVariable("email") String email){
         String checkCode = String.valueOf(new Random().nextInt(799999) + 100000);
         String message = "温馨提示:您的学·知账户" + email + "正在进行修改密码的操作，如果不是您所进行的操作，请注意账号可能已被盗取。您的修改密码的验证码为："+checkCode;
