@@ -5,7 +5,9 @@ import com.xuezhi.user.application.UsersApplication;
 import com.xuezhi.user.domain.entity.User;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
@@ -43,10 +45,15 @@ public class UserController {
     }
 
     @PutMapping("/avatar")
-    public boolean setAvatar(@RequestParam String id){
+    public boolean setAvatar(@RequestParam String id, @RequestParam MultipartFile multipartFile){
         //todo
-        usersApplication.setAvatar(id);
+        usersApplication.setAvatar(id, multipartFile);
         return true;
+    }
+
+    @GetMapping(value = "/avatar/{id}", produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
+    public byte[] avatar(@PathVariable("id") String id){
+        return usersApplication.getAvatar(id);
     }
 
     @PostMapping("/checkcode")

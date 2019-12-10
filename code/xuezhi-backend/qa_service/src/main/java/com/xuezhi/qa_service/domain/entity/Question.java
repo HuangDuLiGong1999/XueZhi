@@ -3,9 +3,10 @@ package com.xuezhi.qa_service.domain.entity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Document("question")
+@Document(collection = "question")
 public class Question {
 
     @Id
@@ -72,6 +73,9 @@ public class Question {
     }
 
     public List<Answer> getAnswerList() {
+        if (answerList == null){
+            answerList = new ArrayList<>();
+        }
         return answerList;
     }
 

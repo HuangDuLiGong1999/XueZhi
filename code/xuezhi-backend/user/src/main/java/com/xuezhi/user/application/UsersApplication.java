@@ -4,12 +4,12 @@ import com.xuezhi.user.domain.entity.User;
 import com.xuezhi.user.domain.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 @Component
@@ -56,8 +56,12 @@ public class UsersApplication {
     }
 
     //todo
-    public void setAvatar(String id){
-        userRepository.setAvatar(id);
+    public void setAvatar(String id, MultipartFile multipartFile){
+        userRepository.setAvatar(id, multipartFile);
+    }
+
+    public byte[] getAvatar(String id){
+        return userRepository.getAvatar(id).getData();
     }
 
     public String sendModifyMail(String id) throws IOException{

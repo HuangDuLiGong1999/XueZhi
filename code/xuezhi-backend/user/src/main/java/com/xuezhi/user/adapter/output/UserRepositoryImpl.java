@@ -3,9 +3,13 @@ package com.xuezhi.user.adapter.output;
 import com.xuezhi.user.adapter.output.UserRepositor;
 import com.xuezhi.user.domain.entity.User;
 import com.xuezhi.user.domain.repository.UserRepository;
+import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Component
 @Repository
@@ -53,10 +57,31 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void setAvatar(String id){
+    public void setAvatar(String id, MultipartFile multipartFile){
         User user = userRepositor.findUserById(id);
         //todo
+        try {
+            user.setAvatar(new Binary(multipartFile.getBytes()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        userRepositor.save(user);
+    }
 
+    @Override
+    public Binary getAvatar(String id){
+        User user = userRepositor.findUserById(id);
+        return user.getAvatar();
+    }
+
+    @Override
+    public void verify(String id, MultipartFile multipartFile){
+        User user = userRepositor.findUserById(id);
+        try{
+            user.setVerImage(new Binary(multipartFile.getBytes()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         userRepositor.save(user);
     }
 

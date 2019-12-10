@@ -4,11 +4,17 @@ import com.xuezhi.qa_service.domain.entity.Answer;
 import com.xuezhi.qa_service.domain.entity.Question;
 import com.xuezhi.qa_service.domain.repository.QARepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
+@Component
+@Repository
 public class QARepositoryImpl implements QARepository {
 
     @Autowired
@@ -57,24 +63,50 @@ public class QARepositoryImpl implements QARepository {
 
     public void addAnswer(String questionId, String authorId, String description)
     {
-
+        Question question = qaRepositor.findQuestionByQuestionId(questionId);
+        Answer answer = new Answer();
+        answer.setAuthorId(authorId);
+        answer.setDescription(description);
+        answer.setUpdateTime(getUpdateTime());
+        List<Answer> answerList = question.getAnswerList();
+        answerList.add(answer);
+        question.setAnswerList(answerList);
+        qaRepositor.save(question);
     }
 
     public void updateAnswer(String questionId, String authorId, String description)
     {
-
+        Question question = qaRepositor.findQuestionByQuestionId(questionId);
+        List<Answer> answerList = question.getAnswerList();
+        for (Answer answer : answerList){
+            if (answer.getAuthorId().equals(authorId)){
+                answer.setDescription(description);
+                answer.setUpdateTime(getUpdateTime());
+                question.setAnswerList(answerList);
+                qaRepositor.save(question);
+                break;
+            }
+        }
     }
 
     public void deleteAnswer(String questionId, String authorId)
     {
-
+        Question question = qaRepositor.findQuestionByQuestionId(questionId);
+        List<Answer> answerList = question.getAnswerList();
+        for (Answer answer : answerList){
+            if (answer.getAuthorId().equals(authorId)){
+                answerList.remove(answer);
+                question.setAnswerList(answerList);
+                qaRepositor.save(question);
+                break;
+            }
+        }
     }
 
     private String getUpdateTime()
     {
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String str = sdf.format(date);
-        return str;
+        return sdf.format(date);
     }
 }

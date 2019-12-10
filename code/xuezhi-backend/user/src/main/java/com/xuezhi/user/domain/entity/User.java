@@ -1,5 +1,6 @@
 package com.xuezhi.user.domain.entity;
 
+import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,22 +13,11 @@ public class User {
     private String name;
     private String password;
     private String signature;
-
-    public String getSignature() {
-        return signature;
-    }
-
-    public void setSignature(String signature) {
-        this.signature = signature;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    private int age;
+    private String sex;
+    private String university;
+    private Binary avatar;
+    private Binary verImage;
 
     public User(){}
     public User(String email, String telephone, String name, int age, String sex, String university, String password, String signature) {
@@ -97,8 +87,35 @@ public class User {
         this.university = university;
     }
 
-    private int age;
-    private String sex;
-    //private GridFS icon;
-    private String university;
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Binary getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(Binary avatar) {
+        this.avatar = avatar;
+    }
+
+    public Binary getVerImage() {
+        return verImage;
+    }
+
+    public void setVerImage(Binary verImage) {
+        this.verImage = verImage;
+    }
 }
