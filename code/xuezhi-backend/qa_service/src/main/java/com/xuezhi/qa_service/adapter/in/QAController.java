@@ -4,8 +4,9 @@ package com.xuezhi.qa_service.adapter.in;
 import com.xuezhi.qa_service.application.QAApplication;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Description;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/qa")
@@ -20,8 +21,7 @@ public class QAController {
 
     @PostMapping("/questions")
     @ApiOperation("create a question by giving some details")
-    public void addQuestion(@RequestParam String title,@RequestParam String description,@RequestParam String askerId, @RequestParam String school)
-    {
+    public void addQuestion(@RequestParam String title,@RequestParam String description,@RequestParam String askerId, @RequestParam String school) throws IOException {
         qaApplication.addQuestion(title, description, askerId, school);
     }
 
@@ -54,4 +54,10 @@ public class QAController {
     {
         qaApplication.deleteAnswer(questionId, authorId);
     }
+
+    @PutMapping("/likes")
+    public void updateLikes(@RequestParam String questionId, @RequestParam String authorId, @RequestParam String likeUserId){
+        qaApplication.updateLikes(questionId, authorId, likeUserId);
+    }
+
 }

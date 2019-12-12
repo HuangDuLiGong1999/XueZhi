@@ -11,6 +11,10 @@ public interface QARepository {
 
     public List<Question> getQuestionByAskerId(String askerId);
 
+    public List<Question> getQuestionByRegex(String regex);
+
+    public List<Question> getPublicQuestions();
+
     public List<Answer> getAnswerListByQuestionId(String questionId);
 
     public void addQuestion(String title, String description, String askerId, String school);
@@ -24,4 +28,6 @@ public interface QARepository {
     public void updateAnswer(String questionId, String authorId, String description);
 
     public void deleteAnswer(String questionId, String authorId);
+
+    public void updateLikes(String questionId, String authorId, String likeUserId);
 }

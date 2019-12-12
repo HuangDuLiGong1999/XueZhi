@@ -4,14 +4,16 @@ import com.xuezhi.qa_service.domain.entity.Answer;
 import com.xuezhi.qa_service.domain.entity.Question;
 import com.xuezhi.qa_service.domain.repository.QARepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 @Repository
@@ -19,6 +21,9 @@ public class QARepositoryImpl implements QARepository {
 
     @Autowired
     private QARepositor qaRepositor;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     @Override
     public Question getQuestionByQuestionId(String questionId)
@@ -29,6 +34,16 @@ public class QARepositoryImpl implements QARepository {
     public List<Question> getQuestionByAskerId(String askerId)
     {
         return qaRepositor.findQuestionByAskerId(askerId);
+    }
+
+    public List<Question> getQuestionByRegex(String regex){
+        Query query = new Query(Criteria.where("title").regex(regex));
+        return mongoTemplate.find(query,Question.class,"question");
+    }
+
+    public List<Question> getPublicQuestions(){
+        Query query = new Query(Criteria.where("school").is("public"));
+        return mongoTemplate.find(query, Question.class,"question");
     }
 
     public List<Answer> getAnswerListByQuestionId(String questionId)
@@ -99,6 +114,31 @@ public class QARepositoryImpl implements QARepository {
                 question.setAnswerList(answerList);
                 qaRepositor.save(question);
                 break;
+            }
+        }
+    }
+
+    public void updateLikes(String questionId, String authorId, String likeUserId){
+        Question question = qaRepositor.findQuestionByQuestionId(questionId);
+        List<Answer> answerList = question.getAnswerList();
+        for (Answer answer : answerList){
+            if (answer.getAuthorId().equals(authorId)){
+                Map<String, Boolean> likesMap = answer.getLikesMap();
+                int likes = answer.getLikes();
+                if (!likesMap.containsKey(likeUserId)){
+                    likes++;
+                    likesMap.put(likeUserId, true);
+                }else if (likesMap.get(likeUserId)){
+                    likes--;
+                    likesMap.put(likeUserId, false);
+                }else {
+                    likes++;
+                    likesMap.put(likeUserId, true);
+                }
+                answer.setLikes(likes);
+                answer.setLikesMap(likesMap);
+                question.setAnswerList(answerList);
+                qaRepositor.save(question);
             }
         }
     }

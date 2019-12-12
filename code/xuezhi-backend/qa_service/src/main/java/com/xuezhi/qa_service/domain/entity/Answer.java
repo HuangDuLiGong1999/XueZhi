@@ -1,5 +1,6 @@
 package com.xuezhi.qa_service.domain.entity;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Answer {
@@ -11,7 +12,7 @@ public class Answer {
 
     private String description;
 
-    private Map<String, Object> likesMap;
+    private Map<String, Boolean> likesMap;
 
     private int likes;
 
@@ -39,11 +40,14 @@ public class Answer {
         this.description = description;
     }
 
-    public Map<String, Object> getLikesMap() {
+    public Map<String, Boolean> getLikesMap() {
+        if (likesMap == null){
+            likesMap = new HashMap<>();
+        }
         return likesMap;
     }
 
-    public void setLikesMap(Map<String, Object> likesMap) {
+    public void setLikesMap(Map<String, Boolean> likesMap) {
         this.likesMap = likesMap;
     }
 
