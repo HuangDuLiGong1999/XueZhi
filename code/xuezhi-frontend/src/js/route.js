@@ -12,6 +12,7 @@ import Me from "./me"
 import Read from "./read"
 import Atricle from "./atricle"
 import Notice from "./notice"
+import Question from "./question";
 
 class App extends Component {
   render() {
@@ -31,6 +32,8 @@ class App extends Component {
             <Route exact path="/atricle/:userId?" component={Atricle} />
             {/* 写文章界面 */}
             <Route exact path="/write/:atricleId?" component={Write} />
+            {/*问题详情界面*/}
+            <Route exact path="/question/:questionId?" component={Question}/>
             {/* 主页文章列表 */}
             <Route exact path="/:page?" component={Home} />
           </Switch>
