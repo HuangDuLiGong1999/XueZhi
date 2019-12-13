@@ -27,6 +27,12 @@ code/xuezhi-fronter/.pnp
 code/xuezhi-fronter.pnp.js
 code/xuezhi-fronter/package-lock.json
 
+code/xuezhi-frontend/node_modules
+code/xuezhi-frontend/.pnp
+code/xuezhi-frontend.pnp.js
+code/xuezhi-frontend/package-lock.json
+
+
 # testing
 /coverage
 
