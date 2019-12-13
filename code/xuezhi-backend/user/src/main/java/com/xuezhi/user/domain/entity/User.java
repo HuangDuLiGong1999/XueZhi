@@ -4,6 +4,10 @@ import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+
 @Document(collection="user")
 public class User {
     @Id
@@ -18,6 +22,66 @@ public class User {
     private String university;
     private Binary avatar;
     private Binary verImage;
+    //private List<History> historyList;
+
+    /*
+    private void update()
+    {
+        if(historyList.size()<=10)
+        {
+            for(int i = 0; i < historyList.size();i++)
+            {
+                if(historyList.get(i).getId().equals("id"))
+                {
+                    historyList.get(i).setTime(new Date().getTime());
+                    break;
+                }
+
+                if(i==historyList.size()-1)
+                {
+                    History temp = new History();
+                    temp.setId("id");
+                    temp.setTime(new Date().getTime());
+                }
+            }
+        }
+        else
+        {
+            historyList.sort(new Comparator<History>() {
+                @Override
+                public int compare(History u1, History u2)
+                {
+                    if(u1.getTime() > u2.getTime())
+                    {
+                        return -1;
+                    }
+                    else
+                        return 1;
+                }
+            });
+
+            for(int i = 0; i < historyList.size();i++)
+            {
+
+                if(historyList.get(i).getId().equals("id"))
+                {
+                    historyList.get(i).setTime(new Date().getTime());
+                    break;
+                }
+
+
+                if(i==historyList.size()-1)
+                {
+                    historyList.remove(0);
+                    History temp = new History();
+                    temp.setId("id");
+                    temp.setTime(new Date().getTime());
+                }
+            }
+        }
+    }
+
+     */
 
     public User(){}
     public User(String email, String telephone, String name, int age, String sex, String university, String password, String signature) {
