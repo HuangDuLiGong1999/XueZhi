@@ -62,7 +62,7 @@ class Question extends React.Component{
         const url = "http://localhost:8087/qa/answers"
         let data = new URLSearchParams();
         data.append('questionId',this.state.questionId);
-        data.append('authorId',"testAuthor"); //todo
+        data.append('authorId',"5df37daea0e40753e18048b6"); //todo
         data.append('description',answer);
 
         axios.post(url,data).then(function (response) {

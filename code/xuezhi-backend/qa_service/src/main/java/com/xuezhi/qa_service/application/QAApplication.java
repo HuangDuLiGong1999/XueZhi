@@ -5,6 +5,7 @@ import com.xuezhi.qa_service.domain.entity.Question;
 import com.xuezhi.qa_service.domain.repository.QARepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import com.alibaba.fastjson.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,8 +14,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
-
-import org.json.JSONObject;
 
 @Component
 public class QAApplication {
@@ -61,7 +60,7 @@ public class QAApplication {
         List<Question> questionList = qaRepository.getPublicQuestions();
         List<Map<String, Object>> mapList = new ArrayList<>();
         Random random = new Random();
-        for (int i = 0; i < 6; i++){
+        for (int i = 0; i < 2; i++){
             int index = random.nextInt(questionList.size() - 1);
             Question question = questionList.get(index);
             while (question.getAnswerList().size() == 0){
@@ -71,8 +70,14 @@ public class QAApplication {
             String questionId = question.getQuestionId();
             String title = question.getTitle();
             List<Answer> answerList = question.getAnswerList();
-            int answerIndex = random.nextInt(answerList.size() - 1);
-            Answer answer = answerList.get(answerIndex);
+            Answer answer;
+            if (answerList.size() == 1){
+                answer = answerList.get(0);
+            }
+            else {
+                int answerIndex = random.nextInt(answerList.size() - 1);
+                answer = answerList.get(answerIndex);
+            }
             Map<String, Object> map = new HashMap<>();
             map.put("questionId", questionId);
             map.put("title", title);
@@ -91,7 +96,7 @@ public class QAApplication {
         conn.setRequestProperty("Accept", "application/json");
         BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
         String temp = br.readLine();
-        return new JSONObject(temp);
+        return JSONObject.parseObject(temp);
     }
 
     public void updateLikes(String questionId, String authorId, String likeUserId){
