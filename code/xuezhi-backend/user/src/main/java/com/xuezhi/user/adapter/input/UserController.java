@@ -47,6 +47,7 @@ public class UserController {
     @PutMapping("/avatar")
     public boolean setAvatar(@RequestParam String id, @RequestParam MultipartFile multipartFile){
         //todo
+        System.out.println("图片");
         usersApplication.setAvatar(id, multipartFile);
         return true;
     }

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 
 @RestController
-//@CrossOrigin(origins = "http://localhost:8085/")
+@CrossOrigin
 @RequestMapping(value="/register")
 public class RegisterController {
     private UsersApplication usersApplication;
