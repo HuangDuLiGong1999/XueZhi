@@ -7,27 +7,29 @@ import java.util.List;
 
 public interface QARepository {
 
-    public Question getQuestionByQuestionId(String questionId);
+    Question getQuestionByQuestionId(String questionId);
 
-    public List<Question> getQuestionByAskerId(String askerId);
+    List<Question> getQuestionByAskerId(String askerId);
 
-    public List<Question> getQuestionByRegex(String regex);
+    List<Question> getQuestionByRegex(String regex);
 
-    public List<Question> getPublicQuestions();
+    List<Question> getPublicQuestions();
 
-    public List<Answer> getAnswerListByQuestionId(String questionId);
+    //List<Answer> getAnswerListByQuestionId(String questionId);
 
-    public void addQuestion(String title, String description, String askerId, String school);
+    void addQuestion(String title, String description, String askerId, String school);
 
-    public void updateQuestion(String questionId, String title, String description);
+    void updateQuestion(String questionId, String title, String description);
 
-    public void deleteQuestion(String questionId);
+    void deleteQuestion(String questionId);
 
-    public void addAnswer(String questionId, String authorId, String description);
+    void addAnswer(String questionId, String authorId, String description);
 
-    public void updateAnswer(String questionId, String authorId, String description);
+    void updateAnswer(String questionId, String authorId, String description);
 
-    public void deleteAnswer(String questionId, String authorId);
+    void deleteAnswer(String questionId, String authorId);
 
-    public void updateLikes(String questionId, String authorId, String likeUserId);
+    void updateLikes(String questionId, String authorId, String likeUserId);
+    //添加评论
+    void addComment(String questionId, String authorId, String commentatorId, String description);
 }

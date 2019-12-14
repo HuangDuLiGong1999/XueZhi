@@ -1,6 +1,8 @@
 package com.xuezhi.qa_service.adapter.out;
 
+import com.alibaba.fastjson.support.odps.udf.CodecCheck;
 import com.xuezhi.qa_service.domain.entity.Answer;
+import com.xuezhi.qa_service.domain.entity.Comment;
 import com.xuezhi.qa_service.domain.entity.Question;
 import com.xuezhi.qa_service.domain.repository.QARepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,10 +48,13 @@ public class QARepositoryImpl implements QARepository {
         return mongoTemplate.find(query, Question.class,"question");
     }
 
+    /*
     public List<Answer> getAnswerListByQuestionId(String questionId)
     {
         return null;
     }
+
+     */
 
     public void addQuestion(String title, String description, String askerId, String school)
     {
@@ -141,6 +146,24 @@ public class QARepositoryImpl implements QARepository {
                 qaRepositor.save(question);
             }
         }
+    }
+
+    public void addComment(String questionId, String authorId, String commentatorId, String description){
+        Question question = qaRepositor.findQuestionByQuestionId(questionId);
+        List<Answer> answerList = question.getAnswerList();
+        for (Answer answer : answerList){
+            if (answer.getAuthorId().equals(authorId)){
+                Comment comment = new Comment();
+                comment.setCommentatorId(commentatorId);
+                comment.setComment(description);
+                List<Comment> commentList = answer.getAnswerComments();
+                commentList.add(comment);
+                answer.setAnswerComments(commentList);
+                break;
+            }
+        }
+        question.setAnswerList(answerList);
+        qaRepositor.save(question);
     }
 
     private String getUpdateTime()

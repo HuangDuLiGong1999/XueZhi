@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -67,4 +68,24 @@ public class UserController {
         return true;
     }
 
+    @PutMapping("/history")
+    public void updateHistory(@RequestParam String id, @RequestParam String questionId){
+        System.out.println("123");
+        usersApplication.updateHistory(id, questionId);
+    }
+
+    @PostMapping("/question")
+    public void addQuestionId(@RequestParam String id, @RequestParam String questionId){
+        usersApplication.addQuestionId(id, questionId);
+    }
+
+    @GetMapping("/question/{id}")
+    public List<String> getQuestionId(@PathVariable(value = "id") String id){
+        return usersApplication.getQuestionId(id);
+    }
+
+    @DeleteMapping("/question")
+    public void deleteQuestionId(@RequestParam String id, @RequestParam String questionId){
+        usersApplication.deleteQuestionId(id, questionId);
+    }
 }

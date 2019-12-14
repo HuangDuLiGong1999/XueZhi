@@ -61,4 +61,8 @@ public class QAController {
         qaApplication.updateLikes(questionId, authorId, likeUserId);
     }
 
+    @PutMapping("/answers/comments")
+    public void addComment(@RequestParam String questionId, @RequestParam String authorId, @RequestParam String commentatorId, @RequestParam String description){
+        qaApplication.addComment(questionId, authorId, commentatorId, description);
+    }
 }

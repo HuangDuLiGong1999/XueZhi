@@ -1,6 +1,8 @@
 package com.xuezhi.qa_service.domain.entity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Answer {
@@ -15,6 +17,8 @@ public class Answer {
     private Map<String, Boolean> likesMap;
 
     private int likes;
+
+    private List<Comment> answerComments;
 
     public String getAuthorId() {
         return authorId;
@@ -57,5 +61,16 @@ public class Answer {
 
     public void setLikes(int likes) {
         this.likes = likes;
+    }
+
+    public List<Comment> getAnswerComments() {
+        if (answerComments == null){
+            answerComments = new ArrayList<>();
+        }
+        return answerComments;
+    }
+
+    public void setAnswerComments(List<Comment> answerComments) {
+        this.answerComments = answerComments;
     }
 }

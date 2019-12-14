@@ -1,5 +1,6 @@
 package com.xuezhi.user.application;
 
+import com.xuezhi.user.domain.entity.History;
 import com.xuezhi.user.domain.entity.User;
 import com.xuezhi.user.domain.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
 
 @Component
 public class UsersApplication {
@@ -79,5 +83,21 @@ public class UsersApplication {
 
     public void modifyPassword(String id, String password){
         userRepository.modifyPassword(id, password);
+    }
+
+    public void updateHistory(String id, String questionId){
+        userRepository.updateHistory(id, questionId);
+    }
+
+    public void addQuestionId(String id, String questionId){
+        userRepository.addQuestionId(id, questionId);
+    }
+
+    public List<String> getQuestionId(String id){
+        return userRepository.getQuestionId(id);
+    }
+
+    public void deleteQuestionId(String id, String questionId){
+        userRepository.deleteQuestionId(id, questionId);
     }
 }

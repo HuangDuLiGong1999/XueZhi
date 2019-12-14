@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.alibaba.fastjson.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
@@ -25,7 +22,20 @@ public class QAApplication {
     }
 
     public Question getQuestionByQuestionId(String questionId){
+
         return qaRepository.getQuestionByQuestionId(questionId);
+    }
+
+    public List<Map<String, String>> getQuestionByAskerId(String askerId){
+        List<Question> questionList = qaRepository.getQuestionByAskerId(askerId);
+        List<Map<String, String>> resultList = new ArrayList<>();
+        for (Question question : questionList){
+            Map<String, String> map = new HashMap<>();
+            map.put("questionId", question.getQuestionId());
+            map.put("title", question.getTitle());
+            resultList.add(map);
+        }
+        return resultList;
     }
 
     public void addQuestion(String title, String description, String askerId, String school){
@@ -101,5 +111,9 @@ public class QAApplication {
 
     public void updateLikes(String questionId, String authorId, String likeUserId){
         qaRepository.updateLikes(questionId, authorId, likeUserId);
+    }
+
+    public void addComment(String questionId, String authorId, String commentatorId, String description){
+        qaRepository.addComment(questionId, authorId, commentatorId, description);
     }
 }

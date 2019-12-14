@@ -4,6 +4,7 @@ import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -22,66 +23,8 @@ public class User {
     private String university;
     private Binary avatar;
     private Binary verImage;
-    //private List<History> historyList;
-
-    /*
-    private void update()
-    {
-        if(historyList.size()<=10)
-        {
-            for(int i = 0; i < historyList.size();i++)
-            {
-                if(historyList.get(i).getId().equals("id"))
-                {
-                    historyList.get(i).setTime(new Date().getTime());
-                    break;
-                }
-
-                if(i==historyList.size()-1)
-                {
-                    History temp = new History();
-                    temp.setId("id");
-                    temp.setTime(new Date().getTime());
-                }
-            }
-        }
-        else
-        {
-            historyList.sort(new Comparator<History>() {
-                @Override
-                public int compare(History u1, History u2)
-                {
-                    if(u1.getTime() > u2.getTime())
-                    {
-                        return -1;
-                    }
-                    else
-                        return 1;
-                }
-            });
-
-            for(int i = 0; i < historyList.size();i++)
-            {
-
-                if(historyList.get(i).getId().equals("id"))
-                {
-                    historyList.get(i).setTime(new Date().getTime());
-                    break;
-                }
-
-
-                if(i==historyList.size()-1)
-                {
-                    historyList.remove(0);
-                    History temp = new History();
-                    temp.setId("id");
-                    temp.setTime(new Date().getTime());
-                }
-            }
-        }
-    }
-
-     */
+    private List<History> historyList;
+    private List<String> questionIdList;
 
     public User(){}
     public User(String email, String telephone, String name, int age, String sex, String university, String password, String signature) {
@@ -181,5 +124,27 @@ public class User {
 
     public void setVerImage(Binary verImage) {
         this.verImage = verImage;
+    }
+
+    public List<History> getHistoryList() {
+        if (historyList == null){
+            historyList = new ArrayList<>();
+        }
+        return historyList;
+    }
+
+    public void setHistoryList(List<History> historyList) {
+        this.historyList = historyList;
+    }
+
+    public List<String> getQuestionIdList() {
+        if (questionIdList == null){
+            questionIdList = new ArrayList<>();
+        }
+        return questionIdList;
+    }
+
+    public void setQuestionIdList(List<String> questionIdList) {
+        this.questionIdList = questionIdList;
     }
 }

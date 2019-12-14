@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -22,15 +24,9 @@ public class QueryController {
     }
 
     @GetMapping(value="/questions/{askerid}")
-    public List<Question> getQuestionByAskerId(@PathVariable("askerid") String askerid)
+    public List<Map<String, String>> getQuestionByAskerId(@PathVariable("askerid") String askerid)
     {
-        return null;
-    }
-
-    @GetMapping(value="/answers/{authorid}")
-    public List<Question> getAnswerByAuthorId(@PathVariable("authorid") String authorid)
-    {
-        return null;
+        return qaApplication.getQuestionByAskerId(askerid);
     }
 
     @GetMapping(value="/answers/regex/{regex}")
