@@ -18,6 +18,7 @@ class AtricleItem extends Component {
     console.log(props.item)
     const userId = props.item.answer.authorId;
     const title = props.item.title
+    const questionId = props.item.questionId
     //从 marked 提取文本与图片地址
     const markdown = marked(props.item.answer.description)
     const data = markdown.replace(/<[^>]+>/g, '').replace(/&.+?;/g, ' ').substring(0, 150) + '...'
@@ -50,7 +51,8 @@ class AtricleItem extends Component {
       showRead,
       messagesShow,
       full,
-      tag: "问答"
+      tag: "问答",
+      questionId
     }
 
     this._clickRead = this._clickRead.bind(this)
@@ -85,7 +87,7 @@ class AtricleItem extends Component {
             </div>
           </div>
           {/* 标题 */}
-          <h1 className="h1">{this.state.title}</h1>
+          <a className="h1" href={"/question/"+this.state.questionId}>{this.state.title}</a>
           {/* 内容 */}
           <div className="content">
             {this._readInfo()}

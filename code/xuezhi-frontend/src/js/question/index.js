@@ -2,7 +2,7 @@ import React from "react";
 import {Button} from "material-ui"
 import axios from "axios";
 import Editor from "../component/editor";
-import AtricleItem from "../component/atricleItem";
+import AnswerItem from "../component/answerItem";
 
 import "./question.css"
 import Message from "../component/message";
@@ -31,14 +31,17 @@ class Question extends React.Component{
         var data;
         axios.get(url).then(function (response) {
             data = response.data;
+            console.log(data)
         }).catch(function (e) {
             alert(e);
         }).then(
             function(){
                _this.setState({
                     title:data.title,
-                    description:data.description
+                    description:data.description,
+                    items:data.answerList
                 })
+                console.log(_this.state)
             }
 
         )
@@ -75,7 +78,7 @@ class Question extends React.Component{
 
     render() {
         const answerItems = this.state.items.map((item, index) =>
-            <AtricleItem key={item.id} history={this.props.history} item={item} MessageChildren={Message} />
+            <AnswerItem key={item.id} history={this.props.history} item={item} MessageChildren={Message} />
         )
         return(
             <div>

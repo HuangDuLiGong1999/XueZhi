@@ -1,0 +1,148 @@
+
+.answerItem {
+    margin-bottom: 10px;
+    padding: 10px 20px 15px 20px;
+    border-radius: 2px;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,.1);
+}
+
+.answerItem .span{
+    font-size: 15px;
+    color: #8590a6;
+}
+
+.answerItem .user{
+    display: flex;
+    margin-top: 10px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.answerItem .user .left{
+    display: flex;
+    align-items: center;
+}
+
+.answerItem .user .headimg{
+    width: 24px;
+    height: 24px;
+    border-radius: 10%;
+}
+
+.answerItem .user .name{
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 15px;
+    color: #262626;
+    text-decoration: none;
+}
+
+.answerItem .user .github{
+    margin-left: 10px;
+    font-size: 12px;
+    color: #8590a6;
+}
+
+.answerItem .user .time{
+    text-align: left;
+    color: #8590a6;
+    font-size: 15px;
+    width: 100px;
+    text-align: right;
+}
+
+.answerItem .h1{
+    font-size: 18px;
+}
+
+.answerItem >.content{
+    display: flex;
+    cursor: pointer;
+}
+
+.answerItem .content .img{
+    width: 190px;
+    height: 105px;
+    border-radius: 4px;
+    /* 图片剧中 */
+    background-position: center;
+    /* 大小 */
+    background-size: cover;
+    /* 不重复 */
+    background-repeat: no-repeat;
+    margin-right: 10px;
+}
+
+.answerItem .content .info{
+    flex: 1;
+    font-size: 15px;
+    line-height: 1.6em;
+    color: #262626;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.answerItem .content .info:hover{
+    color: #8590a6;
+}
+
+.answerItem .tool{
+    margin-top: 10px;
+    display: flex;
+}
+
+.answerItem .tool .right-button{
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+}
+
+.answerItem .tool .right-button .button .button-transform{
+    transform: rotate(180deg);
+}
+
+.answerItem .button{
+    min-width: 0;
+    margin-right: 3px;
+    line-height:1em;
+    min-height: 0;
+    color: #8590a6;
+}
+
+.answerItem .buttonBlue{
+    background-color: #0f88eb !important;
+    color: #ffffff;
+}
+
+.answerItem .button-border{
+    background-color: rgba(0, 0, 0, 0.12);
+}
+
+.answerItem .read{
+    padding: 3px 2px;
+}
+
+@media (max-width: 1024px) {
+    .answerItem >.content{
+        flex-wrap: wrap;
+    }
+    .answerItem .content .img {
+        width: 100%;
+        height: 150px;
+        margin: 1px;
+    }
+    .answerItem .content .info{
+        margin-top: 15px;
+    }
+    .answerItem .read{
+        margin-left: -10px;
+    }
+    .answerItem .button{
+        margin-right: 10px;
+        padding: 8px 5px 8px 10px;
+    }
+    .answerItem .tool .reply-butoon{
+        display: none;
+    }
+}
