@@ -43,8 +43,8 @@ public class QARepositoryImpl implements QARepository {
         return mongoTemplate.find(query,Question.class,"question");
     }
 
-    public List<Question> getPublicQuestions(){
-        Query query = new Query(Criteria.where("school").is("public"));
+    public List<Question> getQuestionsBySchool(String school){
+        Query query = new Query(Criteria.where("school").is(school));
         return mongoTemplate.find(query, Question.class,"question");
     }
 

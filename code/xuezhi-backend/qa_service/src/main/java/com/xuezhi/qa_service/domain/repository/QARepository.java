@@ -13,7 +13,7 @@ public interface QARepository {
 
     List<Question> getQuestionByRegex(String regex);
 
-    List<Question> getPublicQuestions();
+    List<Question> getQuestionsBySchool(String school);
 
     //List<Answer> getAnswerListByQuestionId(String questionId);
 

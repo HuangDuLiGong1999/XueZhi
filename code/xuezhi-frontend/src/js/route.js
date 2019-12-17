@@ -13,6 +13,7 @@ import Read from "./read"
 import Atricle from "./atricle"
 import Notice from "./notice"
 import Question from "./question";
+import College from "./college";
 
 class App extends Component {
   render() {
@@ -24,6 +25,7 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             {/* 自己信息设置 */}
             <Route exact path="/me" component={Me} />
+            <Route exact path="/college" component={College}/>
             {/* 通知页面 */}
             <Route exact path="/notice" component={Notice} />            
             {/* 单文章展示 */}

@@ -4,10 +4,7 @@ import com.xuezhi.qa_service.application.QAApplication;
 import com.xuezhi.qa_service.domain.entity.General;
 import com.xuezhi.qa_service.domain.entity.Question;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -33,8 +30,8 @@ public class RecommendController {
 
     */
 
-    @GetMapping("/recommends")
-    public List<Map<String, Object>> getRecommends() throws IOException {
-        return qaApplication.getRecommends();
+    @GetMapping("/recommends/{university}")
+    public List<Map<String, Object>> getRecommends(@PathVariable(value = "university") String university) throws IOException {
+        return qaApplication.getRecommends(university);
     }
 }

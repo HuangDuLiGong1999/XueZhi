@@ -66,8 +66,8 @@ public class QAApplication {
         return qaRepository.getQuestionByRegex(regex);
     }
 
-    public List<Map<String, Object>> getRecommends() throws IOException {
-        List<Question> questionList = qaRepository.getPublicQuestions();
+    public List<Map<String, Object>> getRecommends(String university) throws IOException {
+        List<Question> questionList = qaRepository.getQuestionsBySchool(university);
         List<Map<String, Object>> mapList = new ArrayList<>();
         Random random = new Random();
         for (int i = 0; i < 4; i++){

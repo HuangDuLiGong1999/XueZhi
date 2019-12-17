@@ -35,7 +35,7 @@ class Home extends Component {
       query.contains('tag', page)
     }
 
-    const url = "http://localhost:8087/recommends/";
+    const url = "http://localhost:8087/recommends/public/";
 
     let _this = this;
 
