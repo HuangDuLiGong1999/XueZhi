@@ -1,153 +1,257 @@
-import React,{Component} from 'react'
-import axios from 'axios'
-import $ from 'jquery'
-import cookie from 'react-cookies'
-import Particles from "reactparticles.js";
-import Mavatar from 'mavatar'
-let avatar;
+import React, { Component } from 'react'
+import { Button, TextField, Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText } from 'material-ui'
+import AV from "leancloud-storage"
+import Progress from "../component/progress"
+import SnackBar from "../component/snackbar"
+import Header from "../component/header"
+import "./me.css"
 
-export default  class Login extends Component{
-    constructor(props){
-        super(props);
-        this.state={
-            username:"",
-            age:"",
-            sex:"",
-            userstate:"",
-        }
+
+class Me extends Component {
+  // 加载一次，初始化状态
+  constructor(props, context) {
+    super(props)
+    this.state = {
+      email: AV.User.current().getEmail(),
+      name: AV.User.current().get('name'),
+      bio: AV.User.current().get('bio'),
+      blog: AV.User.current().get('blog'),
+      github_url: AV.User.current().get('github_url')
+    }
+    this._clickSave = this._clickSave.bind(this)
+    this._onChangeName = this._onChangeName.bind(this)
+    this._emailVerify = this._emailVerify.bind(this)
+    this._upDataPassword = this._upDataPassword.bind(this)
+    this._onChangebBio = this._onChangebBio.bind(this)
+    this._onChangebBlog = this._onChangebBlog.bind(this)
+    this._buttonGithub = this._buttonGithub.bind(this)
+    this._open = this._open.bind(this)
+    this._close = this._close.bind(this)
+  }
+  // 加载一次，Dom 未加载
+  componentWillMount() {
+  }
+  // 加载一次，这里 Dom 已经加载完成
+  componentDidMount() {
+
+  }
+  _onChangeName(e) {
+    this.setState({ name: e.target.value })
+
+    if (e.target.value.length === 0) {
+      this.setState({ nameError: true })
+    } else {
+      this.setState({ nameError: false })
+    }
+  }
+  // 保存信息
+  _clickSave(e) {
+    if (this.state.name && (this.state.name.length === 0 || this.state.name.length > 20)) {
+      this._snackBarOpen('名字不能为空，且不能大于 20 字符')
+      return
+    }
+    // 验证名字合格
+    for (let i = 0; i < this.state.name.length; i++) {
+      const str = this.state.name[i];
+      if (str === '@') {
+        this._snackBarOpen('名字不能有 @ 呢 ~_~')
+        return
+      }
+      if (str === ' ') {
+        this._snackBarOpen('名字不能有空格呢 -_-')
+        return
+      }
     }
 
-    getUsername(){
-        const usernameVal=window.event.target.value;
-        this.setState({
-            username:usernameVal
-        });
-    }
-    getBirthday(){
-        const ageVal=window.event.target.value;
-        this.setState({
-            age:ageVal
-        });
-    }
-    getSex(){
-        const sexVal=window.event.target.value;
-        this.setState({
-            sex:sexVal
-        });
-    }
-    getUserstate(){
-        const userstateVal=window.event.target.value;
-        this.setState({
-            userstate:userstateVal
-        });
-    }
-    componentDidMount(){
+    this.setState({ progressShow: true })
+    AV.User.current()
+      .set('name', this.state.name)
+      .set('bio', this.state.bio)
+      .set('blog', this.state.blog)
+      .save().then(result => {
+        this.setState({ progressShow: false })
+        this._snackBarOpen('保存成功 :)')
+      }).catch(error => {
+        this.setState({ progressShow: false })
+        if (error.code === 137) return this._snackBarOpen('名字重复了 :(')
+        this._snackBarOpen('讨厌，网络错误了')
+      })
+  }
+  // 验证邮箱
+  _emailVerify(e) {
+    this.setState({ progressShow: true })
+    AV.User
+      .requestEmailVerify(AV.User.current().getEmail())
+      .then(function (result) {
+        this.setState({ progressShow: false })
+        this._snackBarOpen('发送一封邮件, 请及时验证邮箱，及时验证邮箱，验证邮箱，重要说三遍啦')
+      }).catch(function (error) {
+        this.setState({ progressShow: false })
+        this._snackBarOpen('网络错啦')
+      })
+  }
+  // 更改密码
+  _upDataPassword(e) {
+    this.setState({ progressShow: true })
+    AV.User
+      .requestPasswordReset(AV.User.current().getEmail())
+      .then(function (success) {
+        this.setState({ progressShow: false })
+        this._snackBarOpen('请注意查收邮箱', 5000)
+      }).catch(function (error) {
+        this.setState({ progressShow: false })
+        this._snackBarOpen('网络错啦')
+      });
+  }
+  // 修改个人信息
+  _onChangebBio(e) {
+    this.setState({ bio: e.target.value })
+  }
+  // 修改博客
+  _onChangebBlog(e) {
+    this.setState({ blog: e.target.value })
+  }
+  // 授权页面
+  _buttonGithub(e) {
+    window.location.href = 'https://github.com/login/oauth/authorize?client_id=538a8b0fb32787b493c7&redirect_uri=http://vscode-china.com/oauth.html&state=' + AV.User.current().id
+  }
+  _open(e) {
+    this.setState({ show: true })
+  }
+  _close(e) {
+    this.setState({ show: false })
+  }
+  // 渲染 Dom
+  render() {
 
-        window.localStorage.setItem("username","");
-        window.localStorage.setItem("age","");
-        window.localStorage.setItem("sex","");
-        window.localStorage.setItem("userstate","");
-        avatar = new Mavatar({
-            el: '#avatar',
-            backgroundColor: '#ff6633'
-        });
-    }
-    handleReset = (e) => {
-        avatar.resetImage();
-    }
-    handleSubmit = (e) => {
-        avatar.upload({
-            url: 'http://localhost:3080/profile',
-            name: 'avatar',
-            success: function (data) {
-                console.log(data)
-            },
-            error: function (error) {
-                console.log(error)
-            }
-        });
-    }
-    LoginFetch(){
-        const _this = this;
-
-        const url = "http://localhost:8081/users/information";
-
-        var code;
-
-        let data = new URLSearchParams();
-        data.append('id',cookie.load('userId'));
-        data.append('name',_this.state.username);
-        data.append('age',_this.state.age);
-        data.append('sex',_this.state.sex);
-        data.append('signature',_this.state.userstate);
-        axios.put(url, data)
-            .then(function (response) {
-                // handle success
-                code = response.data;
-                console.log(code);
-                console.log(response);
-            })
-            .catch(function (error) {
-                // handle error
-                console.log(error);
-            })
-            .then(function () {
-                console.log(code);
-                switch (code) {
-                    //成功登录，跳转页面
-                    case false: alert("修改失败");break;
-                    case true: alert("修改成功");break;
-                }
-            });}
-
-    render() {
-        return(
-            <div>
-                <Particles
-                    id="config-1"
-                    config="新建文本文档.json"
-                    style={{
-                        width: "100%",
-                        height: "100%",
-                        backgroundColor: "white",
-                        opacity: "0.5",
-                        zIndex:"-99",
-
-                    }}
-
-                    className="particles-class-name"
-                />
-            <div style={{height:'751px',width:'70%',marginLeft:'15%',WebkitTapHighlightColor:'rgba(26,26,26,0)',boxShadow: '0 1px 3px rgba(26,26,26,1)'}}>
-                <form onSubmit={this.submit} style={{zIndex:'1'}}>
-                    <div className="form-group" style={{height:'180px'}}>
-                        <div>
-                            <div id="avatar" />
-                            <button onClick={this.handleSubmit}>上传</button>
-                            <button onClick={this.handleReset}>重置</button>
-                        </div>
-                        <input style={{marginTop:'-200px',height:'40px',textAlign:'middle',width:'40%',border:'0px',zIndex:'2',fontSize:'30px',backgroundColor:'transparent'}} type="text" id="8964" className="form-control" placeholder="请输入你的用户名" value={this.state.username} onChange={this.getUsername.bind(this)}/>
-                    </div>
-                    <hr style={{marginLeft:'150px',width:'85%',border:'1 solid #c0c0c0'}}/>
-                    <div className="form-group"style={{height:'180px'}}>
-                        <label style={{marginTop:'70px',height:'40px',marginLeft:'-475px',fontSize:'15px'}}>生日</label>
-                        <input style={{marginTop:'70px',height:'40px',border:'1px',marginLeft:'50px',backgroundColor:'transparent'}} type="text" className="form-control" placeholder="请输入你的生日"  value={this.state.age} onChange={this.getBirthday.bind(this)}/>
-                    </div>
-                    <hr style={{marginLeft:'150px',width:'85%',border:'1 solid #c0c0c0'}}/>
-                    <div className="form-group" style={{height:'180px'}}>
-                        <label style={{marginTop:'70px',height:'40px',marginLeft:'-475px',fontSize:'15px'}}>性别</label>
-                        <input style={{marginTop:'70px',height:'40px',border:'1px',marginLeft:'50px',backgroundColor:'transparent'}} type="text" className="form-control" placeholder="请输入你的性别" value={this.state.sex} onChange={this.getSex.bind(this)}/>
-                    </div>
-                    <hr style={{marginLeft:'150px',width:'85%',border:'1 solid #c0c0c0'}}/>
-                    <div className="form-group" style={{height:'180px'}}>
-                        <label style={{marginTop:'70px',height:'40px',marginLeft:'-475px',fontSize:'15px'}}>个人简介</label>
-                        <input style={{marginTop:'70px',height:'40px',border:'1px',marginLeft:'30px',backgroundColor:'transparent'}} type="text" className="form-control" placeholder="请输入你的用户简介" value={this.state.userstate} onChange={this.getUserstate.bind(this)}/>
-                    </div>
-                    <button type="button" className="submit_btn" style={{width:'100px',marginLeft:'450px',marginTop:'-38px'}}onClick={this.LoginFetch.bind(this)}>修改</button>
-                </form>
+    return (
+      <div>
+        <Header history={this.props.history} />
+        <div className="g-container me">
+          <Progress show={this.state.progressShow} />
+          <SnackBar open={this.state.snackBarOpen} content={this.state.content} />
+          <div className="content">
+            <h3>个人资料</h3>
+            {/* 头像 */}
+            {/* 邮箱 */}
+            <div className="cell">
+              <TextField
+                disabled
+                className="item"
+                value={this.state.email}
+                label={'邮箱: 用于登陆且不可更改, 没有关联 GitHub 的头像显示 Gravatar 头像'}
+              />
             </div>
+            {/* 名字 */}
+            <div className="cell">
+              <TextField
+                required
+                error={this.state.nameError}
+                className="item"
+                value={this.state.name}
+                label={this.state.nameError ? '昵称不能为空' : '昵称'}
+                onChange={this._onChangeName}
+              />
             </div>
+            {/* 个人主页 */}
+            <div className="cell">
+              <TextField
+                className="item"
+                value={this.state.blog}
+                label={'个人主页'}
+                onChange={this._onChangebBlog}
+              />
+            </div>
+            {/* github_url */}
+            <div className="cell">
+              <TextField
+                disabled
+                className="item"
+                value={this.state.github_url}
+                label={'GitHub 地址'}
+              />
+            </div>
+            {/* 介绍 */}
+            <div className="cell">
+              <TextField
+                multiline
+                rowsMax="4"
+                className="item"
+                value={this.state.bio}
+                label={'个人签名'}
+                onChange={this._onChangebBio}
+              />
+            </div>
+            <div className="cell">
+              <Button className="button" onClick={this._clickSave}>
+                保存
+            </Button>
+              <div className="divb">
+                <Button className="b" onClick={this._open}>
+                  GITHUB授权
+              </Button>
+                <Button className="b" onClick={this._emailVerify}>
+                  验证邮箱
+              </Button>
+                <Button className="b" onClick={this._upDataPassword}>
+                  修改密码
+              </Button>
+              </div>
+            </div>
+          </div>
 
-        )
+          {/* model */}
+          <Dialog
+            open={this.state.show}
+            onClose={this._close}
+          >
+            <DialogTitle >{"请注意，少部分人来说是危险操作"}</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                关联 GitHub 数据，同步昵称、GitHub 地址、个人主页、个性签名，最重的是当前的邮箱也会被 GitHub 绑定邮箱「 覆盖 」，则原来邮箱作废，用 GitHub 绑定邮箱登录。
+              <br /><br />
+                如果当前账户邮箱与 GitHub 绑定邮箱一致则不存在此问题 。
+            </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this._buttonGithub} >
+                授权更新
+            </Button>
+              <Button onClick={this._close} autoFocus>
+                取消
+            </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
+      </div>
+    )
+  }
+  _snackBarOpen(content, time = 2000) {
+    this.setState({ snackBarOpen: true, content: content })
+    setTimeout(() => {
+      this.setState({ snackBarOpen: false })
+    }, time)
+  }
+  // 父组建更新 Props 调用
+  componentWillReceiveProps(nextProps) {
 
-    }
+  }
+  // 更新 Props 或 State 则调用
+  shouldComponentUpdate(nextProps, nextState) {
+    return true
+  }
+  //在 Dom 更新之前调用
+  componentWillUpdate(nextProps, nextState) {
+
+  }
+  // 更新 Dom 结束后调用
+  componentDidUpdate() {
+
+  }
+  // 拆卸调用
+  componentWillUnmount() {
+
+  }
 }
+
+export default Me

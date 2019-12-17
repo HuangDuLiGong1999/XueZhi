@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { Button } from 'material-ui'
 import marked from 'marked' //解析 markdown
 import AV from "leancloud-storage"
-import md5 from 'blueimp-md5'
 import { Bottom, Good, Message, Read, Edid } from "../svg.js" //,Collection
 import ReactMarkdown from 'react-markdown'
 import Progress from "../progress"
@@ -16,43 +15,42 @@ class AtricleItem extends Component {
   constructor(props, context) {
     super(props)
 
-    const title = props.item.get('title')
+    console.log(props.item)
+    const userId = props.item.answer.authorId;
+    const title = props.item.title
     //从 marked 提取文本与图片地址
-    const markdown = marked(props.item.get('data'))
+    const markdown = marked(props.item.answer.description)
     const data = markdown.replace(/<[^>]+>/g, '').replace(/&.+?;/g, ' ').substring(0, 150) + '...'
-    const imgObj = props.item.get('data').match(/!\[(.*?)\]\((.*?)\)/) || []
-    const imgUrl = imgObj.length >= 2 ? imgObj[2] : ''
-
-    let likeBool = false
-    if (props.item.get('likeUsers') && props.item.get('likeUsers').split(',').indexOf(AV.User.current() && AV.User.current().id) !== -1) {
-      likeBool = true
-    }
-    const messageCount = this.props.item.get('messageCount')
-    let headUrl = props.item.get('user').get('avatar') || 'https://secure.gravatar.com/avatar/' + md5(props.item.get('user').get('email')) + '?s=140*140&d=identicon&r=g'
-
-    let showRead, messagesShow, isEdid, full
+    const markSource = data;
+    //
+    let likeBool = false;
+    // if (props.item.get('likeUsers') && props.item.get('likeUsers').split(',').indexOf(AV.User.current() && AV.User.current().id) !== -1) {
+    //   likeBool = true
+    // }
+    // const messageCount = this.props.item.get('messageCount')
+    // let headUrl = props.item.get('user').get('avatar') || 'https://secure.gravatar.com/avatar/' + md5(props.item.get('user').get('email')) + '?s=140*140&d=identicon&r=g'
+    //
+    let showRead, messagesShow, full;
     // 单独页面，默认都打开
     if (this.props.skip) {
       showRead = true
       messagesShow = true
       full = true
     }
-    if (AV.User.current() && AV.User.current().id === props.item.get('user').id){
-        isEdid = true
-    }
+
     this.state = {
       title,
+      userId,
       data,
-      imgUrl,
-      markSource: props.item.get('data'),
-      like: props.item.get('like'),
+      markSource,
+      like: 0,
       likeBool,
-      messageCount,
-      headUrl,
+      messageCount: 0, //评论条数
+      headUrl: "https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3489753539,2528035229&fm=111&gp=0.jpg", //头像图片url
       showRead,
       messagesShow,
-      isEdid,
-      full
+      full,
+      tag: "问答"
     }
 
     this._clickRead = this._clickRead.bind(this)
@@ -69,58 +67,47 @@ class AtricleItem extends Component {
   render() {
 
     return (
-      <div className="atricleItem">
-        <Progress show={this.state.progressShow} />
-        <SnackBar open={this.state.snackBarOpen} content={this.state.content} />
-        {/* 简介 */}
-        <div>
-          <span className="span">{this.props.item.get('tag')}</span>
-        </div>
-        {/* 用户信息 */}
-        <div className="user">
-          <div className="left">
-            <img className="headimg" src={this.state.headUrl} alt="header" />
-            <Link className="name" to="/"> {this.props.item.get('user').get('name')} </Link>
-            <a className="github" style={{ display: this.props.item.get('user').get('github_url') ? '' : 'none' }}
-              href={this.props.item.get('user').get('github_url')}>
-              GitHub
-            </a>
+        <div className="atricleItem">
+          <Progress show={this.state.progressShow} />
+          <SnackBar open={this.state.snackBarOpen} content={this.state.content} />
+          {/* 简介 */}
+          <div>
+            <span className="span">{this.state.tag}</span>
           </div>
-          <div className="time">
-            {this._getDateDiff(this.props.item.createdAt)}
+          {/* 用户信息 */}
+          <div className="user">
+            <div className="left">
+              < img className="headimg" src={this.state.headUrl} alt="header" />
+              <Link className="name" to="/"> {this.state.userId} </Link>
+            </div>
+            <div className="time">
+              {this.props.item.answer.updateTime}
+            </div>
           </div>
-        </div>
-        {/* 标题 */}
-        <h1 className="h1">{this.state.title}</h1>
-        {/* 内容 */}
-        <div className="content">
-          <div className="img" style={{ display: this.state.imgUrl && !this.state.showRead ? '' : 'none', backgroundImage: "url(" + this.state.imgUrl + ")" }}> </div>
-          {this._readInfo()}
-        </div>
-        {/* 按钮工具 */}
-        <div className="tool">
-          <Button className={this.state.likeBool ? "button buttonBlue " : "button button-border"} onClick={this._clickGood}>
-            <Good className={this.state.likeBool ? "g-color-white-fill" : "g-color-gray-fill"} />&nbsp; {this.state.like} 赞
-              </Button>
+          {/* 标题 */}
+          <h1 className="h1">{this.state.title}</h1>
+          {/* 内容 */}
+          <div className="content">
+            {this._readInfo()}
+          </div>
+          {/* 按钮工具 */}
+          <div className="tool">
+            <Button className={this.state.likeBool ? "button buttonBlue " : "button button-border"} onClick={this._clickGood}>
+              <Good className={this.state.likeBool ? "g-color-white-fill" : "g-color-gray-fill"} />&nbsp; {this.state.like} 赞
+            </Button>
 
-          <Button className="button" onClick={this._clickMessage}>
-            <Message className="g-color-gray-fill" />&nbsp; {this.state.messagesShow ? '收起评论' : this.state.messageCount + ' 条评论'}
-          </Button>
+            <Button className="button" onClick={this._clickMessage}>
+              <Message className="g-color-gray-fill" />&nbsp; {this.state.messagesShow ? '收起评论' : this.state.messageCount + ' 条评论'}
+            </Button>
 
-          {/* <Button className="button" onClick={this._clickCollection}>
-            <Collection className="g-color-gray-fill" />&nbsp; 收藏
-              </Button> */}
-          <Button className="button reply-butoon" onClick={this._clickSkitRead} style={{ display: this.state.full ? 'none' : '' }}>
-            <Read className="g-color-gray-fill" />&nbsp; 全屏阅读
-              </Button>
+            <Button className="button reply-butoon" onClick={this._clickSkitRead} style={{ display: this.state.full ? 'none' : '' }}>
+              <Read className="g-color-gray-fill" />&nbsp; 全屏阅读
+            </Button>
 
-          <Button className="button reply-butoon" onClick={this._clickSkitEdid} style={{ display: this.state.isEdid ? '' : 'none' }}>
-            <Edid className="g-color-gray-fill" />&nbsp; 编辑文章
-              </Button>
-          {this._cloneButton()}
+            {this._cloneButton()}
+          </div>
+          <this.props.MessageChildren messagesShow={this.state.messagesShow} item={this.props.item} messageSend={this._messageSend} />
         </div>
-        <this.props.MessageChildren messagesShow={this.state.messagesShow} item={this.props.item} messageSend={this._messageSend} />
-      </div>
     )
   }
   // 展示信息
@@ -134,7 +121,7 @@ class AtricleItem extends Component {
         {this.state.data}
         <Button className="button read" >
           阅读全文 &nbsp;
-            <Bottom className="g-color-gray-fill" />
+          <Bottom className="g-color-gray-fill" />
         </Button>
       </div>)
     }
@@ -142,12 +129,12 @@ class AtricleItem extends Component {
   _cloneButton() {
     if (this.state.showRead) {
       return (
-        <div className="right-button">
-          <Button className="button" onClick={this._clickRead}>
-            收起 &nbsp;
-            <Bottom className="g-color-gray-fill button-transform" />
-          </Button>
-        </div>
+          <div className="right-button">
+            <Button className="button" onClick={this._clickRead}>
+              收起 &nbsp;
+              <Bottom className="g-color-gray-fill button-transform" />
+            </Button>
+          </div>
       )
     }
   }
@@ -189,52 +176,15 @@ class AtricleItem extends Component {
   }
   // 展开评论
   _clickMessage(e) {
-    const messagesShow = !this.state.messagesShow
+    const messagesShow = !this.state.messagesShow;
     this.setState({ messagesShow })
   }
-  // 收藏
-  // _clickCollection(e) {
-  //   console.log('-----收藏')
-  // }
+
   // 阅读
   _clickSkitRead(e) {
     this.props.history.push('/read/' + this.props.item.id)
   }
-  _getDateDiff(dateTimeStamp) {
-    const minute = 1000 * 60
-    const hour = minute * 60
-    const day = hour * 24
-    const month = day * 30
-    const now = new Date().getTime()
-    const diffValue = now - dateTimeStamp
-    if (diffValue < 0) return
-    const monthC = diffValue / month
-    const weekC = diffValue / (7 * day)
-    const dayC = diffValue / day
-    const hourC = diffValue / hour
-    const minC = diffValue / minute
 
-    if (monthC >= 1) {
-      return parseInt(monthC, 10) + "月前"
-    }
-    else if (weekC >= 1) {
-      return parseInt(weekC, 10) + "周前"
-    }
-    else if (dayC >= 1) {
-      return parseInt(dayC, 10) + "天前"
-    }
-    else if (hourC >= 1) {
-      return parseInt(hourC, 10) + "小时前"
-    }
-    else if (minC >= 1) {
-      return parseInt(minC, 10) + "分钟前"
-    } else {
-      return "刚刚"
-    }
-  }
 }
 
 export default AtricleItem
-
-
-//https://secure.gravatar.com/avatar/3a1e5cac75ad5e0a710e828fa2f433bd?s=50*50

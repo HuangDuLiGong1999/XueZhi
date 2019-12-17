@@ -70,11 +70,11 @@ public class QAApplication {
         List<Question> questionList = qaRepository.getPublicQuestions();
         List<Map<String, Object>> mapList = new ArrayList<>();
         Random random = new Random();
-        for (int i = 0; i < 2; i++){
-            int index = random.nextInt(questionList.size() - 1);
+        for (int i = 0; i < 4; i++){
+            int index = random.nextInt(questionList.size());
             Question question = questionList.get(index);
             while (question.getAnswerList().size() == 0){
-                index = random.nextInt(questionList.size() - 1);
+                index = random.nextInt(questionList.size());
                 question = questionList.get(index);
             }
             String questionId = question.getQuestionId();
@@ -85,7 +85,7 @@ public class QAApplication {
                 answer = answerList.get(0);
             }
             else {
-                int answerIndex = random.nextInt(answerList.size() - 1);
+                int answerIndex = random.nextInt(answerList.size());
                 answer = answerList.get(answerIndex);
             }
             Map<String, Object> map = new HashMap<>();

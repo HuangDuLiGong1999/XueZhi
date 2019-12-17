@@ -62,7 +62,7 @@ class Write extends Component {
     let data = new URLSearchParams();
     data.append('title',this.state.title);
     data.append('description',editor.state.editor.txt.html());
-    data.append('askerId',"5dcd36b4789ab28c4fa31458");
+    data.append('askerId',"test");
     let school = "";
     if(!this.state.option)school = "public";
     data.append('school',school);//todo

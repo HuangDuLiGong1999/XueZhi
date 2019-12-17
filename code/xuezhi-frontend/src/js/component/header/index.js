@@ -31,12 +31,10 @@ class Header extends Component {
       <header className="header">
         <div className="g-container container">
           <div className="left">
-            <Link className="logo" to="/"> VSCodeChina </Link>
+            <Link className="logo" to="/"> 学知 </Link>
             <nav>
-              <Button className="button"><NavLink exact to="/" className="g-color-gray a" activeClassName="selected"> 全部 </NavLink></Button>
-              <Button className="button"><NavLink to="/精华" className="g-color-gray a" activeClassName="selected"> 精华 </NavLink></Button>
-              <Button className="button"><NavLink to="/分享" className="g-color-gray a" activeClassName="selected"> 分享 </NavLink></Button>
-              <Button className="button"><NavLink to="/问答" className="g-color-gray a" activeClassName="selected"> 问答 </NavLink></Button>
+              <Button className="button"><NavLink exact to="/" className="g-color-gray a" activeClassName="selected"> 首页 </NavLink></Button>
+              <Button className="button"><NavLink to="/问答" className="g-color-gray a" activeClassName="selected"> 我的校园 </NavLink></Button>
             </nav>
           </div>
           {this._userShow()}
