@@ -1,0 +1,76 @@
+.login1 {
+    position: absolute;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.login1 .box{
+    padding: 50px 0;
+    max-height: 700px;
+    max-width: 400px;
+    width: 80%;
+    display: flex;
+    box-sizing: border-box;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(26,26,26,.1);
+    background: #fff;
+    align-items: center;
+    flex-direction: column;
+}
+
+.login1 .box h1 {
+    margin: 0;
+    text-align: center;
+    cursor: pointer;
+}
+
+.login1 .box .item {
+    width: 80%;
+    margin-top: 20px;
+}
+
+.login1 .box .item {
+    width: 80%;
+    margin-top: 20px;
+}
+
+.login1 .box .itemButton {
+    display: flex;
+    width: 80%;
+    margin-top: 30px;
+    justify-content: space-between;
+}
+
+.login1 .box .itemButton .button{
+    padding: 0;
+    width: 45%;
+}
+
+.login1 .box .itemButton .blue{
+    color: #fff;
+    background: #0f88eb;    
+}
+
+.login1 .box  .buttonGithub{
+    margin-top: 30px;
+    padding: 0;
+    width: 80%;   
+}
+
+.login1 .box  .buttonGithub-blue{
+    margin-top: 30px;
+    padding: 0;
+    width: 80%;
+    color: #fff;
+    background: #0f88eb;
+}
+
+
+.login1 .box  .findPsw{
+    margin-top: 30px;
+    padding: 0;
+    width: 80%; 
+}

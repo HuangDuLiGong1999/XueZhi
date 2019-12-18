@@ -29,7 +29,7 @@ public class UserRepositoryImpl implements UserRepository {
         user.setName("");
         user.setSex("");
         user.setTelephone("");
-        user.setUniversity("");
+        user.setUniversity("public");
         user.setSignature("");
         userRepositor.save(user);
     }

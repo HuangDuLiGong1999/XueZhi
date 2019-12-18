@@ -3,24 +3,23 @@ import { TextField, Button } from 'material-ui'
 import AV from "leancloud-storage"
 import Progress from "../component/progress"
 import SnackBar from "../component/snackbar"
-
+import { Redirect } from 'react-router-dom'
 import "./login.css"
+import axios from "axios";
+import cookie from "react-cookies"
 
 class Login extends Component {
   // 加载一次，初始化状态
   constructor(props, context) {
     super(props)
-    this.state = {}
+    this.state = {university:""}
 
     this._clickLogin = this._clickLogin.bind(this)
-    this._clicRegister = this._clicRegister.bind(this)
+    this._onBlur = this._onBlur.bind(this)
+    this._backHom = this._backHom.bind(this)
+    this._RegisterClick=this._RegisterClick.bind(this)
     this._onChangeMail = this._onChangeMail.bind(this)
     this._onChangePassword = this._onChangePassword.bind(this)
-    this._onGitHub = this._onGitHub.bind(this)
-    this._onBlur = this._onBlur.bind(this)
-    this._findPsw = this._findPsw.bind(this)
-    this._findSend = this._findSend.bind(this)
-    this._backHom = this._backHom.bind(this)
   }
   // 加载一次，Dom 未加载
   componentWillMount() {
@@ -30,73 +29,46 @@ class Login extends Component {
   componentDidMount() {
 
   }
+  _RegisterClick(e){
+    this.props.history.push("/login1");
+  }
   // 登陆
   _clickLogin(e) {
-    this.setState({ progressShow: true })
-    const mail = this.state.mail
-    const password = this.state.password
-    AV.User.logIn(mail, password).then(loginedUser => {
-      this.props.history.push('/')
-    }).catch(error => {
-      console.log(error)
-      this.setState({ progressShow: false })
-      if (error.code === 211) return this._snackBarOpen('没有找到邮箱～')
-      if (error.code === 210) return this._snackBarOpen('密码错误，你好好想想～')
-      return this._snackBarOpen('网络有些问题耶～')
-    })
-  }
-  // 注册
-  _clicRegister(e) {
-    if (!this.state.buttonLogin) {
-      this._snackBarOpen('请在本页面填写「账号」与「密码」再点击注册啦～', 5000)
-      return
-    }
-    this.setState({ progressShow: true })
-    const mail = this.state.mail
-    const password = this.state.password
-    const user = new AV.User()
-    user.setUsername(mail)
-    user.setEmail(mail)
-    user.setPassword(password)
-    user.set('name', mail.split('@')[0])
-    user.signUp().then(loginedUser => {
-      this.props.history.push('/')
-    }).catch(error => {
-      this.setState({ progressShow: false })
-      if (error.code === 203)
-        return this._snackBarOpen('邮箱已被注册，是不是你忘记密码了？')
-      if (error.code === 125)
-        return this._snackBarOpen('电子邮箱地址无效，不要骗我')
-      return this._snackBarOpen('网络有些问题～')
-    })
-  }
-  // 切换找回密码与登陆界面
-  _findPsw(e) {
-    this.setState({ findPsw: !this.state.findPsw })
-  }
-  // 根据邮箱找回密码
-  _findSend() {
-    const mail = this.state.mail
-    if (!mail) {
-      return this._snackBarOpen('请输入邮箱')
-    }
-    this.setState({ progressShow: true })
-    AV.User
-      .requestPasswordReset(mail)
-      .then(success => {
-        this.setState({ progressShow: false })
-        this._snackBarOpen('发送一封邮件, 请及时验证邮箱，及时验证邮箱，验证邮箱，重要说三遍啦', 5000)
-      }).catch(error => {
-        this.setState({ progressShow: false })
-        if (error.code === 1)
-          return this._snackBarOpen('15 分钟后再试啦～')
-        if (error.code === 205)
-          return this._snackBarOpen('找不到电子邮箱地址，别骗我啦')
-        return this._snackBarOpen('网络异常，网络又不好了')
-      })
-  }
-  _onGitHub(e) {
-    window.location.href = 'https://github.com/login/oauth/authorize?client_id=538a8b0fb32787b493c7&redirect_uri=http://vscode-china.com/oauth.html'
+    this.setState({ progressShow: true });
+    let _this = this;
+    let data = new URLSearchParams();
+    data.append('email',this.state.mail);
+    data.append('password',this.state.password);
+    const url = "http://localhost:8081/login";
+    var code;
+    axios.post(url, data)
+        .then(function (response) {
+          // handle success
+          code = response.data;
+          console.log(code);
+          console.log(response);
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        })
+        .then(function () {
+          console.log(code);
+          switch (code.status) {
+              //成功登录，跳转页面
+            case false:alert("登陆失败");break;
+            case true:
+              alert("登陆成功");
+              let date = new Date();
+              var user=code.user;
+              date.setTime(date.getTime() + (7 * 24 * 60 * 60 * 1000));
+              console.log(user.university);
+              cookie.save('userId', user.id, { expires: date ,path: '/' ,'university':user.university});
+              _this.props.history.push('./me');
+              break;
+            default: alert("请输入邮箱和密码");break;
+          }
+        });
   }
   _onChangeMail(e) {
     this.setState({ mail: e.target.value })
@@ -176,35 +148,10 @@ class Login extends Component {
           <Button disabled={!this.state.buttonLogin} className={!this.state.buttonLogin ? 'button' : 'button blue'} onClick={this._clickLogin}>
               登陆
           </Button>
-          <Button className="button" onClick={this._clicRegister}>
+          <Button className="button" onClick={this._RegisterClick}>
               注册
           </Button>
           </div>
-          <Button className={this.state.buttonLogin ? 'buttonGithub' : 'buttonGithub-blue'} onClick={this._onGitHub}>
-            GitHub 授权登陆
-          </Button>
-          <Button className="findPsw" onClick={this._findPsw}>
-            找回密码
-          </Button>
-        </div>
-
-        <div className="box" style={this.state.findPsw ? visibleStyle : hiddenStyle}>
-          <h1>VSCodeChina</h1>
-          <TextField
-            required
-            error={this.state.buttonMailError}
-            className="item"
-            label={this.state.buttonMailError ? '不是合法邮箱' : '邮箱'}
-            onChange={this._onChangeMail}
-            onBlur={this._onBlur}
-          />
-          {/* 按钮 */}
-          <Button className="buttonGithub" onClick={this._findSend}>
-            发送邮件
-          </Button>
-          <Button className="findPsw" onClick={this._findPsw}>
-            返回
-          </Button>
         </div>
       </div>
     )

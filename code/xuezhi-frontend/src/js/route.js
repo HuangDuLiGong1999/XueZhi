@@ -14,6 +14,7 @@ import Atricle from "./atricle"
 import Notice from "./notice"
 import Question from "./question";
 import College from "./college";
+import Login1 from "./login1";
 
 class App extends Component {
   render() {
@@ -23,6 +24,8 @@ class App extends Component {
           <Switch>
             {/* 登陆 */}
             <Route exact path="/login" component={Login} />
+            {/*注册*/}
+            <Route exact path="/login1" component={Login1} />
             {/* 自己信息设置 */}
             <Route exact path="/me" component={Me} />
             <Route exact path="/college" component={College}/>
