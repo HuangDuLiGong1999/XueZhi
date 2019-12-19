@@ -1,3 +1,49 @@
-.read{
-  padding-top: 60px
+.head{
+  position: absolute;
+  height:40%;
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 1px 3px 0 rgba(0,34,77,.1);
+}
+.head .questionTitle{
+  position: absolute;
+  top:55px;
+  height: 20%;
+  left:28%;
+  width:44%;
+}
+.head .buttonList{
+  position: absolute;
+  height: 5%;
+  bottom: 15%;
+  left:28%;
+  width:44%;
+}
+
+.head .buttonList .answer{
+  margin: 0 10px;
+  padding: 10px 20px;
+  min-width: 0;
+  height: 30px;
+  background: #0084ff;
+  color: white;
+}
+
+.answerList{
+  position: absolute;
+  width:44%;
+  left:28%;
+  top:42%;
+}
+.editor{
+  background: white;
+}
+.editor .submitAnswer{
+  margin: 10px 5px;
+  padding: 10px 20px;
+  min-width: 0;
+  height: 30px;
+  background: #0084ff;
+  color: white;
+  float:right;
 }

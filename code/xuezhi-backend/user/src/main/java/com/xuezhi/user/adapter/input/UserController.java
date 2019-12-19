@@ -45,9 +45,10 @@ public class UserController {
         return true;
     }
 
-    @PutMapping("/avatar")
+    @PostMapping("/avatar")
     public boolean setAvatar(@RequestParam String id, @RequestParam MultipartFile multipartFile){
         //todo
+        System.out.println(id);
         usersApplication.setAvatar(id, multipartFile);
         return true;
     }

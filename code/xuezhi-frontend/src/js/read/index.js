@@ -1,85 +1,109 @@
-import React, { Component } from 'react'
-import AV from "leancloud-storage"
-import Progress from "../component/progress"
-import SnackBar from "../component/snackbar"
-import Header from "../component/header"
-import AtricleItem from "../component/atricleItem"
-import Message from "../component/message"
+import React from "react";
+import {Button} from "material-ui"
+import axios from "axios";
+import Editor from "../component/editor";
+import AnswerItem from "../component/answerItem";
 
 import "./read.css"
-
-
-class Read extends Component {
-  // 加载一次，初始化状态
-  constructor(props, context) {
+import Message from "../component/message";
+import Header from "../component/header";
+class Question extends React.Component{
+  constructor(props, context){
     super(props)
+    const{questionId} = this.props.match.params
+    this.state = {
+      questionId,
+      title:'',
+      description:'',
+      items:[]
+    }
 
-    const { atricleId } = this.props.match.params
-    this.state = { atricleId }
+    this._answerClick = this._answerClick.bind(this)
+    this._submitAnswerClick = this._submitAnswerClick.bind(this)
   }
-  // 加载一次，Dom 未加载
+
   componentWillMount() {
-    const { atricleId } = this.state
-    this.setState({ progressShow: true })
 
-    // 查询文章
-    const query = new AV.Query('Atricle')
-    query.include('user')
-    query.get(atricleId).then((item) => {
-      this.setState({
-        item,
-        progressShow: false
-      })
-    }).catch((error) => {
-      this._snackBarOpen('讨厌，网络错误了')
-      this.setState({ progressShow: false })
-    })
-  }
-  // 加载一次，这里 Dom 已经加载完成
-  componentDidMount() {
+    const url = "http://localhost:8087/question/"+ this.state.questionId
 
-  }
-  // 渲染 Dom
-  render() {
-    const atricleItem = this.state.item ? <AtricleItem history={this.props.history}  skip={true} item={this.state.item} MessageChildren={Message} /> : ''
-    return (
-      <div>
-        <Header history={this.props.history} />
-        <div className="g-container read">
-          <Progress show={this.state.progressShow} />
-          <SnackBar open={this.state.snackBarOpen} content={this.state.content} />
-          {atricleItem}
-        </div>
-      </div>
+    var _this = this;
+
+    var data;
+    axios.get(url).then(function (response) {
+      data = response.data;
+      console.log(data)
+    }).catch(function (e) {
+      alert(e);
+    }).then(
+        function(){
+          _this.setState({
+            title:data.title,
+            description:data.description,
+            items:data.answerList
+          })
+          console.log(_this.state)
+        }
+
     )
-  }
-  _snackBarOpen(content, time = 2000) {
-    this.setState({ snackBarOpen: true, content: content })
-    setTimeout(() => {
-      this.setState({ snackBarOpen: false })
-    }, time)
-  }
-  // 父组建更新 Props 调用
-  componentWillReceiveProps(nextProps) {
+
 
   }
-  // 更新 Props 或 State 则调用
-  shouldComponentUpdate(nextProps, nextState) {
-    return true
+
+  componentDidMount() {
+    var editor = this.refs.editor;
+    editor.style.display = "none"
   }
-  //在 Dom 更新之前调用 
-  componentWillUpdate(nextProps, nextState) {
+
+  _answerClick(e){
+    var editor = this.refs.editor;
+    editor.style.display = ""
+  }
+
+  _submitAnswerClick(e){
+    var editor = this.refs.editorContext;
+    var answer = editor.state.editor.txt.html();
+    const url = "http://localhost:8087/qa/answers"
+    let data = new URLSearchParams();
+    data.append('questionId',this.state.questionId);
+    data.append('authorId',"testAuthor"); //todo
+    data.append('description',answer);
+
+    axios.post(url,data).then(function (response) {
+      alert("submit success");
+    }).catch(function (e) {
+      alert(e);
+    })
 
   }
-  // 更新 Dom 结束后调用
-  componentDidUpdate() {
 
-  }
-  // 拆卸调用
-  componentWillUnmount() {
+  render() {
+    const answerItems = this.state.items.map((item, index) =>
+        <AnswerItem key={item.id} history={this.props.history} item={item} MessageChildren={Message} />
+    )
+    return(
+        <div>
+          <Header history={this.props.history} />
+          <div className="head">
+            <div className="questionTitle">
+              <h1>{this.state.title}</h1>
+              <div dangerouslySetInnerHTML={{__html: this.state.description}} />
+            </div>
+            <div className="buttonList">
+              <Button className="answer" onClick={this._answerClick}>我也说一句</Button>
+            </div>
+          </div>
+          <div className="answerList">
+            <div ref="editor" className="editor">
+              <Editor ref="editorContext" />
+              <Button className="submitAnswer" onClick={this._submitAnswerClick}>提交回答</Button>
+            </div>
+            {answerItems}
+          </div>
 
+        </div>
+
+    )
   }
 }
 
-
-export default Read
+export default Question

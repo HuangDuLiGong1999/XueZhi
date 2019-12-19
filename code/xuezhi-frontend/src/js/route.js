@@ -30,15 +30,15 @@ class App extends Component {
             <Route exact path="/me" component={Me} />
             <Route exact path="/college" component={College}/>
             {/* 通知页面 */}
-            <Route exact path="/notice" component={Notice} />            
-            {/* 单文章展示 */}
-            <Route exact path="/read/:atricleId?" component={Read} />
+            <Route exact path="/notice" component={Notice} />
             {/* 个人文章展示 */}
             <Route exact path="/atricle/:userId?" component={Atricle} />
             {/* 写文章界面 */}
             <Route exact path="/write/:atricleId?" component={Write} />
             {/*问题详情界面*/}
             <Route exact path="/question/:questionId?" component={Question}/>
+            {/* 单文章展示 */}
+            <Route exact path="/read/:questionId?" component={Read} />
             {/* 主页文章列表 */}
             <Route exact path="/:page?" component={Home} />
           </Switch>

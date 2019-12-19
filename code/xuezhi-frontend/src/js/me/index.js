@@ -7,6 +7,8 @@ import Header from "../component/header"
 import "./me.css"
 import axios from 'axios'
 import cookie from 'react-cookies'
+import Mavatar from 'mavatar'
+let avatar;
 
 class Me extends Component {
   // 加载一次，初始化状态
@@ -29,13 +31,41 @@ class Me extends Component {
     this._onChangeUserstate = this._onChangeUserstate.bind(this)
     this._open = this._open.bind(this)
     this._close = this._close.bind(this)
+    this._handleReset = this._handleReset.bind(this)
+    this._handleClip = this._handleClip.bind(this)
+    this._picture = this._picture.bind(this)
   }
   // 加载一次，Dom 未加载
   componentWillMount() {
   }
   // 加载一次，这里 Dom 已经加载完成
   componentDidMount() {
-
+    avatar = new Mavatar({
+      el: '#avatar',
+      backgroundColor: '#ffffff'
+    });
+  }
+  _handleClip = (e) => {
+    avatar.imageClipper((dataurl) => {
+      console.log(dataurl);
+    });
+  }
+  _handleReset = (e) => {
+    avatar.resetImage();
+  }
+  _picture(e){
+    avatar.upload({
+      url: 'http://localhost:8081/users/avatar',
+      name: 'multipartFile',
+      data: {id: cookie.load('userId')},
+      success: function (data) {
+        console.log(data);
+        alert("上传成功！")
+      },
+      error: function (error) {
+        console.log(error)
+      }
+    });
   }
   _onChangeName(e) {
     this.setState({ name: e.target.value })
@@ -128,7 +158,12 @@ class Me extends Component {
               <h3>个人资料</h3>
               {/* 头像 */}
               {/* 邮箱 */}
-
+              <div>
+                <div id="avatar" />
+                <button onClick={this._handleClip}>裁剪</button>
+                <button onClick={this._handleReset}>重置</button>
+                <button onClick={this._picture}>上传</button>
+              </div>
               {/* 名字 */}
               <div className="cell">
                 <TextField
