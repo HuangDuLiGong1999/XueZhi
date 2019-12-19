@@ -75,17 +75,17 @@ public class UserController {
         usersApplication.updateHistory(id, questionId);
     }
 
-    @PostMapping("/question")
+    @PostMapping("/questions")
     public void addQuestionId(@RequestParam String id, @RequestParam String questionId){
         usersApplication.addQuestionId(id, questionId);
     }
 
-    @GetMapping("/question/{id}")
+    @GetMapping("/questions/{id}")
     public List<String> getQuestionId(@PathVariable(value = "id") String id){
         return usersApplication.getQuestionId(id);
     }
 
-    @DeleteMapping("/question")
+    @DeleteMapping("/questions")
     public void deleteQuestionId(@RequestParam String id, @RequestParam String questionId){
         usersApplication.deleteQuestionId(id, questionId);
     }

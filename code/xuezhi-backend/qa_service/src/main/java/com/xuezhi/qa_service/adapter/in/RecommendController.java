@@ -21,15 +21,6 @@ public class RecommendController {
         this.qaApplication = qaApplication;
     }
 
-    /*
-    @GetMapping("/recommands")
-    public List<General> getRecommands()
-    {
-        return null;
-    }
-
-    */
-
     @GetMapping("/recommends/{university}")
     public List<Map<String, Object>> getRecommends(@PathVariable(value = "university") String university) throws IOException {
         return qaApplication.getRecommends(university);
