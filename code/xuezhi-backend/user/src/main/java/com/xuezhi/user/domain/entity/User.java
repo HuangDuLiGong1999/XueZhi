@@ -22,7 +22,6 @@ public class User {
     private String sex;
     private String university;
     private Binary avatar;
-    private Binary verImage;
     private List<History> historyList;
     private List<String> questionIdList;
 
@@ -116,14 +115,6 @@ public class User {
 
     public void setAvatar(Binary avatar) {
         this.avatar = avatar;
-    }
-
-    public Binary getVerImage() {
-        return verImage;
-    }
-
-    public void setVerImage(Binary verImage) {
-        this.verImage = verImage;
     }
 
     public List<History> getHistoryList() {

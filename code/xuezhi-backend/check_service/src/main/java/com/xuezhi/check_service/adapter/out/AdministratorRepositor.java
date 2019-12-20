@@ -1,10 +1,8 @@
-package com.xuezhi.user.adapter.output;
+package com.xuezhi.check_service.adapter.out;
 
-import com.xuezhi.user.domain.entity.Administrator;
+import com.xuezhi.check_service.domain.entity.Administrator;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface AdministratorRepositor extends MongoRepository<Administrator, String> {
-    Administrator findAdministratorById(String id);
-
     Administrator findAdministratorByNameAndPassword(String name, String password);
 }

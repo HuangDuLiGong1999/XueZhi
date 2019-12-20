@@ -1,8 +1,6 @@
 package com.xuezhi.qa_service.adapter.in;
 
 import com.xuezhi.qa_service.application.QAApplication;
-import com.xuezhi.qa_service.domain.entity.General;
-import com.xuezhi.qa_service.domain.entity.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

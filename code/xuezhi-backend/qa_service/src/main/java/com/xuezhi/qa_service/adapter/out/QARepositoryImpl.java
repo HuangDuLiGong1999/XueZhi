@@ -1,6 +1,5 @@
 package com.xuezhi.qa_service.adapter.out;
 
-import com.alibaba.fastjson.support.odps.udf.CodecCheck;
 import com.xuezhi.qa_service.domain.entity.Answer;
 import com.xuezhi.qa_service.domain.entity.Comment;
 import com.xuezhi.qa_service.domain.entity.Question;

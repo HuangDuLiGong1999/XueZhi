@@ -3,7 +3,6 @@ package com.xuezhi.user.adapter.input;
 
 import com.xuezhi.user.application.UsersApplication;
 import com.xuezhi.user.domain.entity.User;
-import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -47,7 +46,6 @@ public class UserController {
 
     @PostMapping("/avatar")
     public boolean setAvatar(@RequestParam String id, @RequestParam MultipartFile multipartFile){
-        //todo
         System.out.println(id);
         usersApplication.setAvatar(id, multipartFile);
         return true;

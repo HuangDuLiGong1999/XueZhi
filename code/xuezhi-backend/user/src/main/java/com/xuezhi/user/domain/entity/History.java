@@ -1,6 +1,5 @@
 package com.xuezhi.user.domain.entity;
 
-import java.util.Date;
 
 public class History {
     private String id;

@@ -1,6 +1,5 @@
 package com.xuezhi.user.application;
 
-import com.xuezhi.user.domain.entity.History;
 import com.xuezhi.user.domain.entity.User;
 import com.xuezhi.user.domain.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +11,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 @Component

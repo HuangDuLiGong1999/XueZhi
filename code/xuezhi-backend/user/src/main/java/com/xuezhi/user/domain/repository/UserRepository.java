@@ -27,9 +27,6 @@ public interface UserRepository {
     //显示头像
     Binary getAvatar(String id);
 
-    //上传证件照
-    void verify(String id, MultipartFile multipartFile);
-
     //修改密码
     void modifyPassword(String id, String password);
 

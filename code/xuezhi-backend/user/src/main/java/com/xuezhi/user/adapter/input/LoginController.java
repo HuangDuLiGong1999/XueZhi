@@ -1,7 +1,5 @@
 package com.xuezhi.user.adapter.input;
 
-
-import com.xuezhi.user.application.AdministratorApplication;
 import com.xuezhi.user.application.UsersApplication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,12 +13,9 @@ import java.util.Map;
 public class LoginController {
     private UsersApplication usersApplication;
 
-    private AdministratorApplication administratorApplication;
-
     @Autowired
-    public LoginController(UsersApplication usersApplication, AdministratorApplication administratorApplication) {
+    public LoginController(UsersApplication usersApplication) {
         this.usersApplication = usersApplication;
-        this.administratorApplication = administratorApplication;
     }
 
     @PostMapping
@@ -37,17 +32,4 @@ public class LoginController {
         }
     }
 
-    @PostMapping("/administrator")
-    public Map<String, Object> checkAdministrator(@RequestParam String name, @RequestParam String password){
-        Map<String, Object> map = new HashMap<>(3);
-        if (!(administratorApplication.getAdministratorByNameAndPassword(name, password) == null)){
-            map.put("status", true);
-            map.put("administrator", administratorApplication.getAdministratorByNameAndPassword(name, password));
-            return map;
-        }
-        else {
-            map.put("status", false);
-            return map;
-        }
-    }
 }

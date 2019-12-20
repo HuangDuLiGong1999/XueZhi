@@ -1,6 +1,5 @@
 package com.xuezhi.qa_service.domain.repository;
 
-import com.xuezhi.qa_service.domain.entity.Answer;
 import com.xuezhi.qa_service.domain.entity.Question;
 
 import java.util.List;

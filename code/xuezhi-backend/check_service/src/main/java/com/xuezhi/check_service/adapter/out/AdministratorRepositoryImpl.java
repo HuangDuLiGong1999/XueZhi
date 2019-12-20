@@ -1,7 +1,7 @@
-package com.xuezhi.user.adapter.output;
+package com.xuezhi.check_service.adapter.out;
 
-import com.xuezhi.user.domain.entity.Administrator;
-import com.xuezhi.user.domain.repository.AdministratorRepository;
+import com.xuezhi.check_service.domain.entity.Administrator;
+import com.xuezhi.check_service.domain.repository.AdministratorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -12,13 +12,7 @@ public class AdministratorRepositoryImpl implements AdministratorRepository {
     @Autowired
     private AdministratorRepositor administratorRepositor;
 
-    @Override
-    public Administrator getAdministratorById(String id){
-        return administratorRepositor.findAdministratorById(id);
-    }
-
-    @Override
-    public Administrator getAdministratorByNameAndPassword(String name, String password){
+    public Administrator getAdministrator(String name, String password){
         return administratorRepositor.findAdministratorByNameAndPassword(name, password);
     }
 }

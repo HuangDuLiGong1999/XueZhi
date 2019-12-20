@@ -1,6 +1,5 @@
 package com.xuezhi.user.adapter.output;
 
-import com.xuezhi.user.adapter.output.UserRepositor;
 import com.xuezhi.user.domain.entity.History;
 import com.xuezhi.user.domain.entity.User;
 import com.xuezhi.user.domain.repository.UserRepository;
@@ -77,16 +76,6 @@ public class UserRepositoryImpl implements UserRepository {
         return user.getAvatar();
     }
 
-    @Override
-    public void verify(String id, MultipartFile multipartFile){
-        User user = userRepositor.findUserById(id);
-        try{
-            user.setVerImage(new Binary(multipartFile.getBytes()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        userRepositor.save(user);
-    }
 
     @Override
     public void modifyPassword(String id, String password){
