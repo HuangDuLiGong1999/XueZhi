@@ -171,6 +171,11 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
+    public List<History> getHistory(String id){
+        User user = userRepositor.findUserById(id);
+        return user.getHistoryList();
+    }
+
     public void addQuestionId(String id, String questionId){
         User user = userRepositor.findUserById(id);
         List<String> questionIdList = user.getQuestionIdList();

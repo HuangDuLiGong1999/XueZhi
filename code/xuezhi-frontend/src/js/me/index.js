@@ -15,7 +15,7 @@ class Me extends Component {
   constructor(props, context) {
     super(props)
     this.state = {
-      name: axios.get("http://localhost:8081/users/"+cookie.load('userId')).then(response => this.setState({username: response.data.name}))
+      name: axios.get("http://localhost:8081/users/"+cookie.load('userId')).then(response => this.setState({name: response.data.name}))
           .catch(error => console.log("get data error")),
       age: axios.get("http://localhost:8081/users/"+cookie.load('userId')).then(response => this.setState({age: response.data.age}))
           .catch(error => console.log("get data error")),
@@ -34,6 +34,7 @@ class Me extends Component {
     this._handleReset = this._handleReset.bind(this)
     this._handleClip = this._handleClip.bind(this)
     this._picture = this._picture.bind(this)
+    this._clickJump = this._clickJump.bind(this)
   }
   // 加载一次，Dom 未加载
   componentWillMount() {
@@ -104,12 +105,13 @@ class Me extends Component {
     data.append('age',this.state.age);
     data.append('sex',this.state.sex);
     data.append('signature',this.state.userstate);
+    console.log(this.state.name+ "这里是名字");
     axios.put(url, data)
             .then(function (response) {
             // handle success
             code = response.data;
             console.log(code);
-            console.log(response);
+              console.log(response);
           })
           .catch(function (error) {
             // handle error
@@ -145,6 +147,9 @@ class Me extends Component {
   _close(e) {
     this.setState({ show: false })
   }
+  _clickJump(e){
+    this.props.history.push("/checkschool")
+  }
   // 渲染 Dom
   render() {
 
@@ -158,8 +163,7 @@ class Me extends Component {
               <h3>个人资料</h3>
               {/* 头像 */}
               {/* 邮箱 */}
-              <div>
-                <div id="avatar" />
+              <div id="avatar">
                 <button onClick={this._handleClip}>裁剪</button>
                 <button onClick={this._handleReset}>重置</button>
                 <button onClick={this._picture}>上传</button>
@@ -210,6 +214,15 @@ class Me extends Component {
                 <Button className="button" onClick={this._clickSave}>
                   保存
                 </Button>
+                <Button className="button" onClick={this._clickJump}>
+                  验证学校
+                </Button>
+              </div>
+            </div>
+            <div className="right">
+              <div className="card">
+                本站主要愿景：<br />
+                建立高等教育信息分享平台，统一中国高校的经验分享市场，解决中国青年的升学和迷茫问题<br />
               </div>
             </div>
           </div>

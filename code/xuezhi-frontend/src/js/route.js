@@ -15,19 +15,25 @@ import Notice from "./notice"
 import Question from "./question";
 import College from "./college";
 import Login1 from "./login1";
-
+import Checkschool from "./checkschool";
+import Userhistory from "./userhistory";
+import Searchpage from "./searchpage";
 class App extends Component {
   render() {
     return (
       <Router hashType="hashbang">
         <div>
           <Switch>
+            <Route exact path="/userhistory" component={Userhistory} />
             {/* 登陆 */}
             <Route exact path="/login" component={Login} />
             {/*注册*/}
             <Route exact path="/login1" component={Login1} />
             {/* 自己信息设置 */}
             <Route exact path="/me" component={Me} />
+            {/*学生卡上传*/}
+            <Route exact path="/checkschool" component={Checkschool} />
+            <Route exact path="/searchpage" component={Searchpage} />
             <Route exact path="/college" component={College}/>
             {/* 通知页面 */}
             <Route exact path="/notice" component={Notice} />

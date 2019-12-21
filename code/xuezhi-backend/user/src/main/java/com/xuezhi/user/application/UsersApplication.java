@@ -1,5 +1,6 @@
 package com.xuezhi.user.application;
 
+import com.xuezhi.user.domain.entity.History;
 import com.xuezhi.user.domain.entity.User;
 import com.xuezhi.user.domain.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,6 +88,10 @@ public class UsersApplication {
 
     public void updateHistory(String id, String questionId){
         userRepository.updateHistory(id, questionId);
+    }
+
+    public List<History> getHistory(String id){
+        return userRepository.getHistory(id);
     }
 
     public void addQuestionId(String id, String questionId){

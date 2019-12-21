@@ -1,5 +1,6 @@
 package com.xuezhi.user.domain.repository;
 
+import com.xuezhi.user.domain.entity.History;
 import com.xuezhi.user.domain.entity.User;
 import org.bson.types.Binary;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,6 +33,9 @@ public interface UserRepository {
 
     //修改浏览历史
     void updateHistory(String id, String questionId);
+
+    //查看历史记录
+    List<History> getHistory(String id);
 
     //添加用户回答的问题
     void addQuestionId(String id, String questionId);

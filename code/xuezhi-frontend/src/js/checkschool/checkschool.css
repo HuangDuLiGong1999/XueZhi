@@ -1,0 +1,93 @@
+.checkschool .content{
+  margin-top: 60px;
+  padding: 20px 5% 55px 5%;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
+  width: 70%;
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+.checkschool .content .cell {
+  display: flex;
+  align-items: flex-end;
+  margin-top: 35px;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.checkschool .content .cell .item{
+  width: 100%;
+}
+
+.checkschool .button{
+  color: #ffffff;
+  background: #0f88eb;
+  margin-top: 10px
+}
+
+.checkschool .content .cell .divb{
+  display: flex;
+  margin-left: 5%;
+}
+
+.checkschool .content .b{
+  margin-top: 10px
+}
+.checkschool .right{
+  margin-top: 60px;
+  display: inline-block;
+  position: fixed;
+  width: 300px;
+}
+
+.checkschool .right .card {
+  margin-left: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.1);
+  background: #fff;
+  padding: 10px;
+  color: #8590a6;
+  font-size: 14px;
+  line-height: 25px;
+}
+#zhezhao{
+  left: 0px;
+  top: 0px;
+  background: #000fff;
+  width: 40%;
+  height: 40%;
+  opacity: 0.5;
+  position:absolute;
+  left:30%;
+  top:30%;
+}
+#tankuang{
+  position: relative;
+  background: #fff000;
+  width: 50%;
+  height: 80%;
+  border-radius: 5px;
+  margin: 5% auto;
+}
+@media (max-width: 1024px) {
+  .checkschool .content{
+    width: 100%;
+  }
+  .checkschool .content{
+    margin-top: 135px;
+  }
+  .checkschool .content .cell {
+    flex-wrap: wrap;
+  }
+  .checkschool .content .cell .divb{
+    margin: 0;
+    flex: 1;
+    margin-top: 20px;
+    justify-content: center;
+  }
+
+  .checkschool .content .button{
+    width: 100%
+  }
+}

@@ -8,7 +8,7 @@
 }
 
 .home .right{
-  display: inline-block;  
+  display: inline-block;
   position: fixed;
   width: 300px;
 }
@@ -25,13 +25,13 @@
 
 .home .footer{
   margin-left: 13px;
-  margin-top: 5px;  
+  margin-top: 5px;
 }
 
 .home .footer .footer-dot{
   font-size: 13px;
   line-height: 2;
-    color: #8590a6;
+  color: #8590a6;
 }
 
 .home .footer .footer-dot:after {

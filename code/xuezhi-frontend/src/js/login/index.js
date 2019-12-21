@@ -64,7 +64,7 @@ class Login extends Component {
               date.setTime(date.getTime() + (7 * 24 * 60 * 60 * 1000));
               console.log(user.university);
               cookie.save('userId', user.id, { expires: date ,path: '/' ,'university':user.university});
-              _this.props.history.push('./me');
+              _this.props.history.push('./userhistory');
               break;
             default: alert("请输入邮箱和密码");break;
           }

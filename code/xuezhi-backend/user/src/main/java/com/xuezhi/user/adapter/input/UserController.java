@@ -2,6 +2,7 @@ package com.xuezhi.user.adapter.input;
 
 
 import com.xuezhi.user.application.UsersApplication;
+import com.xuezhi.user.domain.entity.History;
 import com.xuezhi.user.domain.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -66,8 +67,12 @@ public class UserController {
 
     @PutMapping("/history")
     public void updateHistory(@RequestParam String id, @RequestParam String questionId){
-        System.out.println("123");
         usersApplication.updateHistory(id, questionId);
+    }
+
+    @GetMapping("/history/{userId}")
+    public List<History> getHistory(@PathVariable("userId") String id){
+        return usersApplication.getHistory(id);
     }
 
     @PostMapping("/questions")

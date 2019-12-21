@@ -5,20 +5,22 @@ import AV from 'leancloud-storage'
 import md5 from 'blueimp-md5'
 import './header.css'
 import { Bell } from './svg.js'
+import cookie from "react-cookies";
 
 class Header extends Component {
   constructor(props, context) {
     super(props)
 
     // 当前用户头像
-    let url = AV.User.current() && (AV.User.current().get('avatar') || 'https://secure.gravatar.com/avatar/' + md5(AV.User.current().getEmail()) + '?s=140*140&d=identicon&r=g')
-    this.state = { anchorEl: null, menuShow: false, url, numer: 0 }
+    let url = "http://localhost:8081/users/avatar/" + cookie.load('userId');
+    this.state = { anchorEl: null, menuShow: false, url, numer: 0 ,searchvalue:0}
 
     this._clickHead = this._clickHead.bind(this)
     this._handleClose = this._handleClose.bind(this)
     this._handleMenuClose = this._handleMenuClose.bind(this)
     this._clickLogin = this._clickLogin.bind(this)
-    this._clickNotice = this._clickNotice.bind(this)    
+    this._clickNotice = this._clickNotice.bind(this)
+    this._clickSearch = this._clickSearch.bind(this)
   }
   // 加载一次，Dom 未加载
   componentWillMount() {
@@ -36,6 +38,21 @@ class Header extends Component {
               <Button className="button"><NavLink exact to="/" className="g-color-gray a" activeClassName="selected"> 首页 </NavLink></Button>
               <Button className="button"><NavLink to="/college" className="g-color-gray a" activeClassName="selected"> 我的校园 </NavLink></Button>
             </nav>
+            <input type="input"
+                   style={{width:"300px",
+                    marginLeft:"60px",
+                     height:"24px",
+                     borderRadius: "2px",
+                     boxShadow: "0 1px 2px 0 rgba(0,0,0,.05)",
+                   }} placeholder="请输入你要搜索的内容"/>
+            <button
+                style={{marginLeft:"10px",
+                  height:"30px",
+                  color: "#ffffff",
+                  background: "#0f88eb",
+                  borderRadius: "2px",
+                  border:"none",
+                }} onClick={this._clickSearch}>搜索</button>
           </div>
           {this._userShow()}
         </div>
@@ -54,7 +71,7 @@ class Header extends Component {
     )
   }
   _userShow() {
-    return AV.User.current() ?
+    return cookie.load('userId')!=null?
       (<div className="right">
         <Button className="button buttonw "><NavLink to="/write" className="a" activeClassName="selected"> 发布话题 </NavLink></Button>
         <IconButton className="bell" onClick={this._clickNotice}>
@@ -79,9 +96,12 @@ class Header extends Component {
       menuShow: !menuShow
     })
   }
+  _clickSearch(e){
+    alert("chongchongchong!")
+  }
   // 点击了登陆
   _clickLogin(e) {
-    this.props.history.push('/login')
+    this.props.history.push('./login')
   }
   // 点击 item
   _handleClose(i, e) {
@@ -95,7 +115,7 @@ class Header extends Component {
       return
     }
     if (i === 2) {
-      AV.User.logOut()
+      cookie.remove('userId', { path: '/' })
       this.props.history.push('/')
       return
     }

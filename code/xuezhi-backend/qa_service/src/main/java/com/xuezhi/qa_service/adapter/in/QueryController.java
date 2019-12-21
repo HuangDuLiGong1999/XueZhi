@@ -39,7 +39,7 @@ public class QueryController {
         return qaApplication.getQuestionByQuestionId(questionId);
     }
 
-    @GetMapping(value = "/school")
+    @GetMapping(value = "/schools")
     public List<String> getSchoolList(){
         return qaApplication.getAllSchoolList();
     }
