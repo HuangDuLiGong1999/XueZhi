@@ -12,9 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 @Repository
@@ -163,6 +161,15 @@ public class QARepositoryImpl implements QARepository {
         }
         question.setAnswerList(answerList);
         qaRepositor.save(question);
+    }
+
+    public List<String> getSchoolList()
+    {
+        List<Question> questionList = qaRepositor.findAll();
+        List<String> schoolList  = new ArrayList<>();
+        for(Question each : questionList)
+            schoolList.add(each.getSchool());
+        return new ArrayList<>(new HashSet<>(schoolList));
     }
 
     private String getUpdateTime()

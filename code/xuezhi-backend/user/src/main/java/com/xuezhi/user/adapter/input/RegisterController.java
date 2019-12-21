@@ -17,17 +17,15 @@ public class RegisterController {
         this.usersApplication = usersApplication;
     }
 
-
     @PostMapping("/checkcode")
     public String checkAndSendMail(@RequestParam String email) throws IOException {
         return usersApplication.checkAndSendMail(email);
     }
 
-
     @PostMapping
-    public void addUser(@RequestParam String email, @RequestParam String password)
+    public boolean addUser(@RequestParam String email, @RequestParam String password)
     {
-       usersApplication.addUser(email, password);
+       return usersApplication.addUser(email, password);
     }
 
 }

@@ -23,8 +23,12 @@ public class UsersApplication {
         this.userRepository = userRepository;
     }
 
-    public void addUser(String email, String password){
+    public boolean addUser(String email, String password){
+        if (userRepository.getUserByEmail(email) != null){
+            return false;
+        }
         userRepository.addUser(email,password);
+        return true;
     }
 
     public void updateUser(String id, String name, int age, String sex, String signature){
@@ -38,7 +42,6 @@ public class UsersApplication {
 
     public User getUserByEmailAndPassword(String email, String password){
         return userRepository.getUserByEmailAndPassword(email, password);
-        //return !(userRepository.getUserByEmailAndPassword(email, password) == null);
     }
 
     public String checkAndSendMail(String email) throws IOException {

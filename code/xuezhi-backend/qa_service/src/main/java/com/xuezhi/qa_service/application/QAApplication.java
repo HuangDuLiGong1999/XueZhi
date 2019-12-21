@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.alibaba.fastjson.JSONObject;
 
+import javax.management.ObjectName;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -15,6 +16,8 @@ import java.util.*;
 @Component
 public class QAApplication {
     private QARepository qaRepository;
+
+    private static final int defaultRecommedNum = 4;
 
     @Autowired
     public QAApplication(QARepository qaRepository){
@@ -69,30 +72,44 @@ public class QAApplication {
     public List<Map<String, Object>> getRecommends(String university) throws IOException {
         List<Question> questionList = qaRepository.getQuestionsBySchool(university);
         List<Map<String, Object>> mapList = new ArrayList<>();
+
+        if (questionList.size() == 0){
+            Map<String, Object> map = new HashMap<>();
+            map.put("questionId", "null");
+            mapList.add(map);
+            return mapList;
+        }
+
         Random random = new Random();
-        for (int i = 0; i < 4; i++){
+        if (questionList.size() <= defaultRecommedNum){
+            for (Question question : questionList){
+                Map<String, Object> map = new HashMap<>();
+                String questionId = question.getQuestionId();
+                String title = question.getTitle();
+                map.put("questionId", questionId);
+                map.put("title", title);
+                Answer answer = getRandomAnswer(question);
+                if (answer != null){
+                    map.put("author", getUserById(answer.getAuthorId()));
+                    map.put("answer", answer);
+                }
+                mapList.add(map);
+            }
+            return mapList;
+        }
+        for (int i = 0; i < defaultRecommedNum; i++){
+            Map<String, Object> map = new HashMap<>();
             int index = random.nextInt(questionList.size());
             Question question = questionList.get(index);
-            while (question.getAnswerList().size() == 0){
-                index = random.nextInt(questionList.size());
-                question = questionList.get(index);
-            }
             String questionId = question.getQuestionId();
             String title = question.getTitle();
-            List<Answer> answerList = question.getAnswerList();
-            Answer answer;
-            if (answerList.size() == 1){
-                answer = answerList.get(0);
-            }
-            else {
-                int answerIndex = random.nextInt(answerList.size());
-                answer = answerList.get(answerIndex);
-            }
-            Map<String, Object> map = new HashMap<>();
             map.put("questionId", questionId);
             map.put("title", title);
-            map.put("author", getUserById(answer.getAuthorId()));
-            map.put("answer", answer);
+            Answer answer = getRandomAnswer(question);
+            if (answer != null){
+                map.put("author", getUserById(answer.getAuthorId()));
+                map.put("answer", answer);
+            }
             mapList.add(map);
             questionList.remove(questionList.get(index));
         }
@@ -115,5 +132,22 @@ public class QAApplication {
 
     public void addComment(String questionId, String authorId, String commentatorId, String description){
         qaRepository.addComment(questionId, authorId, commentatorId, description);
+    }
+
+    private Answer getRandomAnswer(Question question){
+        List<Answer> answerList = question.getAnswerList();
+        if (answerList.size() == 0){
+            return null;
+        }
+        else {
+            Random random = new Random();
+            int index = random.nextInt(answerList.size());
+            return answerList.get(index);
+        }
+    }
+
+    public List<String> getAllSchoolList()
+    {
+        return qaRepository.getSchoolList();
     }
 }

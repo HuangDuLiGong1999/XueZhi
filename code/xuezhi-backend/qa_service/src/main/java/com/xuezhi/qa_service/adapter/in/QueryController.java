@@ -38,4 +38,9 @@ public class QueryController {
     public Question getQuestionByQuestionId(@PathVariable("questionId") String questionId){
         return qaApplication.getQuestionByQuestionId(questionId);
     }
+
+    @GetMapping(value = "/school")
+    public List<String> getSchoolList(){
+        return qaApplication.getAllSchoolList();
+    }
 }

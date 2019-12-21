@@ -14,6 +14,8 @@ public interface QARepository {
 
     List<Question> getQuestionsBySchool(String school);
 
+    List<String> getSchoolList();
+
     //List<Answer> getAnswerListByQuestionId(String questionId);
 
     void addQuestion(String title, String description, String askerId, String school);
@@ -31,4 +33,5 @@ public interface QARepository {
     void updateLikes(String questionId, String authorId, String likeUserId);
     //添加评论
     void addComment(String questionId, String authorId, String commentatorId, String description);
+
 }

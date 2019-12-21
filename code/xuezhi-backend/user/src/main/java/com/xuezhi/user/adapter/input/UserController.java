@@ -38,15 +38,12 @@ public class UserController {
 
     @PutMapping("/information")
     public boolean updateUser(@RequestParam String id, @RequestParam String name, @RequestParam int age, @RequestParam String sex, @RequestParam String signature){
-        //TODO
-        System.out.println(id);
         usersApplication.updateUser(id, name, age, sex, signature);
         return true;
     }
 
     @PostMapping("/avatar")
     public boolean setAvatar(@RequestParam String id, @RequestParam MultipartFile multipartFile){
-        System.out.println(id);
         usersApplication.setAvatar(id, multipartFile);
         return true;
     }
