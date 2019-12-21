@@ -17,14 +17,17 @@ public class VerificationRepositoryImpl implements VerificationRepository {
     @Autowired
     private VerificationRepositor verificationRepositor;
 
-    public void addVerification(String userId, MultipartFile multipartFile){
+    public void addVerification(String userId, MultipartFile multipartFile, String intention,String remark){
         Verification verification = new Verification();
         verification.setUserId(userId);
+        verification.setIntention(intention);
+        verification.setRemark(remark);
         try {
             verification.setVerImage(new Binary(multipartFile.getBytes()));
         } catch (IOException e) {
             e.printStackTrace();
         }
+        verificationRepositor.save(verification);
     }
 
     public List<Verification> getVerification(){
@@ -33,5 +36,9 @@ public class VerificationRepositoryImpl implements VerificationRepository {
 
     public void deleteVerification(String id){
         verificationRepositor.deleteVerificationById(id);
+    }
+
+    public Verification getVerificationById(String id){
+        return verificationRepositor.findVerificationById(id);
     }
 }

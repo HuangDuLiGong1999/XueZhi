@@ -10,6 +10,8 @@ public class Verification {
     private String id;
     private String userId;
     private Binary verImage;
+    private String intention;
+    private String remark;
 
     public String getId() {
         return id;
@@ -33,5 +35,21 @@ public class Verification {
 
     public void setVerImage(Binary verImage) {
         this.verImage = verImage;
+    }
+
+    public String getIntention() {
+        return intention;
+    }
+
+    public void setIntention(String intention) {
+        this.intention = intention;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

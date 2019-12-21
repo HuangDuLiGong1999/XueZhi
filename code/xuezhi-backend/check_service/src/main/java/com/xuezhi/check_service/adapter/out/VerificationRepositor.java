@@ -5,4 +5,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface VerificationRepositor extends MongoRepository<Verification, String> {
     void deleteVerificationById(String id);
+    Verification findVerificationById(String id);
 }
