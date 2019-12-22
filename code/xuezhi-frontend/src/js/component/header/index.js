@@ -12,7 +12,7 @@ import uniqid from "uniqid"
 class Header extends React.Component {
   constructor(props, context) {
     super(props)
-    let url = "http://localhost:8081/users/avatar/" + cookie.load('userId');
+    let url = "http://49.234.73.158:8085/v1/user_service/users/avatar/" + cookie.load('userId');
 
     this.state = { anchorEl: null, menuShow: false, url, numer: 0 ,searchvalue:0,InputValue : ""}
     this._clickHead = this._clickHead.bind(this)

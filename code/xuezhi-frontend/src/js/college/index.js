@@ -18,7 +18,7 @@ class College extends Component {
   // 加载一次，Dom 未加载
   componentWillMount() {
     let _this = this;
-    const url = "http://localhost:8081/users/" + cookie.load("userId");
+    const url = "http://49.234.73.158:8085/v1/user_service/users/" + cookie.load("userId");
     axios.get(url).then(
         function (response) {
           _this.setState(
@@ -54,7 +54,7 @@ class College extends Component {
 
 
     var school = this.state.school;
-    const url = "http://localhost:8087/recommends/"+school;
+    const url = "http://49.234.73.158:8085/v1/qa_service/recommends/"+school;
 
 
     let data;
@@ -71,7 +71,6 @@ class College extends Component {
   }
   // 渲染 Dom
   render() {
-    //console.log("检查", this.state.items)
     const atricleItems = this.state.items.map((item, index) =>
         <AtricleItem key={item.id} history={this.props.history} item={item} MessageChildren={Message} />
     )

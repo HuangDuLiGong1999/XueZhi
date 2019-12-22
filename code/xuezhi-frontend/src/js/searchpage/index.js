@@ -1,6 +1,5 @@
 import React from 'react'
 import AtricleItem from "../component/atricleItem"
-import Message from "../component/message"
 import Progress from "../component/progress"
 import SnackBar from "../component/snackbar"
 import Header from "../component/header"
@@ -14,7 +13,6 @@ class Searchpage extends React.Component {
     constructor(props, context) {
         super(props);
         const{searchId} = this.props.match.params
-        console.log(searchId)
         this.state={
             items: []
         };
@@ -25,13 +23,12 @@ class Searchpage extends React.Component {
 
     // 加载一次，这里 Dom 已经加载完成
     componentDidMount() {
-        console.log("333333333333333333333333333333333333333333333");
 
         this._net(this.props.match.params.page)
     }
     _net(page) {
-        const url = "http://localhost:8087/answers/regex/"+this.props.location.query.foo+"/"+cookie.load('university');
-        console.log(cookie.load('university'));
+        const url = "http://49.234.73.158:8085/v1/qa_service/answers/regex/"+this.props.location.query.foo+"/"+cookie.load('university');
+
         let _this = this;
         let data = [];
         axios.get(url).then(function (response) {
@@ -58,7 +55,7 @@ class Searchpage extends React.Component {
         console.log(header);
         console.log("检查4544", this.state.items)
         const atricleItems = this.state.items.map((item, index) =>
-            <NoButtonItem key={item.id} history={this.props.history} item={item} MessageChildren={Message} />
+            <NoButtonItem key={item.id} history={this.props.history} item={item}  />
         )
         return (
             <div>

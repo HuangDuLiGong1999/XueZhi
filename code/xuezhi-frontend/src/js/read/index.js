@@ -28,7 +28,7 @@ class Read extends React.Component{
     let userId = str;
 
 
-    const url = "http://localhost:8087/question/"+ this.state.questionId+ "/"+cookie.load("userId");
+    const url = "http://49.234.73.158:8085/v1/qa_service/question/"+ this.state.questionId+ "/"+cookie.load("userId");
 
     var _this = this;
 

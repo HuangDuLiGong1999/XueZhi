@@ -36,7 +36,7 @@ class Userfocus extends Component {
   }
   _net(page) {
     this.setState({ progressShow: true });
-    const url = "http://localhost:8081/users/followList/"+cookie.load('userId');
+    const url = "http://49.234.73.158:8085/v1/user_service/users/followList/"+cookie.load('userId');
     let _this = this;
     let data = [];
     axios.get(url).then(function (response) {
@@ -46,7 +46,7 @@ class Userfocus extends Component {
 
       for(let i = 0; i <response.data.length; i++) {
 
-        const url = "http://localhost:8087/question/"+response.data[i];
+        const url = "http://49.234.73.158:8085/v1/qa_service/question/"+response.data[i];
         axios.get(url).then(function (response) {
           data.push(response.data);
           console.log(data);

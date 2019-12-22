@@ -86,3 +86,12 @@
   background: #0f88eb;
   color: white;
 }
+
+.comment img{
+  height: 60px;
+  display: inline-block;
+}
+
+.comment .content{
+  display: inline-block;
+}

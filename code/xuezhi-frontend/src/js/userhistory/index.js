@@ -25,26 +25,25 @@ class Userhistory extends Component {
 
   // 加载一次，Dom 未加载
   componentWillMount() {
-
+    this._net(this.props.match.params.page)
   }
 
   // 加载一次，这里 Dom 已经加载完成
   componentDidMount() {
-    this._net(this.props.match.params.page)
+
   }
   _net(page) {
     this.setState({ progressShow: true });
-    const url = "http://localhost:8081/users/history/"+cookie.load('userId');
+    const url = "http://49.234.73.158:8085/v1/user_service/users/history/"+cookie.load('userId');
     let _this = this;
     let data = [];
     axios.get(url).then(function (response) {
-      //data = response.data;
-      //console.log(data);
+      console.log(response.data)
       for(let i = 0; i <response.data.length; i++) {
-        const url = "http://localhost:8087/question/"+response.data[i].id;
+        const url = "http://49.234.73.158:8085/v1/qa_service/question/"+response.data[i].id + "/" + cookie.load("userId");
         axios.get(url).then(function (response) {
           data.push(response.data);
-          console.log(data);
+          console.log(response.data);
           _this.setState({
             items: data,
             progressShow: false

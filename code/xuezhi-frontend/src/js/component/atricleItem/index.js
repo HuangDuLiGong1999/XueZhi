@@ -7,21 +7,33 @@ import SnackBar from "../snackbar"
 import axios from "axios"
 
 import "./atricleItem.css"
+import cookie from "react-cookies";
 
 class AtricleItem extends Component {
   // 加载一次，初始化状态
   constructor(props, context) {
     super(props)
 
+    let loginUser = cookie.load("userId");
+
+    const likesMap = props.item.answer.likesMap;
+
+    const like = props.item.answer.likes;
+
+    const answerList = props.item.answer.answerComments;
+
+    const answerListLength = props.item.answer.answerComments.length;
+
+
     const userId = props.item.answer.authorId;
-    const title = props.item.title
-    const questionId = props.item.questionId
+    const title = props.item.title;
+    const questionId = props.item.questionId;
     //从 marked 提取文本与图片地址
-    const data = props.item.answer.description
+    const data = props.item.answer.description;
     //
     let likeBool = false;
 
-    let showRead = false, messagesShow, full;
+    let showRead = false, messagesShow = false, full;
     // 单独页面，默认都打开
     if (this.props.skip) {
       showRead = true
@@ -33,16 +45,19 @@ class AtricleItem extends Component {
       title,
       userId,
       data,
-      like: 0,
+      like,
       likeBool,
       messageCount: 0, //评论条数
-      headUrl: "http://localhost:8081/users/avatar/"+userId, //头像图片url
+      headUrl: "http://49.234.73.158:8085/v1/user_service/users/avatar/"+userId, //头像图片url
       showRead,
       messagesShow,
       full,
       tag: "问答",
       questionId,
-      user:[]
+      user:[],
+      loginUser,
+      answerList,
+      answerListLength,
     }
 
     this._clickRead = this._clickRead.bind(this)
@@ -58,7 +73,7 @@ class AtricleItem extends Component {
 
   componentWillMount() {
     let _this = this;
-    const url = "http://localhost:8081/users/" + this.state.userId;
+    const url = "http://49.234.73.158:8085/v1/user_service/users/" + this.state.userId;
     axios.get(url).then(
         function (response) {
           _this.setState(
@@ -103,7 +118,7 @@ class AtricleItem extends Component {
             </Button>
 
             <Button className="button" onClick={this._clickMessage}>
-              <Message className="g-color-gray-fill" />&nbsp; {this.state.messagesShow ? '收起评论' : this.state.messageCount + ' 条评论'}
+              <Message className="g-color-gray-fill" />&nbsp; {this.state.messagesShow ? '收起评论' : this.state.answerListLength + ' 条评论'}
             </Button>
 
             <Button className="button reply-butoon" href={"/question/"+ this.state.questionId +"/authorId/"+ this.state.userId} style={{ display: this.state.full ? 'none' : '' }}>
@@ -112,7 +127,7 @@ class AtricleItem extends Component {
 
             {this._cloneButton()}
           </div>
-          <this.props.MessageChildren messagesShow={this.state.messagesShow} item={this.props.item} messageSend={this._messageSend} />
+          <this.props.MessageChildren messagesShow={this.state.messagesShow} item={this.props.item} authorId={this.state.userId} questionId={this.props.item.questionId} answerComments = {this.props.item.answer.answerComments}  messageSend={this._messageSend} />
         </div>
     )
   }
@@ -172,7 +187,19 @@ class AtricleItem extends Component {
   // 点赞
   _clickGood(e) {
 
+    const url = "http://49.234.73.158:8085/v1/qa_service/qa/likes";
+    let data = new URLSearchParams();
+    data.append('questionId', this.state.questionId);
+    data.append('authorId', this.state.userId);
+    data.append('likeUserId', cookie.load("userId"));
+
+    axios.put(url, data).then(function (response) {
+      console.log(response.data);
+    }).catch(function (e) {
+      alert(e);
+    })
   }
+
   // 展开评论
   _clickMessage(e) {
     const messagesShow = !this.state.messagesShow;

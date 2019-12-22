@@ -39,18 +39,17 @@ class Login extends Component {
     let data = new URLSearchParams();
     data.append('email',this.state.mail);
     data.append('password',this.state.password);
-    const url = "http://localhost:8081/login";
+    const url = "http://49.234.73.158:8085/v1/user_service/login";
     var code;
     axios.post(url, data)
         .then(function (response) {
           // handle success
           code = response.data;
-          console.log(code);
-          console.log(response);
+
         })
         .catch(function (error) {
           // handle error
-          console.log(error);
+          alert(error);
         })
         .then(function () {
           console.log(code);

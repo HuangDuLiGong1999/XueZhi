@@ -26,7 +26,7 @@ class Question extends React.Component{
 
     componentWillMount() {
 
-        const url = "http://localhost:8087/question/"+ this.state.questionId + "/"+cookie.load("userId")
+        const url = "http://49.234.73.158:8085/v1/qa_service/question/"+ this.state.questionId + "/"+cookie.load("userId")
 
         var _this = this;
 
@@ -70,7 +70,7 @@ class Question extends React.Component{
     }
     _addquestionClick(e){
 
-        const url = "http://localhost:8081/users/followList";
+        const url = "http://49.234.73.158:8085/v1/user_service/users/followList";
         let data = new URLSearchParams();
         data.append('questionId',this.state.questionId);
         data.append('id',cookie.load('userId')); //todo
@@ -88,7 +88,7 @@ class Question extends React.Component{
     _submitAnswerClick(e){
         var editor = this.refs.editorContext;
         var answer = editor.state.editor.txt.html();
-        const url = "http://localhost:8087/qa/answers"
+        const url = "http://49.234.73.158:8085/v1/qa_service/qa/answers"
         let data = new URLSearchParams();
         data.append('questionId',this.state.questionId);
         data.append('authorId',cookie.load("userId"));
@@ -106,6 +106,7 @@ class Question extends React.Component{
         const answerItems = this.state.items.map((item, index) =>
             <AnswerItem questionId ={this.state.questionId} history={this.props.history} item={item} MessageChildren={Message} />
         )
+
         return(
             <div>
                 <Header history={this.props.history} />

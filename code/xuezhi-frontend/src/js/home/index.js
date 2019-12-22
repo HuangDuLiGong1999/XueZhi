@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import AV from "leancloud-storage"
 import AtricleItem from "../component/atricleItem"
-import Message from "../component/message"
+import MessageComponent from "../component/message"
 import Progress from "../component/progress"
 import SnackBar from "../component/snackbar"
 import Header from "../component/header"
@@ -30,7 +30,7 @@ class Home extends Component {
     this.setState({ progressShow: true });
 
 
-    const url = "http://localhost:8087/recommends/public/";
+    const url = "http://49.234.73.158:8085/v1/qa_service/recommends/public";
 
     let _this = this;
 
@@ -49,7 +49,7 @@ class Home extends Component {
   // 渲染 Dom
   render() {
     const atricleItems = this.state.items.map((item, index) =>
-        <AtricleItem key={item.id} history={this.props.history} item={item} MessageChildren={Message} />
+        <AtricleItem key={item.id} history={this.props.history} item={item} MessageChildren={MessageComponent} />
     )
     return (
         <div>

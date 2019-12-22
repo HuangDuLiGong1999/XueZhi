@@ -16,7 +16,6 @@ class HistoryItem extends Component {
     // 加载一次，初始化状态
     constructor(props, context) {
         super(props)
-        console.log(props.item)
         const userId = props.item.authorId;
         const questionId = props.item.questionId
         const title = props.item.title
@@ -102,7 +101,7 @@ class HistoryItem extends Component {
     }
     _cancelfocus(e){
 
-        const url="http://localhost:8081/users/followList/"+cookie.load('userId')+"/"+this.state.questionId;
+        const url="http://49.234.73.158:8085/v1/user_service/users/followList/"+cookie.load('userId')+"/"+this.state.questionId;
         // let data = new URLSearchParams();
         // data.append('questionId',this.state.questionId);
         // data.append('id',cookie.load('userId')); //todo

@@ -14,16 +14,30 @@ class Me extends Component {
   // 加载一次，初始化状态
   constructor(props, context) {
     super(props)
+
+    let name,age,sex,userstate;
+
     this.state = {
-      name: axios.get("http://localhost:8081/users/"+cookie.load('userId')).then(response => this.setState({name: response.data.name}))
-          .catch(error => console.log("get data error")),
-      age: axios.get("http://localhost:8081/users/"+cookie.load('userId')).then(response => this.setState({age: response.data.age}))
-          .catch(error => console.log("get data error")),
-      sex: axios.get("http://localhost:8081/users/"+cookie.load('userId')).then(response => this.setState({sex: response.data.sex}))
-          .catch(error => console.log("get data error")),
-      userstate:axios.get("http://localhost:8081/users/"+cookie.load('userId')).then(response => this.setState({userstate: response.data.signature}))
-          .catch(error => console.log("get data error")),
+      name,
+      age,
+      sex,
+      userstate
     }
+    var _this = this
+    axios.get("http://49.234.73.158:8085/v1/user_service/users/"+cookie.load('userId'))
+        .then(function (response) {
+          _this.setState(
+              {
+                name : response.data.name,
+          age :  response.data.age,
+          sex : response.data.sex,
+          userstate: response.data.userstate
+              }
+          )
+
+        })
+
+
     this._clickSave = this._clickSave.bind(this)
     this._onChangeName = this._onChangeName.bind(this)
     this._onChangeAge = this._onChangeAge.bind(this)
@@ -56,7 +70,7 @@ class Me extends Component {
   }
   _picture(e){
     avatar.upload({
-      url: 'http://localhost:8081/users/avatar',
+      url: 'http://49.234.73.158:8085/v1/user_service/users/avatar',
       name: 'multipartFile',
       data: {id: cookie.load('userId')},
       success: function (data) {
@@ -97,7 +111,7 @@ class Me extends Component {
     }
 
     this.setState({ progressShow: true })
-    const url = "http://localhost:8081/users/information";
+    const url = "http://49.234.73.158:8085/v1/user_service/users/information";
     var code;
     let data = new URLSearchParams();
     data.append('id',cookie.load('userId'));

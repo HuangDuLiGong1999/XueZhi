@@ -9,15 +9,29 @@ import { Reply, MessageGood } from "../svg.js"
 import Progress from "../progress"
 import SnackBar from "../snackbar"
 import "./message.css"
+import cookie from "react-cookies";
+import axios from "axios";
 
 class MessageComponent extends Component {
   // 加载一次，初始化状态
   constructor(props, context) {
     super(props)
-    this.state = { progressShow: false, snackBarOpen: false, messages: [] }
+    const questionId = props.questionId;
+    const userId = props.authorId;
+    const answerListLength = props.answerComments.length;
+    const messages = props.answerComments;
+
+    this.state = {
+      progressShow: false,
+      snackBarOpen: false,
+      messages,
+      questionId,
+      userId,
+      answerListLength,
+      message:''
+    }
     this._textarea = this._textarea.bind(this)
     this._clickSend = this._clickSend.bind(this)
-    this._net = this._net.bind(this)
     this._getDateDiff = this._getDateDiff.bind(this)
     this._clickReply = this._clickReply.bind(this)
   }
@@ -27,66 +41,37 @@ class MessageComponent extends Component {
   }
   // 加载一次，这里 Dom 已经加载完成
   componentDidMount() {
-    this._net()
-  }
-  _net() {
-    this.setState({ progressShow: true })
-    const query = new AV.Query('Message')
-    query.equalTo('atricle', this.props.item)
-    query.addDescending('like')
-    query.addDescending('createdAt')
-    query.include('user')
-    query.find().then((messages) => {
-      if(AV.User.current()){
-        messages = messages.map(item => {
-          if (item.get('likeUsers') && item.get('likeUsers').split(',').indexOf(AV.User.current().id) !== -1) {
-            item.likeBool = true
-          }
-          return item
-        })
-      }
-      this.setState({
-        messages: messages,
-        progressShow: false
-      })
-    }).catch((error) => {
-      this._snackBarOpen('讨厌，网络错误了')
-      this.setState({ progressShow: false })
-    })
   }
   _textarea(e) {
     this.setState({ message: e.target.value })
   }
   render() {
-    const messages = this.state.messages.map((item, index) => {
-      const headUrl = item.get('user').get('avatar') || 'https://secure.gravatar.com/avatar/' + md5(item.get('user').get('email')) + '?s=140*140&d=identicon&r=g'
-      return (<div key={index}>
-        <div className="head">
-          <img className="headimg" src={headUrl} alt="头像" />
-          <a>{item.get('user').get('name')}</a>
-          <span>{this._getDateDiff(item.createdAt)}</span>
+    const messagesItems = this.state.messages.map((item, index) => {
+      const headUrl = "http://49.234.73.158:8085/v1/user_service/users/avatar/"+item.commentatorId
+      const url = "http://49.234.73.158:8085/v1/user_service/users/" + item.commentatorId;
+
+      return(<div key={index}>
+
+        <div className="comment">
+          <img src={headUrl} />&ensp;&ensp;&ensp;&ensp;
+
+          <div className="content" dangerouslySetInnerHTML={{__html: item.comment}}/>
         </div>
-        <ReactMarkdown source={item.get('message')} className="markdown-body content" escapeHtml={false} />
-        <div className="messagetool">
-          <Button className={item.likeBool ? 'button buttonColor' : 'button '} onClick={this._clickGood.bind(this, index)}>
-            <MessageGood className={item.likeBool ? 'g-color-white-fill' : 'g-color-gray-fill'} />&nbsp; {item.get('like')} 赞
-          </Button>
-          <Button className="button" onClick={this._clickReply}>
-            <Reply className="g-color-gray-fill" />&nbsp; 回复
-          </Button>
-        </div>
+
       </div>)
     })
+
+
 
     return (
       <div className="messagesList" style={{ display: this.props.messagesShow ? '' : 'none' }}>
         <Progress show={this.state.progressShow} />
         <SnackBar open={this.state.snackBarOpen} content={this.state.content} />
-        <div className="messagesCount">{this.state.messages.length} 条留言</div>
+        <div className="messagesCount">{this.state.answerListLength} 条留言</div>
         <div className="messages">
           {/*  留言 */}
           <div>
-            {messages}
+            {messagesItems}
           </div>
           {/*  /留言 */}
           <div className="replyMessage">
@@ -107,41 +92,37 @@ class MessageComponent extends Component {
   }
   // 发送留言
   _clickSend(e) {
-    if (!AV.User.current()) {
+    if (cookie.load("userId").toString() == "undefined"){
       this._snackBarOpen('哎～，你忘记登陆了耶')
       return
     }
 
-    const message = this.state.message
-    if (!message || message.length === 0) {
-      this._snackBarOpen('哎～，你怎么不说话')
-      return
-    }
-    this.setState({ progressShow: true })
-    // 增加留言
-    AV.Cloud.run('atricleMessage', {
-      message: message,
-      atricleId: this.props.item.id
-    }).then(result => {
-      this.setState({ progressShow: false, message: '' })
-      this._snackBarOpen('欧耶～发送成功')
-      this._net()
-      this.props.messageSend()
-    }).catch(err => {
-      this.setState({ progressShow: false })
-      this._snackBarOpen('讨厌，网络错误了')
-      console.log(err)
+    const message = this.state.message;
+
+
+
+    const url = "http://49.234.73.158:8085/v1/qa_service/qa/answers/comments";
+    let data = new URLSearchParams();
+    data.append('questionId', this.state.questionId);
+    data.append('authorId', this.state.userId);
+    data.append('commentatorId', cookie.load("userId"));
+    data.append('description', message);
+
+    axios.put(url, data).then(function (response) {
+    }).catch(function (e) {
+      alert(e);
     })
+
 
   }
   // 点赞
   _clickGood(index, e) {
-    if (!AV.User.current()) {
+    if (cookie.load("userId").toString() == "undefined"){
       this._snackBarOpen('哎～，你忘记登陆了耶')
       return
     }
 
-    const messages = this.state.messages
+    const messages = this.state.messages;
     const bool = messages[index].likeBool
     const like = messages[index].get('like')
     messages[index].likeBool = !bool
@@ -155,16 +136,13 @@ class MessageComponent extends Component {
     AV.Cloud.run('messageLike', { id }).then(result => {
     }).catch(err => {
       this._snackBarOpen('讨厌，网络错误了')
-      console.log(err)
     })
   }
   // 回复
   _clickReply(e){
     this._snackBarOpen('讨厌，此功能还没写完 = =')
   }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.messagesShow === true) this._net()
-  }
+
   _getDateDiff(dateTimeStamp) {
     const minute = 1000 * 60
     const hour = minute * 60

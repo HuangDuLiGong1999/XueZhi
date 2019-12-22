@@ -22,6 +22,7 @@ class AnswerItem extends Component {
         const data = props.item.description
         //
         let likeBool = false;
+        const answerListLength = props.item.answerComments.length;
 
         let showRead, messagesShow, full;
         // 单独页面，默认都打开
@@ -38,13 +39,14 @@ class AnswerItem extends Component {
             like: 0,
             likeBool,
             messageCount: 0, //评论条数
-            headUrl: "http://localhost:8081/users/avatar/"+userId, //头像图片url
+            headUrl: "http://49.234.73.158:8085/v1/user_service/users/avatar/"+userId, //头像图片url
             showRead,
             messagesShow,
             full,
             tag: "问答",
             questionId,
-            user:[]
+            user:[],
+            answerListLength,
         }
 
         this._clickRead = this._clickRead.bind(this)
@@ -60,7 +62,7 @@ class AnswerItem extends Component {
 
     componentWillMount() {
         let _this = this;
-        const url = "http://localhost:8081/users/" + this.state.userId;
+        const url = "http://49.234.73.158:8085/v1/user_service/users/" + this.state.userId;
         axios.get(url).then(
             function (response) {
                 _this.setState(
@@ -105,7 +107,7 @@ class AnswerItem extends Component {
                     </Button>
 
                     <Button className="button" onClick={this._clickMessage}>
-                        <Message className="g-color-gray-fill" />&nbsp; {this.state.messagesShow ? '收起评论' : this.state.messageCount + ' 条评论'}
+                        <Message className="g-color-gray-fill" />&nbsp; {this.state.messagesShow ? '收起评论' : this.state.answerListLength + ' 条评论'}
                     </Button>
 
                     <Button className="button reply-butoon" onClick={this._clickSkitRead} style={{ display: this.state.full ? 'none' : '' }}>
@@ -114,7 +116,7 @@ class AnswerItem extends Component {
 
                     {this._cloneButton()}
                 </div>
-                <this.props.MessageChildren messagesShow={this.state.messagesShow} item={this.props.item} messageSend={this._messageSend} />
+                <this.props.MessageChildren messagesShow={this.state.messagesShow} item={this.props.item} authorId={this.state.userId} questionId = {this.props.questionId} answerComments = {this.props.item.answerComments} messageSend={this._messageSend} />
             </div>
         )
     }

@@ -16,22 +16,15 @@ class NoButtonItem extends Component {
     // 加载一次，初始化状态
     constructor(props, context) {
         super(props)
-        console.log(props.item)
         const userId = props.item.authorId;
         const questionId = props.item.questionId
         const title = props.item.title
-        //从 marked 提取文本与图片地址
-        const markdown = marked(props.item.description)
-        const data = markdown.replace(/<[^>]+>/g, '').replace(/&.+?;/g, ' ').substring(0, 150) + '...'
+
+        const data = props.item.description
         const markSource = data;
         //
         let likeBool = false;
-        // if (props.item.get('likeUsers') && props.item.get('likeUsers').split(',').indexOf(AV.User.current() && AV.User.current().id) !== -1) {
-        //   likeBool = true
-        // }
-        // const messageCount = this.props.item.get('messageCount')
-        // let headUrl = props.item.get('user').get('avatar') || 'https://secure.gravatar.com/avatar/' + md5(props.item.get('user').get('email')) + '?s=140*140&d=identicon&r=g'
-        //
+
         let showRead, messagesShow, full;
         // 单独页面，默认都打开
         if (this.props.skip) {
@@ -78,11 +71,10 @@ class NoButtonItem extends Component {
                 <a className="h1" href={"/question/"+this.state.questionId}>{this.state.title}</a>
                 {/* 按钮工具 */}
                 <div className="tool">
-                    <Button className="button reply-butoon" href={"/read/"+this.state.questionId} style={{ display: this.state.full ? 'none' : '' }}>
+                    <Button className="button reply-butoon" href={"/question/"+this.state.questionId} style={{ display: this.state.full ? 'none' : '' }}>
                         <Read className="g-color-gray-fill" />&nbsp; 问题详情
                     </Button>
                 </div>
-                <this.props.MessageChildren messagesShow={this.state.messagesShow} item={this.props.item} messageSend={this._messageSend} />
             </div>
         )
     }

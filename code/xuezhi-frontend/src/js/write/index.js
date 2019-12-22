@@ -59,7 +59,7 @@ class Write extends Component {
       this._snackBarOpen("问题太短啦～");
       return;
     }
-    const url = "http://localhost:8087/qa/questions"
+    const url = "http://49.234.73.158:8085/v1/qa_service/qa/questions"
     let data = new URLSearchParams();
     data.append('title',this.state.title);
     data.append('description',editor.state.editor.txt.html());

@@ -52,7 +52,7 @@ class Login1 extends Component {
   }
   //验证邮箱
   _checkmail(){
-    const url = "http://localhost:8081/register/checkcode";
+    const url = "http://49.234.73.158:8085/v1/user_service/register/checkcode";
     let data = new URLSearchParams();
     let _this = this;
     data.append('email',this.state.mail);
@@ -121,7 +121,7 @@ class Login1 extends Component {
   }
   _clickRegister(){
     const _this = this;
-    const url = "http://localhost:8081/register";
+    const url = "http://49.234.73.158:8085/v1/user_service/register";
     var code;
     let data = new URLSearchParams();
     data.append('email',_this.state.mail);
