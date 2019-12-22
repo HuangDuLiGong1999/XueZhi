@@ -63,7 +63,12 @@ class Login extends Component {
               var user=code.user;
               date.setTime(date.getTime() + (7 * 24 * 60 * 60 * 1000));
               console.log(user.university);
-              cookie.save('userId', user.id, { expires: date ,path: '/' ,'university':user.university});
+              cookie.save('userId', user.id, { expires: date ,path: '/'});
+              cookie.save('university',user.university);
+              console.log(cookie.loadAll());
+              console.log(cookie.load('userId'));
+              console.log(cookie.load('university'));
+              console.log("`1`1112122222222");
               _this.props.history.push('./userhistory');
               break;
             default: alert("请输入邮箱和密码");break;

@@ -20,6 +20,9 @@ public class ReportRepositoryImpl implements ReportRepository {
         Report report;
         if (type.equals("question")){
             report = reportRepositor.findReportByQuestionId(questionId);
+            if (report != null && report.getType().equals("answer")){
+                report = null;
+            }
         }
         else {
             report = reportRepositor.findReportByQuestionIdAndAuthorId(questionId, authorId);

@@ -35,9 +35,22 @@ public class QARepositoryImpl implements QARepository {
         return qaRepositor.findQuestionByAskerId(askerId);
     }
 
-    public List<Question> getQuestionByRegex(String regex){
+    public List<Question> getQuestionByRegex(String regex,String school){
         Query query = new Query(Criteria.where("title").regex(regex));
-        return mongoTemplate.find(query,Question.class,"question");
+        List<Question> temp = mongoTemplate.find(query,Question.class,"question");
+        if(school.equals("public"))
+        {
+            temp.removeIf(each -> !(each.getSchool()).equals("public"));
+        }
+        else if(school.equals("root"))
+        {
+            return temp;
+        }
+        else
+        {
+            temp.removeIf(each -> !(each.getSchool().equals("public") || each.getSchool().equals(school)));
+        }
+        return temp;
     }
 
     public List<Question> getQuestionsBySchool(String school){

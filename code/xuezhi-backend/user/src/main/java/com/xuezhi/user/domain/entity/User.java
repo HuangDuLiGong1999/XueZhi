@@ -24,6 +24,17 @@ public class User {
     private Binary avatar;
     private List<History> historyList;
     private List<String> questionIdList;
+    private List<String> followList;
+
+    public List<String> getFollowList() {
+        if(followList==null)
+            followList = new ArrayList<>();
+        return followList;
+    }
+
+    public void setFollowList(List<String> followList) {
+        this.followList = followList;
+    }
 
     public User(){}
     public User(String email, String telephone, String name, int age, String sex, String university, String password, String signature) {

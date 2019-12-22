@@ -1,0 +1,154 @@
+
+.noButtonItem {
+    margin-bottom: 10px;
+    padding: 10px 20px 15px 20px;
+    border-radius: 2px;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,.1);
+}
+
+.noButtonItem .span{
+    font-size: 15px;
+    color: #8590a6;
+}
+
+.noButtonItem .user{
+    display: flex;
+    margin-top: 10px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.noButtonItem .user .left{
+    display: flex;
+    align-items: center;
+}
+
+.noButtonItem .user .headimg{
+    width: 24px;
+    height: 24px;
+    border-radius: 10%;
+}
+
+.noButtonItem .user .name{
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 15px;
+    color: #262626;
+    text-decoration: none;
+}
+
+.noButtonItem .user .github{
+    margin-left: 10px;
+    font-size: 12px;
+    color: #8590a6;
+}
+
+.noButtonItem .user .time{
+    text-align: left;
+    color: #8590a6;
+    font-size: 15px;
+    width: 100px;
+    text-align: right;
+}
+
+.noButtonItem .h1{
+    font-size: 18px;
+}
+
+.noButtonItem >.content{
+    display: flex;
+    cursor: pointer;
+}
+
+.noButtonItem .content .img{
+    width: 190px;
+    height: 105px;
+    border-radius: 4px;
+    /* 图片剧中 */
+    background-position: center;
+    /* 大小 */
+    background-size: cover;
+    /* 不重复 */
+    background-repeat: no-repeat;
+    margin-right: 10px;
+}
+
+.noButtonItem .content .info{
+    flex: 1;
+    font-size: 15px;
+    line-height: 1.6em;
+    color: #262626;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.noButtonItem .content .info:hover{
+    color: #8590a6;
+}
+
+.noButtonItem .tool{
+    margin-top: 10px;
+    display: flex;
+}
+
+.noButtonItem .tool .right-button{
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+}
+
+.noButtonItem .tool .right-button .button .button-transform{
+    transform: rotate(180deg);
+}
+
+.noButtonItem .button{
+    min-width: 0;
+    margin-right: 3px;
+    line-height:1em;
+    min-height: 0;
+    color: #8590a6;
+}
+
+.noButtonItem .buttonBlue{
+    background-color: #0f88eb !important;
+    color: #ffffff;
+}
+
+.a .button-border{
+    background-color: rgba(0, 0, 0, 0.12);
+}
+
+.noButtonItem .read{
+    padding: 3px 2px;
+}
+.noButtonItem .h1{
+    font-size: 18px;
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+@media (max-width: 1024px) {
+    .noButtonItem >.content{
+        flex-wrap: wrap;
+    }
+    .noButtonItem .content .img {
+        width: 100%;
+        height: 150px;
+        margin: 1px;
+    }
+    .noButtonItem .content .info{
+        margin-top: 15px;
+    }
+    .noButtonItem .read{
+        margin-left: -10px;
+    }
+    .noButtonItem .button{
+        margin-right: 10px;
+        padding: 8px 5px 8px 10px;
+    }
+    .noButtonItem .tool .reply-butoon{
+        display: none;
+    }
+}

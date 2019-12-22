@@ -9,6 +9,8 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletInputStream;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 
@@ -65,9 +67,17 @@ public class UserController {
         return true;
     }
 
-    @PutMapping("/history")
-    public void updateHistory(@RequestParam String id, @RequestParam String questionId){
-        usersApplication.updateHistory(id, questionId);
+    @PutMapping("/history/{userId}")
+    public void updateHistory(@PathVariable("userId") String userId, HttpServletRequest request) throws IOException {
+        ServletInputStream servletInputStream = request.getInputStream();
+        StringBuilder content = new StringBuilder();
+        byte[] b = new byte[request.getContentLength()];
+        int lens = -1;
+        while ((lens = servletInputStream.read(b)) > 0){
+            content.append(new String(b, 0, lens));
+        }
+        String questionId = content.toString();
+        usersApplication.updateHistory(userId, questionId);
     }
 
     @GetMapping("/history/{userId}")
@@ -88,5 +98,25 @@ public class UserController {
     @DeleteMapping("/questions")
     public void deleteQuestionId(@RequestParam String id, @RequestParam String questionId){
         usersApplication.deleteQuestionId(id, questionId);
+    }
+
+    @PostMapping("/followList")
+    public boolean addFollowQuestionId(@RequestParam String id, @RequestParam String questionId){
+        return usersApplication.addFollowListId(id, questionId);
+    }
+
+    @GetMapping("/followList/{id}")
+    public List<String> getFollowQuestionId(@PathVariable(value = "id") String id){
+        return usersApplication.getFollowListId(id);
+    }
+
+    @DeleteMapping("/followList/{id}/{questionId}")
+    public boolean deleteFollowQuestionId(@PathVariable(value = "id") String id, @PathVariable(value = "questionId") String questionId){
+        return usersApplication.deleteFollowListId(id, questionId);
+    }
+
+    @PutMapping("/verification")
+    public void updateSchool(@RequestParam String id, @RequestParam String school){
+        usersApplication.updateSchool(id, school);
     }
 }

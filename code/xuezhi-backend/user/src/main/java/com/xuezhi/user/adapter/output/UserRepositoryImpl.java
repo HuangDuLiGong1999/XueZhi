@@ -202,4 +202,41 @@ public class UserRepositoryImpl implements UserRepository {
         }
 
     }
+
+    public boolean addFollowListId(String id, String questionId){
+        User user = userRepositor.findUserById(id);
+        List<String> FollowList = user.getFollowList();
+        for(String each : FollowList)
+            if(each.equals(questionId))
+                return false;
+        FollowList.add(questionId);
+        user.setFollowList(FollowList);
+        userRepositor.save(user);
+        return true;
+    }
+
+    public List<String> getFollowListId(String id){
+        User user = userRepositor.findUserById(id);
+        return user.getFollowList();
+    }
+
+    public boolean deleteFollowListId(String id, String questionId){
+        User user = userRepositor.findUserById(id);
+        List<String> FollowList = user.getFollowList();
+        for (String quesId : FollowList){
+            if (quesId.equals(questionId)){
+                FollowList.remove(quesId);
+                user.setFollowList(FollowList);
+                userRepositor.save(user);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void updateUniversity(String id, String school){
+        User user = userRepositor.findUserById(id);
+        user.setUniversity(school);
+        userRepositor.save(user);
+    }
 }

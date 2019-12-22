@@ -2,27 +2,29 @@ import React, { Component } from 'react'
 import Message from "../component/message"
 import Header from "../component/header"
 import $ from "jquery"
-import "./userhistory.css"
+import "./userfocus.css"
 import axios from "axios";
 import cookie from "react-cookies";
 import HistoryItem from "../component/historyItem";
-import NoButtonItem from "../component/noButtonItem";
 
-class Userhistory extends Component {
+class Userfocus extends Component {
   // 加载一次，初始化状态
   constructor(props, context) {
     super(props);
     this.state = { items: [] };
+    this._click1=this._click1.bind(this)
     this._click2=this._click2.bind(this)
-    this._clickUserJump=this._clickUserJump.bind(this)
   }
+  _click1(){
+    this.props.history.push('./userhistory')
+}
   _click2(){
-      this.props.history.push('./userfocus')
+    $("#22").click(function(){
+      $("#1").hide();
+      $("#3").hide();
+      $("#2").show();
+    });
   }
-  _clickUserJump(e){
-    this.props.history.push("./me")
-  }
-
   // 加载一次，Dom 未加载
   componentWillMount() {
 
@@ -34,17 +36,21 @@ class Userhistory extends Component {
   }
   _net(page) {
     this.setState({ progressShow: true });
-    const url = "http://localhost:8081/users/history/"+cookie.load('userId');
+    const url = "http://localhost:8081/users/followList/"+cookie.load('userId');
     let _this = this;
     let data = [];
     axios.get(url).then(function (response) {
       //data = response.data;
-      //console.log(data);
+      // console.log(response.data);
+      // console.log("222222222222222222222222222222");
+
       for(let i = 0; i <response.data.length; i++) {
-        const url = "http://localhost:8087/question/"+response.data[i].id;
+
+        const url = "http://localhost:8087/question/"+response.data[i];
         axios.get(url).then(function (response) {
           data.push(response.data);
           console.log(data);
+
           _this.setState({
             items: data,
             progressShow: false
@@ -67,7 +73,7 @@ class Userhistory extends Component {
     let _this = this;
     console.log("检查444", this.state.items)
     const atricleItems = this.state.items.map((item, index) =>
-        <NoButtonItem key={item.id} history={this.props.history} item={item} MessageChildren={Message} />
+        <HistoryItem key={item.id} history={this.props.history} item={item} MessageChildren={Message} />
     )
     return (
         <div>
@@ -77,9 +83,8 @@ class Userhistory extends Component {
                 <button id="11"onClick={this._click1}style={{float:"left",marginLeft:"10px",width:"200px"}}>浏览历史</button>
                 <button id="22"onClick={this._click2}style={{float:"left",marginLeft:"10px",outline:"none"}}>关注问题</button>
               <div style={{marginLeft:"-50px",marginTop:"30px"}}>
-              <div id="1" >{atricleItems}</div>
-              <div id="2"  className="11111" style={{display:"none"}}></div>
-              <div id="3" className="22222" style={{display:"none"}}>内容三</div>
+              <div id="1" style={{display:"none"}}></div>
+              <div id="2"  className="11111">{atricleItems}</div>
               </div>
             </div>
             <div className="right">
@@ -120,4 +125,4 @@ class Userhistory extends Component {
   }
 }
 
-export default Userhistory
+export default Userfocus

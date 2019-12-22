@@ -7,6 +7,7 @@ import AnswerItem from "../component/answerItem";
 import "./question.css"
 import Message from "../component/message";
 import Header from "../component/header";
+import cookie from "react-cookies"
 class Question extends React.Component{
     constructor(props, context){
         super(props)
@@ -20,6 +21,7 @@ class Question extends React.Component{
 
         this._answerClick = this._answerClick.bind(this)
         this._submitAnswerClick = this._submitAnswerClick.bind(this)
+        this._addquestionClick = this._addquestionClick.bind(this)
     }
 
     componentWillMount() {
@@ -58,6 +60,23 @@ class Question extends React.Component{
         var editor = this.refs.editor;
         editor.style.display = ""
     }
+    _addquestionClick(e){
+
+        const url = "http://localhost:8081/users/followList";
+        let data = new URLSearchParams();
+        data.append('questionId',this.state.questionId);
+        data.append('id',cookie.load('userId')); //todo
+
+        axios.post(url,data).then(function (response) {
+            console.log(response.data)
+            if(response.data)
+                alert("关注成功");
+            else
+                alert("已经关注，无法重复关注！")
+        }).catch(function (e) {
+            alert(e);
+        })
+    }
 
     _submitAnswerClick(e){
         var editor = this.refs.editorContext;
@@ -88,8 +107,9 @@ class Question extends React.Component{
                         <h1>{this.state.title}</h1>
                         <div dangerouslySetInnerHTML={{__html: this.state.description}} />
                     </div>
-                    <div className="buttonList">
-                        <Button className="answer" onClick={this._answerClick}>我也说一句</Button>
+                    <div >
+                        <Button className="answer1" onClick={this._answerClick}>我也说一句</Button>
+                        <Button className="answer2" onClick={this._addquestionClick}>关注问题</Button>
                     </div>
                 </div>
                 <div className="answerList">

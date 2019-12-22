@@ -65,8 +65,8 @@ public class QAApplication {
         qaRepository.deleteAnswer(questionId, authorId);
     }
 
-    public List<Question> getQuestionByRegex(String regex){
-        return qaRepository.getQuestionByRegex(regex);
+    public List<Question> getQuestionByRegex(String regex, String school){
+        return qaRepository.getQuestionByRegex(regex,school);
     }
 
     public List<Map<String, Object>> getRecommends(String university) throws IOException {
@@ -124,6 +124,20 @@ public class QAApplication {
         BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
         String temp = br.readLine();
         return JSONObject.parseObject(temp);
+    }
+
+    public void updateHistory(String questionId, String userId) throws IOException {
+        URL restURL = new URL("http://localhost:8081/users/history/" + userId);
+        HttpURLConnection conn = (HttpURLConnection)restURL.openConnection();
+        conn.setRequestMethod("PUT");
+        conn.setRequestProperty("Content-Type", " application/json");
+        conn.setDoOutput(true);
+        conn.setDoInput(true);
+        PrintWriter printWriter = new PrintWriter(conn.getOutputStream());
+        printWriter.write(questionId);
+        printWriter.flush();
+        printWriter.close();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
     }
 
     public void updateLikes(String questionId, String authorId, String likeUserId){

@@ -32,8 +32,8 @@ public class QAController {
         qaApplication.updateQuestion(questionId, title, description);
     }
 
-    @DeleteMapping("/questions")
-    public void deleteQuestion(@RequestParam String questionId)
+    @DeleteMapping("/questions/{questionId}")
+    public void deleteQuestion(@PathVariable("questionId") String questionId)
     {
         qaApplication.deleteQuestion(questionId);
     }
@@ -50,8 +50,8 @@ public class QAController {
         qaApplication.updateAnswer(questionId, authorId, description);
     }
 
-    @DeleteMapping("/answers")
-    public void deleteAnswer(@RequestParam String questionId,@RequestParam  String authorId)
+    @DeleteMapping("/answers/{questionId}/{authorId}")
+    public void deleteAnswer(@PathVariable("questionId") String questionId,@PathVariable("authorId") String authorId)
     {
         qaApplication.deleteAnswer(questionId, authorId);
     }

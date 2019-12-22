@@ -27,8 +27,8 @@ public class ReportController {
         return reportApplication.getReports();
     }
 
-    @DeleteMapping("/reports")
-    public void deleteReport(@RequestParam String id){
+    @DeleteMapping("/reports/{id}")
+    public void deleteReport(@PathVariable("id") String id){
         reportApplication.deleteReport(id);
     }
 }

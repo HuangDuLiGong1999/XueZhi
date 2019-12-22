@@ -36,8 +36,8 @@ public class VerifyController {
         return verificationApplication.getVerImage(id);
     }
 
-    @DeleteMapping
-    public void deleteVerification(@RequestParam String id){
+    @DeleteMapping(value = "/{id}")
+    public void deleteVerification(@PathVariable("id") String id){
         verificationApplication.deleteVerification(id);
     }
 }

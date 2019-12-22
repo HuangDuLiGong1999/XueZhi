@@ -17,6 +17,7 @@ import College from "./college";
 import Login1 from "./login1";
 import Checkschool from "./checkschool";
 import Userhistory from "./userhistory";
+import Userfocus from "./userfocus";
 import Searchpage from "./searchpage";
 class App extends Component {
   render() {
@@ -25,6 +26,8 @@ class App extends Component {
         <div>
           <Switch>
             <Route exact path="/userhistory" component={Userhistory} />
+            <Route exact path="/userfocus" component={Userfocus} />
+            <Route exact path="/searchpage/:searchId?" component={Searchpage} />
             {/* 登陆 */}
             <Route exact path="/login" component={Login} />
             {/*注册*/}
@@ -33,7 +36,6 @@ class App extends Component {
             <Route exact path="/me" component={Me} />
             {/*学生卡上传*/}
             <Route exact path="/checkschool" component={Checkschool} />
-            <Route exact path="/searchpage" component={Searchpage} />
             <Route exact path="/college" component={College}/>
             {/* 通知页面 */}
             <Route exact path="/notice" component={Notice} />

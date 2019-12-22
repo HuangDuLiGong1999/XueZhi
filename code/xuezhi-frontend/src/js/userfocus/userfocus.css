@@ -1,0 +1,81 @@
+.userfocus{
+  padding-top: 0px;
+}
+
+.userfocus .content{
+  margin-top: 60px;
+  padding: 20px 5% 55px 5%;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
+  width: 70%;
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+.userfocus .content .cell {
+  display: flex;
+  align-items: flex-end;
+  margin-top: 35px;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.userfocus .right{
+  display: inline-block;  
+  position: fixed;
+width: 300px;
+  margin-top: 60px;
+}
+
+.userfocus .right .card {
+  margin-left: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.1);
+  background: #fff;
+  padding: 10px;
+  color: #8590a6;
+  font-size: 14px;
+  line-height: 25px;
+}
+
+.userfocus .footer{
+  margin-left: 13px;
+  margin-top: 5px;  
+}
+
+.userfocus .footer .footer-dot{
+  font-size: 13px;
+  line-height: 2;
+    color: #8590a6;
+}
+
+.userfocus .footer .footer-dot:after {
+  margin: 0 5px;
+  content: "\B7";
+}
+
+.userfocus .footer .footer-item{
+  text-decoration: none;
+  display: inline-block;
+  font-size: 13px;
+  color: #8590a6;
+}
+
+.userfocus .moblie {
+  display: none;
+}
+@media (max-width: 1024px) {
+  .userfocus{
+    padding-top: 135px;
+  }
+  .userfocus .left{
+    width: 100%;
+  }
+  .userfocus .right{
+    display: none;
+  }
+
+  .userfocus .moblie {
+    display: block;
+  }
+}

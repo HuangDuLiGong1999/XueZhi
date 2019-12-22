@@ -105,4 +105,20 @@ public class UsersApplication {
     public void deleteQuestionId(String id, String questionId){
         userRepository.deleteQuestionId(id, questionId);
     }
+
+    public boolean addFollowListId(String id, String questionId){
+        return userRepository.addFollowListId(id, questionId);
+    }
+
+    public List<String> getFollowListId(String id){
+        return userRepository.getFollowListId(id);
+    }
+
+    public boolean deleteFollowListId(String id, String questionId){
+        return userRepository.deleteFollowListId(id, questionId);
+    }
+
+    public void updateSchool(String id, String school){
+        userRepository.updateUniversity(id, school);
+    }
 }

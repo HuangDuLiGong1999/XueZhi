@@ -10,7 +10,7 @@ public interface QARepository {
 
     List<Question> getQuestionByAskerId(String askerId);
 
-    List<Question> getQuestionByRegex(String regex);
+    List<Question> getQuestionByRegex(String regex,String school);
 
     List<Question> getQuestionsBySchool(String school);
 

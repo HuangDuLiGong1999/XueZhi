@@ -45,4 +45,16 @@ public interface UserRepository {
 
     //删除用户的一个回答的问题的id
     void deleteQuestionId(String id, String questionId);
+
+    //添加用户关注的问题
+    boolean addFollowListId(String id, String questionId);
+
+    //查找用户关注的所有问题id
+    List<String> getFollowListId(String id);
+
+    //删除用户的一个关注的问题的id
+    boolean deleteFollowListId(String id, String questionId);
+
+    //
+    void updateUniversity(String id, String school);
 }

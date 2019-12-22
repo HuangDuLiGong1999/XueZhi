@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -28,14 +29,15 @@ public class QueryController {
         return qaApplication.getQuestionByAskerId(askerid);
     }
 
-    @GetMapping(value="/answers/regex/{regex}")
-    public List<Question> getQuestionByRegex(@PathVariable("regex") String regex)
+    @GetMapping(value="/answers/regex/{regex}/{school}")
+    public List<Question> getQuestionByRegex(@PathVariable("regex") String regex,@PathVariable("school") String school)
     {
-        return qaApplication.getQuestionByRegex(regex);
+        return qaApplication.getQuestionByRegex(regex,school);
     }
 
-    @GetMapping(value = "/question/{questionId}")
-    public Question getQuestionByQuestionId(@PathVariable("questionId") String questionId){
+    @GetMapping(value = "/question/{questionId}/{userId}")
+    public Question getQuestionByQuestionId(@PathVariable("questionId") String questionId, @PathVariable("userId") String userId) throws IOException {
+        qaApplication.updateHistory(questionId, userId);
         return qaApplication.getQuestionByQuestionId(questionId);
     }
 

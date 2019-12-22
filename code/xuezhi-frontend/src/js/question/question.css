@@ -20,15 +20,26 @@
     width:44%;
 }
 
-.head .buttonList .answer{
+.head .answer1{
     margin: 0 10px;
     padding: 10px 20px;
     min-width: 0;
     height: 30px;
     background: #0084ff;
     color: white;
+    margin-top: 300px;
+    margin-left: 550px;
 }
-
+.head .answer2{
+    margin: 0 10px;
+    padding: 10px 20px;
+    min-width: 0;
+    height: 30px;
+    background: #0084ff;
+    color: white;
+    margin-top: 0px;
+    margin-left: 500px;
+}
 .answerList{
     position: absolute;
     width:44%;
