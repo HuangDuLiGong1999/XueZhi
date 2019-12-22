@@ -9,26 +9,20 @@ import Progress from "../progress"
 import SnackBar from "../snackbar"
 import "github-markdown-css"
 import "./answerItem.css"
+import axios from "axios";
 
 class AnswerItem extends Component {
     // 加载一次，初始化状态
     constructor(props, context) {
         super(props)
-        console.log(props.item)
+        const questionId = props.questionId;
         const userId = props.item.authorId;
         const title = props.item.title
         //从 marked 提取文本与图片地址
-        const markdown = marked(props.item.description)
-        const data = markdown.replace(/<[^>]+>/g, '').replace(/&.+?;/g, ' ').substring(0, 150) + '...'
-        const markSource = data;
+        const data = props.item.description
         //
         let likeBool = false;
-        // if (props.item.get('likeUsers') && props.item.get('likeUsers').split(',').indexOf(AV.User.current() && AV.User.current().id) !== -1) {
-        //   likeBool = true
-        // }
-        // const messageCount = this.props.item.get('messageCount')
-        // let headUrl = props.item.get('user').get('avatar') || 'https://secure.gravatar.com/avatar/' + md5(props.item.get('user').get('email')) + '?s=140*140&d=identicon&r=g'
-        //
+
         let showRead, messagesShow, full;
         // 单独页面，默认都打开
         if (this.props.skip) {
@@ -41,15 +35,16 @@ class AnswerItem extends Component {
             title,
             userId,
             data,
-            markSource,
             like: 0,
             likeBool,
             messageCount: 0, //评论条数
-            headUrl: "https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3489753539,2528035229&fm=111&gp=0.jpg", //头像图片url
+            headUrl: "http://localhost:8081/users/avatar/"+userId, //头像图片url
             showRead,
             messagesShow,
             full,
-            tag: "问答"
+            tag: "问答",
+            questionId,
+            user:[]
         }
 
         this._clickRead = this._clickRead.bind(this)
@@ -61,6 +56,20 @@ class AnswerItem extends Component {
         this._cloneButton = this._cloneButton.bind(this)
         this._clickSkitRead = this._clickSkitRead.bind(this)
         this._clickSkitEdid = this._clickSkitEdid.bind(this)
+    }
+
+    componentWillMount() {
+        let _this = this;
+        const url = "http://localhost:8081/users/" + this.state.userId;
+        axios.get(url).then(
+            function (response) {
+                _this.setState(
+                    {
+                        user:response.data
+                    }
+                )
+            }
+        )
     }
 
     render() {
@@ -77,7 +86,7 @@ class AnswerItem extends Component {
                 <div className="user">
                     <div className="left">
                         < img className="headimg" src={this.state.headUrl} alt="header" />
-                        <Link className="name" to="/"> {this.state.userId} </Link>
+                        <Link className="name" to="/"> {this.state.user.name} </Link>
                     </div>
                     <div className="time">
                         {this.props.item.updateTime}
@@ -112,17 +121,21 @@ class AnswerItem extends Component {
     // 展示信息
     _readInfo() {
         if (this.state.showRead) {
-            return (<div className="info">
-                <ReactMarkdown source={this.state.markSource} className="markdown-body markdown" escapeHtml={false} />
+            return (
+                <div className="description" dangerouslySetInnerHTML={{__html:this.state.data}}>
             </div>)
         } else {
-            return (<div className="info" onClick={this._clickRead}>
-                {this.state.data}
+            return (
+                <div>
+                <div className="description" dangerouslySetInnerHTML={{__html:this.state.data}}>
+                </div>
+                <div className="info" onClick={this._clickRead}>
                 <Button className="button read" >
                     阅读全文 &nbsp;
                     <Bottom className="g-color-gray-fill" />
                 </Button>
-            </div>)
+            </div>
+                </div>)
         }
     }
     _cloneButton() {
@@ -181,7 +194,7 @@ class AnswerItem extends Component {
 
     // 阅读
     _clickSkitRead(e) {
-        this.props.history.push('/read/' + this.props.item.id)
+        this.props.history.push(this.state.questionId +'/authorId/' + this.state.userId)
     }
 
 }

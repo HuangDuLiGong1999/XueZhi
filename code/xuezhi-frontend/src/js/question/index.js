@@ -33,7 +33,6 @@ class Question extends React.Component{
         var data;
         axios.get(url).then(function (response) {
             data = response.data;
-            console.log(data)
         }).catch(function (e) {
             alert(e);
         }).then(
@@ -43,9 +42,18 @@ class Question extends React.Component{
                     description:data.description,
                     items:data.answerList
                 })
-                console.log(_this.state)
             }
 
+        ).then(
+
+            function(){
+                for (var i in _this.state.items) {
+                    if (_this.state.items[i]["authorId"] === cookie.load("userId")) {
+                        _this.refs.answer1.style.display = "none"
+                        break;
+                    }
+                }
+            }
         )
 
 
@@ -68,7 +76,6 @@ class Question extends React.Component{
         data.append('id',cookie.load('userId')); //todo
 
         axios.post(url,data).then(function (response) {
-            console.log(response.data)
             if(response.data)
                 alert("关注成功");
             else
@@ -97,7 +104,7 @@ class Question extends React.Component{
 
     render() {
         const answerItems = this.state.items.map((item, index) =>
-            <AnswerItem key={item.id} history={this.props.history} item={item} MessageChildren={Message} />
+            <AnswerItem questionId ={this.state.questionId} history={this.props.history} item={item} MessageChildren={Message} />
         )
         return(
             <div>
@@ -107,9 +114,11 @@ class Question extends React.Component{
                         <h1>{this.state.title}</h1>
                         <div dangerouslySetInnerHTML={{__html: this.state.description}} />
                     </div>
-                    <div >
-                        <Button className="answer1" onClick={this._answerClick}>我也说一句</Button>
-                        <Button className="answer2" onClick={this._addquestionClick}>关注问题</Button>
+                    <div className="buttonList">
+                    <div ref="answer1">
+                        <Button className="answer1"  onClick={this._answerClick}>我也说一句</Button>
+                    </div>
+                    <Button className="answer2" onClick={this._addquestionClick}>关注问题</Button>
                     </div>
                 </div>
                 <div className="answerList">

@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from 'material-ui'
-import marked from 'marked' //解析 markdown
-import AV from "leancloud-storage"
-import { Bottom, Good, Message, Read, Edid } from "../svg.js" //,Collection
-import ReactMarkdown from 'react-markdown'
+import { Bottom, Good, Message, Read, Edid } from "../svg.js"
 import Progress from "../progress"
 import SnackBar from "../snackbar"
-import "github-markdown-css"
+import axios from "axios"
+
 import "./atricleItem.css"
 
 class AtricleItem extends Component {
@@ -15,23 +13,15 @@ class AtricleItem extends Component {
   constructor(props, context) {
     super(props)
 
-    console.log(props.item)
     const userId = props.item.answer.authorId;
     const title = props.item.title
     const questionId = props.item.questionId
     //从 marked 提取文本与图片地址
-    const markdown = marked(props.item.answer.description)
-    const data = markdown.replace(/<[^>]+>/g, '').replace(/&.+?;/g, ' ').substring(0, 150) + '...'
-    const markSource = data;
+    const data = props.item.answer.description
     //
     let likeBool = false;
-    // if (props.item.get('likeUsers') && props.item.get('likeUsers').split(',').indexOf(AV.User.current() && AV.User.current().id) !== -1) {
-    //   likeBool = true
-    // }
-    // const messageCount = this.props.item.get('messageCount')
-    // let headUrl = props.item.get('user').get('avatar') || 'https://secure.gravatar.com/avatar/' + md5(props.item.get('user').get('email')) + '?s=140*140&d=identicon&r=g'
-    //
-    let showRead, messagesShow, full;
+
+    let showRead = false, messagesShow, full;
     // 单独页面，默认都打开
     if (this.props.skip) {
       showRead = true
@@ -43,16 +33,16 @@ class AtricleItem extends Component {
       title,
       userId,
       data,
-      markSource,
       like: 0,
       likeBool,
       messageCount: 0, //评论条数
-      headUrl: "https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3489753539,2528035229&fm=111&gp=0.jpg", //头像图片url
+      headUrl: "http://localhost:8081/users/avatar/"+userId, //头像图片url
       showRead,
       messagesShow,
       full,
       tag: "问答",
-      questionId
+      questionId,
+      user:[]
     }
 
     this._clickRead = this._clickRead.bind(this)
@@ -64,6 +54,20 @@ class AtricleItem extends Component {
     this._cloneButton = this._cloneButton.bind(this)
     this._clickSkitRead = this._clickSkitRead.bind(this)
     this._clickSkitEdid = this._clickSkitEdid.bind(this)
+  }
+
+  componentWillMount() {
+    let _this = this;
+    const url = "http://localhost:8081/users/" + this.state.userId;
+    axios.get(url).then(
+        function (response) {
+          _this.setState(
+              {
+                user:response.data
+              }
+          )
+        }
+    )
   }
 
   render() {
@@ -80,7 +84,7 @@ class AtricleItem extends Component {
           <div className="user">
             <div className="left">
               < img className="headimg" src={this.state.headUrl} alt="header" />
-              <Link className="name" to="/"> {this.state.userId} </Link>
+              <Link className="name" to="/"> {this.state.user.name} </Link>
             </div>
             <div className="time">
               {this.props.item.answer.updateTime}
@@ -102,7 +106,7 @@ class AtricleItem extends Component {
               <Message className="g-color-gray-fill" />&nbsp; {this.state.messagesShow ? '收起评论' : this.state.messageCount + ' 条评论'}
             </Button>
 
-            <Button className="button reply-butoon" href={"/read/"+ this.state.questionId +"/authorId/"+ this.state.userId} style={{ display: this.state.full ? 'none' : '' }}>
+            <Button className="button reply-butoon" href={"/question/"+ this.state.questionId +"/authorId/"+ this.state.userId} style={{ display: this.state.full ? 'none' : '' }}>
               <Read className="g-color-gray-fill" />&nbsp; 问题详情
             </Button>
 
@@ -115,17 +119,23 @@ class AtricleItem extends Component {
   // 展示信息
   _readInfo() {
     if (this.state.showRead) {
-      return (<div className="info">
-        <ReactMarkdown source={this.state.markSource} className="markdown-body markdown" escapeHtml={false} />
-      </div>)
+      return (
+        <div className="description" dangerouslySetInnerHTML={{__html:this.state.data}}>
+        </div>
+      )
     } else {
-      return (<div className="info" onClick={this._clickRead}>
-        {this.state.data}
-        <Button className="button read" >
-          阅读全文 &nbsp;
-          <Bottom className="g-color-gray-fill" />
-        </Button>
-      </div>)
+      return (
+          <div>
+                  <div className="description" dangerouslySetInnerHTML={{__html:this.state.data}}>
+                  </div>
+                  <div className="info" onClick={this._clickRead}>
+                <Button className="button read" >
+                  阅读全文 &nbsp;
+                  <Bottom className="g-color-gray-fill" />
+                </Button>
+                  </div>
+          </div>
+      )
     }
   }
   _cloneButton() {
@@ -161,20 +171,7 @@ class AtricleItem extends Component {
   }
   // 点赞
   _clickGood(e) {
-    if (!AV.User.current()) {
-      this._snackBarOpen('哎～，你忘记登录了耶~')
-      return
-    }
 
-    const likeBool = !this.state.likeBool
-    let like = likeBool ? this.state.like + 1 : this.state.like - 1
-    this.setState({ likeBool, like })
-    const id = this.props.item.id
-    AV.Cloud.run('atricleLike', { id }).then(result => {
-    }).catch(err => {
-      this._snackBarOpen('讨厌，网络错误了')
-      console.log(err)
-    })
   }
   // 展开评论
   _clickMessage(e) {

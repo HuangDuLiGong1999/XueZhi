@@ -46,7 +46,7 @@ class App extends Component {
             {/*问题详情界面*/}
             <Route exact path="/question/:questionId?" component={Question}/>
             {/* 回答详情 */}
-            <Route exact path="/read/:questionId/authorId/:authorId?" component={Read} />
+            <Route exact path="/question/:questionId/authorId/:authorId?" component={Read} />
             {/* 主页文章列表 */}
             <Route exact path="/:page?" component={Home} />
           </Switch>

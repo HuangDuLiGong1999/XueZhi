@@ -28,12 +28,7 @@ class Home extends Component {
 
   _net(page) {
     this.setState({ progressShow: true });
-    const query = new AV.Query('Atricle');
-    if (page === '精华') {
-      query.equalTo('essence', 1)
-    } else if (page) {
-      query.contains('tag', page)
-    }
+
 
     const url = "http://localhost:8087/recommends/public/";
 
@@ -42,7 +37,6 @@ class Home extends Component {
     let data;
     axios.get(url).then(function (response) {
       data = response.data;
-      console.log(data);
       _this.setState({
         items: data,
         progressShow: false
@@ -51,16 +45,9 @@ class Home extends Component {
       alert(e);
     });
 
-    query.find().then((items) => {
-
-    }).catch((error) => {
-      this._snackBarOpen('讨厌，网络错误了')
-      this.setState({ progressShow: false })
-    })
   }
   // 渲染 Dom
   render() {
-    console.log("检查", this.state.items)
     const atricleItems = this.state.items.map((item, index) =>
         <AtricleItem key={item.id} history={this.props.history} item={item} MessageChildren={Message} />
     )

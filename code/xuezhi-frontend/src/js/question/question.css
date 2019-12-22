@@ -15,30 +15,32 @@
 .head .buttonList{
     position: absolute;
     height: 5%;
-    bottom: 15%;
+    bottom: 10%;
     left:28%;
     width:44%;
 }
 
 .head .answer1{
+    position: absolute;
+    bottom: 0%;
+    left:5%;
     margin: 0 10px;
     padding: 10px 20px;
     min-width: 0;
     height: 30px;
     background: #0084ff;
     color: white;
-    margin-top: 300px;
-    margin-left: 550px;
 }
 .head .answer2{
+    position: absolute;
+    bottom: 0%;
+    right:5%;
     margin: 0 10px;
     padding: 10px 20px;
     min-width: 0;
     height: 30px;
     background: #0084ff;
     color: white;
-    margin-top: 0px;
-    margin-left: 500px;
 }
 .answerList{
     position: absolute;
@@ -48,6 +50,7 @@
 }
 .editor{
     background: white;
+    margin: 15px auto 60px auto;
 }
 .editor .submitAnswer{
     margin: 10px 5px;
