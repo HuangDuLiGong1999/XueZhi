@@ -24,18 +24,20 @@ public class PreFilter extends ZuulFilter {
         HttpServletRequest request = rc.getRequest();
         logger.info("LogFilter .... 请求的路径是{},请求提交的方式是{}", request.getRequestURL().toString(), request.getMethod());
         String url = request.getHeader("REFERER");
-        if (url.equals("http://localhost:3000/") && isIllegal(request.getRequestURL().toString()))
-        {
-            rc.setSendZuulResponse(true);
-            rc.setResponseStatusCode(200);
-            rc.set("isSuccess", true);
-            return null;
-        } else {
-            rc.setSendZuulResponse(false);
-            rc.setResponseStatusCode(401);
-            rc.set("isSuccess", false);
-            return null;
-        }
+//        if (url.equals("http://localhost:3000/")||url.equals("http://localhost:3001/"))
+//        {
+//            rc.setSendZuulResponse(true);
+//            rc.setResponseStatusCode(200);
+//            rc.set("isSuccess", true);
+//        } else {
+//            rc.setSendZuulResponse(false);
+//            rc.setResponseStatusCode(401);
+//            rc.set("isSuccess", false);
+//        }
+        rc.setSendZuulResponse(true);
+        rc.setResponseStatusCode(200);
+        rc.set("isSuccess", true);
+        return null;
 
 
     }
@@ -51,7 +53,7 @@ public class PreFilter extends ZuulFilter {
     @Override
     public boolean shouldFilter()
     {
-        return true;
+        return false;
     }
 
     /**

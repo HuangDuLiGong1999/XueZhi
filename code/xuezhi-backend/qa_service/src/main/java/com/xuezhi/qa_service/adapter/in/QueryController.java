@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin
+//@CrossOrigin
 @RestController
 public class QueryController {
 

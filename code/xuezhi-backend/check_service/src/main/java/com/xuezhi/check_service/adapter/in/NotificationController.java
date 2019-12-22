@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 
 @RestController
-@CrossOrigin
+//@CrossOrigin
 public class NotificationController {
     private ReportApplication reportApplication;
 
