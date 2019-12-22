@@ -26,7 +26,7 @@ class Question extends React.Component{
 
     componentWillMount() {
 
-        const url = "http://localhost:8087/question/"+ this.state.questionId
+        const url = "http://localhost:8087/question/"+ this.state.questionId + "/"+cookie.load("userId")
 
         var _this = this;
 
@@ -84,7 +84,7 @@ class Question extends React.Component{
         const url = "http://localhost:8087/qa/answers"
         let data = new URLSearchParams();
         data.append('questionId',this.state.questionId);
-        data.append('authorId',"testAuthor"); //todo
+        data.append('authorId',cookie.load("userId"));
         data.append('description',answer);
 
         axios.post(url,data).then(function (response) {

@@ -102,7 +102,7 @@ class AtricleItem extends Component {
               <Message className="g-color-gray-fill" />&nbsp; {this.state.messagesShow ? '收起评论' : this.state.messageCount + ' 条评论'}
             </Button>
 
-            <Button className="button reply-butoon" href={"/read/"+this.state.questionId} style={{ display: this.state.full ? 'none' : '' }}>
+            <Button className="button reply-butoon" href={"/read/"+ this.state.questionId +"/authorId/"+ this.state.userId} style={{ display: this.state.full ? 'none' : '' }}>
               <Read className="g-color-gray-fill" />&nbsp; 问题详情
             </Button>
 

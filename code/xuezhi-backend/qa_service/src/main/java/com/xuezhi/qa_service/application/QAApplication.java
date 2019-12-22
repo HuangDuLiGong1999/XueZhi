@@ -103,13 +103,18 @@ public class QAApplication {
             Question question = questionList.get(index);
             String questionId = question.getQuestionId();
             String title = question.getTitle();
-            map.put("questionId", questionId);
-            map.put("title", title);
             Answer answer = getRandomAnswer(question);
             if (answer != null){
                 map.put("author", getUserById(answer.getAuthorId()));
                 map.put("answer", answer);
             }
+            else{
+                questionList.remove(questionList.get(index));
+                i--;
+                continue;
+            }
+            map.put("questionId", questionId);
+            map.put("title", title);
             mapList.add(map);
             questionList.remove(questionList.get(index));
         }
