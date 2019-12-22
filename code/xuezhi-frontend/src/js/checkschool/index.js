@@ -22,11 +22,11 @@ class Checkschool extends Component {
     this._handleReset = this._handleReset.bind(this)
     this._handleClip = this._handleClip.bind(this)
     this._picture = this._picture.bind(this)
-    this._getuniversity = this._getuniversity.bind(this)
  }
 
   // 加载一次，Dom 未加载
   componentWillMount() {
+
   }
 
   // 加载一次，这里 Dom 已经加载完成
@@ -35,6 +35,22 @@ class Checkschool extends Component {
       el: '#avatar1',
       backgroundColor: '#ffffff'
     });
+      const url = "http://49.234.73.158:8085/v1/qa_service/schools";
+      let _this = this;
+      let data;
+      axios.get(url).then(function (response) {
+          data= response.data;
+          console.log(data);
+          _this.setState({
+              items: data,
+          });
+          console.log(data);
+          for(var i=0;i<data.length;i++){
+              $("#selectbox").append("<option value='"+data[i]+"'>"+data[i]+"</option>")
+          }
+      }).catch(function (e) {
+          alert(e);
+      });
   }
   _handleClip = (e) => {
     avatar1.imageClipper((dataurl) => {
@@ -60,25 +76,6 @@ class Checkschool extends Component {
       }
     });
   }
-  _getuniversity(e){
-      const url = "http://49.234.73.158:8085/v1/qa_service/schools";
-      let _this = this;
-      let data;
-      axios.get(url).then(function (response) {
-          data= response.data;
-          console.log(data);
-          _this.setState({
-              items: data,
-          });
-          console.log(data);
-          for(var i=0;i<data.length;i++){
-              $("#selectbox").append("<option value='"+data[i]+"'>"+data[i]+"</option>")
-          }
-      }).catch(function (e) {
-          alert(e);
-      });
-
-  }
 
   // 渲染 Dom
   render() {
@@ -90,20 +87,19 @@ class Checkschool extends Component {
             <SnackBar open={this.state.snackBarOpen} content={this.state.content} />
             <div className="content">
               <h3>学生证上传</h3>
-              <h4 style={{fontSize:"15px"}}>请上传带有学生照片的一面！</h4>
+              <h4 style={{fontSize:"15px",fontWeight:"bolder"}}>请上传带有学生照片的一面！</h4>
               <div id="avatar1" style={{marginTop:"10px"}}></div>
-              <div>
-                <Button className="button" onClick={this._handleClip} style={{marginTop:"10px"}}>裁剪</Button>
-                <Button className="button" onClick={this._handleReset} style={{marginTop:"10px"}}>重置</Button>
-                <Button className="button" onClick={this._picture} style={{marginTop:"10px"}}>上传</Button>
-              </div>
-              <div>
-                <select id="selectbox" style={{width:"100px"}}>请选择</select>
-                <button onClick={this._getuniversity}>选择学校</button>
-              </div>
-              <div>
-                <input id="inputbox" placeholder="如果是其他学校，请手动输入！"/>
-              </div>
+                <div>
+                <Button className="button" onClick={this._handleClip} style={{marginTop:"5px",marginLeft:"0px",height:"15px",width:"50px",boxShadow: "0 1px 3px 0 rgba(0,34,77,.1)"}}>裁剪</Button>
+                <Button className="button" onClick={this._handleReset} style={{marginTop:"5px",marginLeft:"10px",height:"15px",width:"50px",boxShadow: "0 1px 3px 0 rgba(0,34,77,.1)"}}>重置</Button>
+                  <div style={{width:"200px",marginTop:"-300px",marginLeft:"300px"}}>
+                      <p style={{fontSize:"14px",marginTop:"10%",}}>备注</p>
+                      <input id="inputbox" style={{width:"150px",height:"50px",marginTop:"0%",border:":#000000 6px solid"}}/>
+                      <p style={{fontSize:"14px",marginTop:"10%"}}>请选择学校！</p>
+                      <select id="selectbox" style={{width:"100px",marginTop:"0%"}}>请选择</select>
+                      <Button className="button" onClick={this._picture} style={{marginTop:"40%",marginLeft:"110%",height:"15px",width:"50px",boxShadow: "0 1px 3px 0 rgba(0,34,77,.1)"}}>提交</Button>
+                  </div>
+                </div>
             </div>
             <div className="right">
               <div className="card">

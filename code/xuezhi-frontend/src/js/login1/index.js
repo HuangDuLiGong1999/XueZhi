@@ -164,7 +164,7 @@ class Login1 extends Component {
         <Progress show={this.state.progressShow} />
         <SnackBar open={this.state.snackBarOpen} content={this.state.content} />
         <div className="box" style={this.state.findPsw ? hiddenStyle : visibleStyle}>
-          <h1 onClick={this._backHom}>VSCodeChina</h1>
+          <h1 onClick={this._backHom}>学知</h1>
           <TextField
             required
             error={this.state.buttonMailError}

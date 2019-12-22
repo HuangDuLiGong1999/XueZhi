@@ -35,6 +35,9 @@
 .checkschool .content .b{
   margin-top: 10px
 }
+.checkschool .content .diva .button{
+  width: 300px;
+}
 .checkschool .right{
   margin-top: 60px;
   display: inline-block;

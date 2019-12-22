@@ -5,7 +5,6 @@ import $ from "jquery"
 import "./userhistory.css"
 import axios from "axios";
 import cookie from "react-cookies";
-import HistoryItem from "../component/historyItem";
 import NoButtonItem from "../component/noButtonItem";
 
 class Userhistory extends Component {
@@ -73,8 +72,8 @@ class Userhistory extends Component {
           <Header history={this.props.history} />
           <div className="g-container userhistory">
             <div className="content">
-                <button id="11"onClick={this._click1}style={{float:"left",marginLeft:"10px",width:"200px"}}>浏览历史</button>
-                <button id="22"onClick={this._click2}style={{float:"left",marginLeft:"10px",outline:"none"}}>关注问题</button>
+                <button id="11"className="btn-1">浏览历史</button>
+                <button id="22"onClick={this._click2}className="btn-2">关注问题</button>
               <div style={{marginLeft:"-50px",marginTop:"30px"}}>
               <div id="1" >{atricleItems}</div>
               <div id="2"  className="11111" style={{display:"none"}}></div>

@@ -19,9 +19,8 @@ class HistoryItem extends Component {
         const userId = props.item.authorId;
         const questionId = props.item.questionId
         const title = props.item.title
-        //从 marked 提取文本与图片地址
-        const markdown = marked(props.item.description)
-        const data = markdown.replace(/<[^>]+>/g, '').replace(/&.+?;/g, ' ').substring(0, 150) + '...'
+        //从 marked 提取文本与图片地
+        const data = props.item.description
         const markSource = data;
         //
         let likeBool = false;
@@ -85,7 +84,6 @@ class HistoryItem extends Component {
                         取消关注
                     </Button>
                 </div>
-                <this.props.MessageChildren messagesShow={this.state.messagesShow} item={this.props.item} messageSend={this._messageSend} />
             </div>
         )
     }

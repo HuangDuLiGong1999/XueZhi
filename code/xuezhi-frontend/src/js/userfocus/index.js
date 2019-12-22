@@ -13,18 +13,10 @@ class Userfocus extends Component {
     super(props);
     this.state = { items: [] };
     this._click1=this._click1.bind(this)
-    this._click2=this._click2.bind(this)
   }
   _click1(){
     this.props.history.push('./userhistory')
 }
-  _click2(){
-    $("#22").click(function(){
-      $("#1").hide();
-      $("#3").hide();
-      $("#2").show();
-    });
-  }
   // 加载一次，Dom 未加载
   componentWillMount() {
 
@@ -46,7 +38,7 @@ class Userfocus extends Component {
 
       for(let i = 0; i <response.data.length; i++) {
 
-        const url = "http://49.234.73.158:8085/v1/qa_service/question/"+response.data[i];
+        const url = "http://49.234.73.158:8085/v1/qa_service/question/"+response.data[i]+"/"+cookie.load('userId');
         axios.get(url).then(function (response) {
           data.push(response.data);
           console.log(data);
@@ -73,15 +65,15 @@ class Userfocus extends Component {
     let _this = this;
     console.log("检查444", this.state.items)
     const atricleItems = this.state.items.map((item, index) =>
-        <HistoryItem key={item.id} history={this.props.history} item={item} MessageChildren={Message} />
+        <HistoryItem key={item.id} history={this.props.history} item={item}  />
     )
     return (
         <div>
           <Header history={this.props.history} />
           <div className="g-container userhistory">
             <div className="content">
-                <button id="11"onClick={this._click1}style={{float:"left",marginLeft:"10px",width:"200px"}}>浏览历史</button>
-                <button id="22"onClick={this._click2}style={{float:"left",marginLeft:"10px",outline:"none"}}>关注问题</button>
+                <button id="11"onClick={this._click1}className="btn-1">浏览历史</button>
+                <button id="22"className="btn-2">关注问题</button>
               <div style={{marginLeft:"-50px",marginTop:"30px"}}>
               <div id="1" style={{display:"none"}}></div>
               <div id="2"  className="11111">{atricleItems}</div>

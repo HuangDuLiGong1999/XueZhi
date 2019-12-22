@@ -4,7 +4,7 @@
 
 .userfocus .content{
   margin-top: 60px;
-  padding: 20px 5% 55px 5%;
+  padding: 0px 5% 55px 5%;
   background-color: #fff;
   border-radius: 2px;
   box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
@@ -12,7 +12,26 @@
   box-sizing: border-box;
   display: inline-block;
 }
-
+.userfocus .content .btn-1{
+  margin-left:-50px;
+  margin-top:0px;
+  width:150px;
+  height:30px;
+  border:none;
+}
+.userfocus .content .btn-1:hover{
+  background-color: #AAAAAF;
+}
+.userfocus .content .btn-2{
+  margin-left:0px;
+  marginTop:0px;
+  width:150px;
+  height:30px;
+  border:none;
+}
+.userfocus .content .btn-2:hover{
+  background-color: #AAAAAF;
+}
 .userfocus .content .cell {
   display: flex;
   align-items: flex-end;

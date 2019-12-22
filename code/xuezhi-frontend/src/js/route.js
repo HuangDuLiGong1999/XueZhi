@@ -19,12 +19,14 @@ import Checkschool from "./checkschool";
 import Userhistory from "./userhistory";
 import Userfocus from "./userfocus";
 import Searchpage from "./searchpage";
+import Me1 from "./me1";
 class App extends Component {
   render() {
     return (
       <Router hashType="hashbang">
         <div>
           <Switch>
+            <Route exact path="/me1" component={Me1} />
             <Route exact path="/userhistory" component={Userhistory} />
             <Route exact path="/userfocus" component={Userfocus} />
             <Route exact path="/searchpage/:searchId?" component={Searchpage} />
