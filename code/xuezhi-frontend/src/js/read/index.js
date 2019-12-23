@@ -7,8 +7,7 @@ import AnswerItem from "../component/answerItem";
 import "./read.css"
 import Message from "../component/message";
 import Header from "../component/header";
-import cookie from "react-cookies";
-class Read extends React.Component{
+class Question extends React.Component{
   constructor(props, context){
     super(props)
     const{questionId} = this.props.match.params
@@ -25,32 +24,14 @@ class Read extends React.Component{
 
   componentWillMount() {
 
-    console.log(this.state);
-    console.log(this.props.match);
-
-    let str = this.props.match.url;
-    str = str.toString();
-    str = str.split("/authorId/")[1]
-    let userId = str;
-    console.log(userId);
-
-
-    const url = "http://localhost:8087/question/"+ this.state.questionId+ "/"+cookie.load("userId");
+    const url = "http://localhost:8087/question/"+ this.state.questionId
 
     var _this = this;
 
     var data;
     axios.get(url).then(function (response) {
       data = response.data;
-      console.log(data.answerList)
-      for (var i in data.answerList) {
-        if (data.answerList[i]["authorId"] != userId) {
-          delete data.answerList[i];
-        }
-      }
-      console.log(data.answerList)
-
-
+      console.log(data)
     }).catch(function (e) {
       alert(e);
     }).then(
@@ -95,9 +76,6 @@ class Read extends React.Component{
 
   }
 
-
-
-
   render() {
     const answerItems = this.state.items.map((item, index) =>
         <AnswerItem key={item.id} history={this.props.history} item={item} MessageChildren={Message} />
@@ -128,4 +106,4 @@ class Read extends React.Component{
   }
 }
 
-export default Read
+export default Question

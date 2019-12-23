@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin
+//@CrossOrigin
 @RequestMapping("/verification")
 public class VerifyController {
     private VerificationApplication verificationApplication;

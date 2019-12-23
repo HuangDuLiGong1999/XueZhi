@@ -4,7 +4,6 @@ import Progress from "../component/progress"
 import SnackBar from "../component/snackbar"
 import Editor from "../component/editor";
 import axios from "axios";
-import cookie from "react-cookies";
 
 import "./write.css"
 
@@ -63,10 +62,11 @@ class Write extends Component {
     let data = new URLSearchParams();
     data.append('title',this.state.title);
     data.append('description',editor.state.editor.txt.html());
-    data.append('askerId',cookie.load("userId"));
-    let school = cookie.load("university");
+    data.append('askerId',"test");
+    let school = "";
     if(!this.state.option)school = "public";
-    data.append('school',school);
+    data.append('school',school);//todo
+    console.log(data.toString())
     axios.post(url,data).then(function (response) {
       alert("submit success");
     }).catch(function (e) {

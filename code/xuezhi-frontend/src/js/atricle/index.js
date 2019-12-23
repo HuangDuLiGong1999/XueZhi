@@ -135,7 +135,7 @@ class Oauth extends Component {
       </div>
     )
   }
-
+ 
   _snackBarOpen(content, time = 2000) {
     this.setState({ snackBarOpen: true, content: content })
     setTimeout(() => {
@@ -150,7 +150,7 @@ class Oauth extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     return true
   }
-  //在 Dom 更新之前调用
+  //在 Dom 更新之前调用 
   componentWillUpdate(nextProps, nextState) {
 
   }
