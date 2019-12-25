@@ -106,8 +106,7 @@ class AtricleItem extends Component {
             </div>
           </div>
           {/* 标题 */}
-          <a className="h1" href={"/question/"+this.state.questionId}>{this.state.title}</a>
-          {/* 内容 */}
+          <Link className="h1" to={{pathname:"/question/"+this.state.questionId,hash:"",query:{foo: this.state.questionId, boo:'boz'}}}>{this.state.title}</Link>          {/* 内容 */}
           <div className="content">
             {this._readInfo()}
           </div>
@@ -121,9 +120,9 @@ class AtricleItem extends Component {
               <Message className="g-color-gray-fill" />&nbsp; {this.state.messagesShow ? '收起评论' : this.state.answerListLength + ' 条评论'}
             </Button>
 
-            <Button className="button reply-butoon" href={"/question/"+ this.state.questionId +"/authorId/"+ this.state.userId} style={{ display: this.state.full ? 'none' : '' }}>
-              <Read className="g-color-gray-fill" />&nbsp; 问题详情
-            </Button>
+            <Link className="button reply-butoon" to={{pathname:"/question/"+ this.state.questionId +"/authorId/"+ this.state.userId,hash:"",query:{foo: this.state.questionId, boo:this.state.userId}}} style={{ display: this.state.full ? 'none' : '' }}>
+              <Read/>&nbsp; 回答详情
+            </Link>
 
             {this._cloneButton()}
           </div>
