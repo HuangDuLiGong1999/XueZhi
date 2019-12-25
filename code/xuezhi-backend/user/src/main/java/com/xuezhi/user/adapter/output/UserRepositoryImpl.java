@@ -105,7 +105,8 @@ public class UserRepositoryImpl implements UserRepository {
         {
             for(int i = 0; i < historyList.size();i++)
             {
-                if(historyList.get(i).getId().equals(questionId))
+                String a = historyList.get(i).getId();
+                if(a.equals(questionId))
                 {
                     historyList.get(i).setTime(new Date().getTime());
                     break;

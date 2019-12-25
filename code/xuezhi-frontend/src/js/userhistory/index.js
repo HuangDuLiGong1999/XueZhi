@@ -39,7 +39,7 @@ class Userhistory extends Component {
     axios.get(url).then(function (response) {
       console.log(response.data)
       for(let i = 0; i <response.data.length; i++) {
-        const url = "http://49.234.73.158:8085/v1/qa_service/question/"+response.data[i].id + "/" + cookie.load("userId");
+        const url = "http://49.234.73.158:8085/v1/qa_service/question/"+response.data[i].id;
         axios.get(url).then(function (response) {
           data.push(response.data);
           console.log(response.data);

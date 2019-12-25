@@ -34,7 +34,6 @@ class Searchpage extends React.Component {
         axios.get(url).then(function (response) {
             data = response.data;
             console.log(data);
-            console.log("323233333333333");
             _this.setState({
                 items: data,
                 progressShow: false

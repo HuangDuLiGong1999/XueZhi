@@ -41,6 +41,11 @@ public class QueryController {
         return qaApplication.getQuestionByQuestionId(questionId);
     }
 
+    @GetMapping(value = "/question/{questionId}")
+    public Question getQuestionByQuestionIdWithoutUpdatingHistoryList(@PathVariable("questionId") String questionId) throws IOException {
+        return qaApplication.getQuestionByQuestionId(questionId);
+    }
+
     @GetMapping(value = "/schools")
     public List<String> getSchoolList(){
         return qaApplication.getAllSchoolList();

@@ -145,6 +145,7 @@ public class QAApplication {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
     }
 
+
     public void updateLikes(String questionId, String authorId, String likeUserId){
         qaRepository.updateLikes(questionId, authorId, likeUserId);
     }

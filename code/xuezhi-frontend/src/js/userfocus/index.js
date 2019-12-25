@@ -38,7 +38,7 @@ class Userfocus extends Component {
 
       for(let i = 0; i <response.data.length; i++) {
 
-        const url = "http://49.234.73.158:8085/v1/qa_service/question/"+response.data[i]+"/"+cookie.load('userId');
+        const url = "http://49.234.73.158:8085/v1/qa_service/question/"+response.data[i];
         axios.get(url).then(function (response) {
           data.push(response.data);
           console.log(data);
