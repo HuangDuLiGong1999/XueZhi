@@ -63,7 +63,10 @@ class Login extends Component {
               date.setTime(date.getTime() + (7 * 24 * 60 * 60 * 1000));
               console.log(user.university);
               cookie.save('userId', user.id, { expires: date ,path: '/'});
-              cookie.save('university',user.university);
+              if(user.university!=null)
+              {cookie.save('university',user.university);}
+              else
+              {cookie.save('university','public');}
               console.log(cookie.loadAll());
               console.log(cookie.load('userId'));
               console.log(cookie.load('university'));

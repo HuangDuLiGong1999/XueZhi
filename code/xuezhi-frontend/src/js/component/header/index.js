@@ -1,14 +1,9 @@
 import React, { Component } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { Button, IconButton, Menu, MenuItem } from 'material-ui'
-import AV from 'leancloud-storage'
-import md5 from 'blueimp-md5'
 import './header.css'
 import { Bell } from './svg.js'
 import cookie from "react-cookies";
-import { browserHistory } from 'react-router'
-import $ from "jquery"
-import uniqid from "uniqid"
 class Header extends React.Component {
   constructor(props, context) {
     super(props)
@@ -21,12 +16,22 @@ class Header extends React.Component {
     this._clickLogin = this._clickLogin.bind(this)
     this._clickNotice = this._clickNotice.bind(this)
     this._verify = this._verify.bind(this)
+    this._blockbutton = this._blockbutton.bind(this)
   }
   // 加载一次，Dom 未加载
   componentWillMount() {
   }
   // 加载一次，这里 Dom 已经加载完成
   componentDidMount() {
+  }
+  _blockbutton(){
+    if(cookie.load('userId')==null)
+    {
+      this.setState({buttonclick:false});
+    }
+    else{
+      this.setState({buttonclick:true});
+    }
   }
   render() {
     return (
@@ -35,7 +40,7 @@ class Header extends React.Component {
           <div className="left">
             <Link className="logo" to="/"> 学知 </Link>
             <nav>
-              <Button className="button"><NavLink exact to="/" className="g-color-gray a" activeClassName="selected"> 首页 </NavLink></Button>
+              <Button disabled={!this.state.buttonclick} className="button"><NavLink exact to="/" className="g-color-gray a" activeClassName="selected"> 首页 </NavLink></Button>
               <Button className="button"><NavLink to="/college" className="g-color-gray a" activeClassName="selected"> 我的校园 </NavLink></Button>
             </nav>
             <input type="input"
@@ -54,7 +59,13 @@ class Header extends React.Component {
                   background: "#0f88eb",
                   borderRadius: "2px",
                   border:"none",
-                }}> <li style={{listStyle:"none"}}><Link style={{textDecoration:"none",color:"white"}} to={{pathname:"/searchpage/"+this.state.InputValue, hash:"", query:{foo: this.state.InputValue, boo:'boz'}}} activeClassName="GlobalNav-active">搜索</Link></li></button>
+                }}>
+              <li style={{listStyle:"none"}}>
+                <Link style={{textDecoration:"none",color:"white"}} to={{pathname:"/searchpage/"+this.state.InputValue, hash:"", query:{foo: this.state.InputValue, boo:'boz'}}} activeClassName="GlobalNav-active">搜索</Link>
+              </li>
+            </button>
+            <Link style={{textDecoration:"none",color:"white"}} to={{pathname:"/searchpage/"+this.state.InputValue, hash:"", query:{foo: this.state.InputValue, boo:'boz'}}} activeClassName="GlobalNav-active">搜索</Link>
+
           </div>
           {this._userShow()}
         </div>

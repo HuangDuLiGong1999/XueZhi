@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import AV from "leancloud-storage"
 import AtricleItem from "../component/atricleItem"
 import MessageComponent from "../component/message"
 import Progress from "../component/progress"
