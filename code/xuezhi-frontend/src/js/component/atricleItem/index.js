@@ -98,7 +98,6 @@ class AtricleItem extends Component {
 
     return (
         <div className="atricleItem">
-          <Progress show={this.state.progressShow} />
           <SnackBar open={this.state.snackBarOpen} content={this.state.content} />
           {/* 简介 */}
           <div>
@@ -121,7 +120,7 @@ class AtricleItem extends Component {
           </div>
           {/* 按钮工具 */}
           <div className="tool">
-            <Button className={this.state.likeBool ? "button buttonBlue " : "button button-border"} onClick={this._clickGood}>
+            <Button disabled={(cookie.load('userId')==null)}  className={this.state.likeBool ? "button buttonBlue " : "button button-border"} onClick={this._clickGood}>
               <Good className={this.state.likeBool ? "g-color-white-fill" : "g-color-gray-fill"} />&nbsp; {this.state.like} 赞
             </Button>
 

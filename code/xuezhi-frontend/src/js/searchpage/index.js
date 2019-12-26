@@ -20,20 +20,27 @@ class Searchpage extends React.Component {
     }
     // 加载一次，Dom 未加载
     componentWillMount() {
+
     }
 
     // 加载一次，这里 Dom 已经加载完成
     componentDidMount() {
-
+        let _this =this;
+        if( ('query' in this.props.location) == false){
+            _this.props.history.push('/')
+            return;
+        }
         this._net(this.props.match.params.page)
     }
     _net(page) {
+        let _this = this;
+
         const url = "http://49.234.73.158:8085/v1/qa_service/answers/regex/"+this.props.location.query.foo+"/"+cookie.load('university');
         console.log(url);
 
         console.log("123123");
 
-        let _this = this;
+
         let data = [];
 
         axios.get(url).then(function (response) {
@@ -54,10 +61,6 @@ class Searchpage extends React.Component {
     render()
     {
         let _this = this;
-
-        var header=this.props.location.query.foo;
-        console.log(header);
-        console.log("检查4544", this.state.items)
         const atricleItems = this.state.items.map((item, index) =>
             <NoButtonItem key={item.id} history={this.props.history} item={item}/>
         )

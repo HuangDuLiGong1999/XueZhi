@@ -108,6 +108,10 @@ class MessageComponent extends Component {
 
     let _this = this;
     axios.put(url, data).then(function (response) {
+      let comment = new Object();
+      comment.commentatorId = cookie.load("userId");
+      comment.comment = message;
+      _this.state.messages.push(comment);
       _this._snackBarOpen("评论成功");
     })
   }

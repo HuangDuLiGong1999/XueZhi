@@ -30,7 +30,7 @@ class Login extends Component {
 
   }
   _RegisterClick(e){
-    this.props.history.push("/login1");
+    this.props.history.push("/register");
   }
   // 登陆
   _clickLogin(e) {
@@ -70,8 +70,7 @@ class Login extends Component {
               console.log(cookie.loadAll());
               console.log(cookie.load('userId'));
               console.log(cookie.load('university'));
-              console.log("`1`1112122222222");
-              _this.props.history.push('./userhistory');
+              _this.props.history.push('./');
               break;
             default: alert("请输入邮箱和密码");break;
           }

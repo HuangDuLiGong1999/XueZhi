@@ -17,15 +17,15 @@ class Home extends Component {
 
   // 加载一次，Dom 未加载
   componentWillMount() {
-
+    this._net()
   }
 
   // 加载一次，这里 Dom 已经加载完成
   componentDidMount() {
-    this._net(this.props.match.params.page)
+
   }
 
-  _net(page) {
+  _net() {
     this.setState({ progressShow: true });
 
     const url = "http://49.234.73.158:8085/v1/qa_service/recommends/public";

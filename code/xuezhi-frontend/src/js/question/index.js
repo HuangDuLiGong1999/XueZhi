@@ -25,12 +25,13 @@ class Question extends React.Component{
     }
 
     componentWillMount() {
-
-
-
-        console.log(this.props.location.query);
+        let _this = this;
+        if( ('query' in this.props.location) == false){
+            _this.props.history.push('/')
+            return;
+        }
         const url = "http://49.234.73.158:8085/v1/qa_service/question/"+ this.props.location.query.foo + "/"+cookie.load("userId")
-        var _this = this;
+
 
         var data;
         axios.get(url).then(function (response) {
@@ -75,7 +76,7 @@ class Question extends React.Component{
         const url = "http://49.234.73.158:8085/v1/user_service/users/followList";
         let data = new URLSearchParams();
         data.append('questionId',this.state.questionId);
-        data.append('id',cookie.load('userId')); //todo
+        data.append('id',cookie.load('userId'));
 
         axios.post(url,data).then(function (response) {
             if(response.data)

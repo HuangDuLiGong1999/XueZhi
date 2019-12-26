@@ -6,8 +6,9 @@ import SnackBar from "../component/snackbar"
 import { Redirect } from 'react-router-dom'
 import "./login1.css"
 import axios from "axios";
+import cookie from "react-cookies";
 
-class Login1 extends Component {
+class Register extends Component {
   // 加载一次，初始化状态
   constructor(props, context) {
     super(props)
@@ -128,20 +129,42 @@ class Login1 extends Component {
     data.append('password',_this.state.password);
     axios.post(url, data)
         .then(function (response) {
-        alert("注册成功");_this.props.history.push("./login");
-        })
-        .catch(function (error) {
-          // handle error
-          console.log(error);
-        })
-        .then(function () {
-          console.log(code);
-          switch (code) {
-              //成功登录，跳转页面
-            case true: alert("注册成功");_this.props.history.push("./me");break;
-            case false: alert("注册失败");break;
+          alert("注册成功");
+          {
+            let dat1 = new URLSearchParams();
+            dat1.append('email',_this.state.mail);
+            dat1.append('password',_this.state.password);
+            const url = "http://49.234.73.158:8085/v1/user_service/login";
+            var code;
+            axios.post(url, dat1)
+                .then(function (response) {
+                  // handle success
+                  code = response.data;
+                })
+                .catch(function (error) {
+                  // handle error
+                  alert(error);
+                })
+                .then(function () {
+                  console.log(code);
+                  switch (code.status) {
+                      //成功登录，跳转页面
+                    case false:break;
+                    case true:
+                      let date = new Date();
+                      var user=code.user;
+                      date.setTime(date.getTime() + (7 * 24 * 60 * 60 * 1000));
+                      cookie.save('userId', user.id, { expires: date ,path: '/'});
+                      if(user.university!=null)
+                      {cookie.save('university',user.university);}
+                      else
+                      {cookie.save('university','public');}
+                      _this.props.history.push('./me');
+                      break;
+                    default: alert("请输入邮箱和密码");break;
+                  }
+                });
           }
-
         });}
   // 失去焦点
   _onBlur(e) {
@@ -177,6 +200,7 @@ class Login1 extends Component {
           <TextField
               required
               className="item"
+              label={'验证码'}
               onChange={this._onChangeCheck}
               onBlur={this._onBlur}
           />
@@ -240,4 +264,4 @@ class Login1 extends Component {
   }
 }
 
-export default Login1
+export default Register

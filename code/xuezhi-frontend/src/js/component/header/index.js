@@ -16,22 +16,12 @@ class Header extends React.Component {
     this._clickLogin = this._clickLogin.bind(this)
     this._clickNotice = this._clickNotice.bind(this)
     this._verify = this._verify.bind(this)
-    this._blockbutton = this._blockbutton.bind(this)
   }
   // 加载一次，Dom 未加载
   componentWillMount() {
   }
   // 加载一次，这里 Dom 已经加载完成
   componentDidMount() {
-  }
-  _blockbutton(){
-    if(cookie.load('userId')==null)
-    {
-      this.setState({buttonclick:false});
-    }
-    else{
-      this.setState({buttonclick:true});
-    }
   }
   render() {
     return (
@@ -40,9 +30,8 @@ class Header extends React.Component {
           <div className="left">
             <Link className="logo" to="/"> 学知 </Link>
             <nav>
-              {/*<Button disabled={!this.state.buttonclick} className="button"><NavLink exact to="/" className="g-color-gray a" activeClassName="selected"> 首页 </NavLink></Button>*/}
               <Button className="button"><NavLink to="/" className="g-color-gray a" activeClassName="selected"> 首页 </NavLink></Button>
-              <Button className="button"><NavLink to="/college" className="g-color-gray a" activeClassName="selected"> 我的校园 </NavLink></Button>
+              <Button disabled={(cookie.load('userId')==null)} className="button"><NavLink to="/college" className="g-color-gray a" activeClassName="selected"> 我的校园 </NavLink></Button>
             </nav>
             <input type="input"
                    id="search1"
@@ -53,7 +42,7 @@ class Header extends React.Component {
                      borderRadius: "2px",
                      boxShadow: "0 1px 2px 0 rgba(0,0,0,.05)",
                    }} placeholder="请输入你要搜索的内容"/>
-            <button disabled={this.state.searchstate==false}
+            <button disabled={this.state.InputValue==null}
                 style={{marginLeft:"10px",
                   height:"30px",
                   color: "#ffffff",
@@ -61,11 +50,10 @@ class Header extends React.Component {
                   borderRadius: "2px",
                   border:"none",
                 }}>
-              <li style={{listStyle:"none"}}>
-                <Link style={{textDecoration:"none",color:"white"}} to={{pathname:"/searchpage/"+this.state.InputValue, hash:"", query:{foo: this.state.InputValue, boo:'boz'}}} activeClassName="GlobalNav-active">搜索</Link>
+              <li disabled={this.state.InputValue==null} style={{listStyle:"none"}}>
+                <Link disabled={this.state.InputValue==null} style={{textDecoration:"none",color:"white"}} to={{pathname:"/searchpage/"+this.state.InputValue, hash:"", query:{foo: this.state.InputValue, boo:'boz'}}} activeClassName="GlobalNav-active">搜索</Link>
               </li>
             </button>
-            <Link style={{textDecoration:"none",color:"white"}} to={{pathname:"/searchpage/"+this.state.InputValue, hash:"", query:{foo: this.state.InputValue, boo:'boz'}}} activeClassName="GlobalNav-active">搜索</Link>
 
           </div>
           {this._userShow()}

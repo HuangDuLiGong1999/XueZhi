@@ -14,7 +14,7 @@ import Atricle from "./atricle"
 import Notice from "./notice"
 import Question from "./question";
 import College from "./college";
-import Login1 from "./login1";
+import Register from "./register";
 import Checkschool from "./checkschool";
 import Userhistory from "./userhistory";
 import Userfocus from "./userfocus";
@@ -33,7 +33,7 @@ class App extends Component {
             {/* 登陆 */}
             <Route exact path="/login" component={Login} />
             {/*注册*/}
-            <Route exact path="/login1" component={Login1} />
+            <Route exact path="/register" component={Register} />
             {/* 自己信息设置 */}
             <Route exact path="/me" component={Me} />
             {/*学生卡上传*/}

@@ -16,7 +16,7 @@ class NoButtonItem extends Component {
     // 加载一次，初始化状态
     constructor(props, context) {
         super(props)
-        const userId = props.item.authorId;
+        const userId = props.item.askerId;
         const questionId = props.item.questionId
         const title = props.item.title
 
@@ -41,7 +41,7 @@ class NoButtonItem extends Component {
             like: 0,
             likeBool,
             messageCount: 0, //评论条数
-            headUrl: "https://dss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3489753539,2528035229&fm=111&gp=0.jpg", //头像图片url
+            headUrl: "http://49.234.73.158:8085/v1/user_service/users/avatar/"+userId,//头像图片url
             showRead,
             messagesShow,
             full,
@@ -61,7 +61,6 @@ class NoButtonItem extends Component {
                 <div className="user">
                     <div className="left">
                         < img className="headimg" src={this.state.headUrl} alt="header" />
-                        <Link className="name" to="/"> {this.state.userId} </Link>
                     </div>
                     <div className="time">
                         {this.props.item.updateTime}
