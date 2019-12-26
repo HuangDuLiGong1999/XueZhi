@@ -30,6 +30,7 @@ public class UserRepositoryImpl implements UserRepository {
         user.setTelephone("");
         user.setUniversity("public");
         user.setSignature("");
+        user.setAvatar(getToolAvatar());
         userRepositor.save(user);
     }
 
@@ -239,5 +240,10 @@ public class UserRepositoryImpl implements UserRepository {
         User user = userRepositor.findUserById(id);
         user.setUniversity(school);
         userRepositor.save(user);
+    }
+
+    private Binary getToolAvatar()
+    {
+        return userRepositor.findUserById("5e048c04df66842e11bbba03").getAvatar();
     }
 }

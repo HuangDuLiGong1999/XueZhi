@@ -168,6 +168,8 @@ public class QAApplication {
 
     public List<String> getAllSchoolList()
     {
-        return qaRepository.getSchoolList();
+        List<String> temp = qaRepository.getSchoolList();
+        temp.remove("public");
+        return temp;
     }
 }
