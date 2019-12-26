@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Button, TextField, Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText } from 'material-ui'
-import AV from "leancloud-storage"
+import { Button, TextField,} from 'material-ui'
 import Progress from "../component/progress"
 import SnackBar from "../component/snackbar"
 import Header from "../component/header"
@@ -9,7 +8,7 @@ import axios from 'axios'
 import cookie from 'react-cookies'
 class Me extends Component {
   // 加载一次，初始化状态
-  constructor(props, context) {
+  constructor(props) {
     super(props)
     let url="http://49.234.73.158:8085/v1/user_service/users/avatar/" + cookie.load('userId');
     let name,age,sex,userstate;

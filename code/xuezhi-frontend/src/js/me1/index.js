@@ -1,18 +1,15 @@
 import React, { Component } from 'react'
-import { Button, TextField, Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText } from 'material-ui'
-import AV from "leancloud-storage"
 import Progress from "../component/progress"
 import SnackBar from "../component/snackbar"
 import Header from "../component/header"
 import "./me1.css"
-import axios from 'axios'
 import cookie from 'react-cookies'
 import Mavatar from 'mavatar'
 let avatar;
 
 class Me1 extends Component {
   // 加载一次，初始化状态
-  constructor(props, context) {
+  constructor(props) {
     super(props)
     this.state = {
     }

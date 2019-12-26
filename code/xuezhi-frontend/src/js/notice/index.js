@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-// import AV from "leancloud-storage"
 import Progress from "../component/progress"
 import SnackBar from "../component/snackbar"
 import Header from "../component/header"
@@ -8,7 +7,7 @@ import "./notice.css"
 
 class Me extends Component {
   // 加载一次，初始化状态
-  constructor(props, context) {
+  constructor(props) {
     super(props)
     this.state = {}
   }

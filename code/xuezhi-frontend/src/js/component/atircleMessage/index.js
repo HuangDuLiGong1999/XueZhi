@@ -3,7 +3,7 @@ import "./atircleMessage.css"
 
 class AtircleMessage extends Component {
   // 加载一次，初始化状态
-  constructor(props, context) {
+  constructor(props) {
     super(props)
 
     const { item } = this.props

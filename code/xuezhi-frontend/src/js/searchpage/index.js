@@ -5,12 +5,11 @@ import SnackBar from "../component/snackbar"
 import Header from "../component/header"
 import axios from "axios";
 import cookie from "react-cookies";
-import HistoryItem from "../component/historyItem";
 import NoButtonItem from "../component/noButtonItem";
 
 class Searchpage extends React.Component {
     // 加载一次，初始化状态
-    constructor(props, context) {
+    constructor(props) {
         super(props);
         const{searchId} = this.props.match.params;
 

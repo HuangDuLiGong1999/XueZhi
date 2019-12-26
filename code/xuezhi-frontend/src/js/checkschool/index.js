@@ -1,7 +1,4 @@
 import React, { Component } from 'react'
-import AV from "leancloud-storage"
-import AtricleItem from "../component/atricleItem"
-import Message from "../component/message"
 import Progress from "../component/progress"
 import SnackBar from "../component/snackbar"
 import Header from "../component/header"
@@ -16,7 +13,7 @@ let avatar1;
 
 class Checkschool extends Component {
   // 加载一次，初始化状态
-  constructor(props, context) {
+  constructor(props) {
     super(props);
     this.state = { items: [] }
     this._handleReset = this._handleReset.bind(this)

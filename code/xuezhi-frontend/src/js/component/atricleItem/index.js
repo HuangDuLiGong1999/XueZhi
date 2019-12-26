@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from 'material-ui'
 import { Bottom, Good, Message, Read, Edid } from "../svg.js"
-import Progress from "../progress"
 import SnackBar from "../snackbar"
 import axios from "axios"
 
@@ -11,7 +10,7 @@ import cookie from "react-cookies";
 
 class AtricleItem extends Component {
   // 加载一次，初始化状态
-  constructor(props, context) {
+  constructor(props) {
     super(props)
 
     let loginUser = cookie.load("userId");

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Message from "../component/message"
 import Header from "../component/header"
-import $ from "jquery"
 import "./userhistory.css"
 import axios from "axios";
 import cookie from "react-cookies";
@@ -9,7 +8,7 @@ import NoButtonItem from "../component/noButtonItem";
 
 class Userhistory extends Component {
   // 加载一次，初始化状态
-  constructor(props, context) {
+  constructor(props) {
     super(props);
     this.state = { items: [] };
     this._click2=this._click2.bind(this)

@@ -1,16 +1,14 @@
 import React, { Component } from 'react'
 import { TextField, Button } from 'material-ui'
-import AV from "leancloud-storage"
 import Progress from "../component/progress"
 import SnackBar from "../component/snackbar"
-import { Redirect } from 'react-router-dom'
 import "./login1.css"
 import axios from "axios";
 import cookie from "react-cookies";
 
 class Register extends Component {
   // 加载一次，初始化状态
-  constructor(props, context) {
+  constructor(props) {
     super(props)
     this.state = {checknum:"",}
     this._onBlur = this._onBlur.bind(this)

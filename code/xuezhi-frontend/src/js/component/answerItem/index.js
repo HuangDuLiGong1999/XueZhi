@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from 'material-ui'
-import marked from 'marked' //解析 markdown
-import AV from "leancloud-storage"
 import { Bottom, Good, Message, Read, Edid } from "../svg.js" //,Collection
-import ReactMarkdown from 'react-markdown'
 import Progress from "../progress"
 import SnackBar from "../snackbar"
 import "github-markdown-css"
@@ -16,7 +13,7 @@ import cookie from "react-cookies";
 
 class AnswerItem extends Component {
     // 加载一次，初始化状态
-    constructor(props, context) {
+    constructor(props) {
         super(props)
         const questionId = props.questionId;
         const userId = props.item.authorId;

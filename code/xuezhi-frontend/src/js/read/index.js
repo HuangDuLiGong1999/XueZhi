@@ -5,9 +5,8 @@ import AnswerItem from "../component/answerItem";
 import "./read.css"
 import Message from "../component/message";
 import Header from "../component/header";
-import cookie from "react-cookies";
 class Read extends React.Component{
-  constructor(props, context){
+  constructor(props){
     super(props)
     const{questionId} = this.props.match.params
     this.state = {

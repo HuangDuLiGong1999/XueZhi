@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import Message from "../component/message"
 import Header from "../component/header"
-import $ from "jquery"
 import "./userfocus.css"
 import axios from "axios";
 import cookie from "react-cookies";

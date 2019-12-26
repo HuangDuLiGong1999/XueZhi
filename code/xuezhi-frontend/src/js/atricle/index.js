@@ -1,12 +1,6 @@
 import React, { Component } from 'react'
-import md5 from 'blueimp-md5'
-import AV from "leancloud-storage"
-import Progress from "../component/progress"
-import SnackBar from "../component/snackbar"
 import Header from "../component/header"
-import AtricleItem from "../component/atricleItem"
 import Message from "../component/message"
-import AtircleMessage from "../component/atircleMessage"
 
 import "./atricle.css"
 import cookie from "react-cookies";
@@ -16,7 +10,7 @@ import NoButtonItem from "../component/noButtonItem";
 
 class Oauth extends Component {
   // 加载一次，初始化状态
-  constructor(props, context) {
+  constructor(props) {
     super(props);
     this.state = { items: [] };
     this._clickUserJump=this._clickUserJump.bind(this)

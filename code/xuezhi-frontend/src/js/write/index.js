@@ -12,7 +12,7 @@ import {NavLink} from "react-router-dom";
 
 class Write extends Component {
   // 加载一次，初始化状态
-  constructor(props, context) {
+  constructor(props) {
     super(props)
     this.state = { title: '', atricleTagIndex: 0 ,option:false}
 

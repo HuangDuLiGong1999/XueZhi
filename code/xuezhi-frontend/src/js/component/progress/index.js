@@ -5,7 +5,7 @@ import "./progress.css"
 
 class Progress extends Component {
   // 加载一次，初始化状态
-  constructor(props, context) {
+  constructor(props) {
     super(props)
 
   }

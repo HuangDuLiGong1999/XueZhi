@@ -11,7 +11,7 @@ import axios from "axios";
 
 class MessageComponent extends Component {
   // 加载一次，初始化状态
-  constructor(props, context) {
+  constructor(props) {
     super(props)
     const questionId = props.questionId;
     const userId = props.authorId;
