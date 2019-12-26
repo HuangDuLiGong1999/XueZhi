@@ -11,6 +11,8 @@ import "github-markdown-css"
 import "./answerItem.css"
 import axios from "axios";
 
+
+
 class AnswerItem extends Component {
     // 加载一次，初始化状态
     constructor(props, context) {

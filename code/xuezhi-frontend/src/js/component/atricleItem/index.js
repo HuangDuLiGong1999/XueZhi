@@ -16,6 +16,7 @@ class AtricleItem extends Component {
 
     let loginUser = cookie.load("userId");
 
+
     const likesMap = props.item.answer.likesMap;
 
     const like = props.item.answer.likes;

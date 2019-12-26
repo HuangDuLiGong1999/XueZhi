@@ -12,9 +12,10 @@ class Searchpage extends React.Component {
     // 加载一次，初始化状态
     constructor(props, context) {
         super(props);
-        const{searchId} = this.props.match.params
+        const{searchId} = this.props.match.params;
+
         this.state={
-            items: []
+            items: [],
         };
     }
     // 加载一次，Dom 未加载
@@ -28,9 +29,13 @@ class Searchpage extends React.Component {
     }
     _net(page) {
         const url = "http://49.234.73.158:8085/v1/qa_service/answers/regex/"+this.props.location.query.foo+"/"+cookie.load('university');
+        console.log(url);
+
+        console.log("123123");
 
         let _this = this;
         let data = [];
+
         axios.get(url).then(function (response) {
             data = response.data;
             console.log(data);
@@ -43,18 +48,18 @@ class Searchpage extends React.Component {
             alert(e);
         });
 
-
-
     }
 
      // 渲染 Dom
     render()
-    {    let _this = this;
+    {
+        let _this = this;
+
         var header=this.props.location.query.foo;
         console.log(header);
         console.log("检查4544", this.state.items)
         const atricleItems = this.state.items.map((item, index) =>
-            <NoButtonItem key={item.id} history={this.props.history} item={item}  />
+            <NoButtonItem key={item.id} history={this.props.history} item={item}/>
         )
         return (
             <div>

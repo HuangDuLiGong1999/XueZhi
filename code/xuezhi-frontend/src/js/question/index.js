@@ -26,6 +26,9 @@ class Question extends React.Component{
 
     componentWillMount() {
 
+
+
+        console.log(this.props.location.query);
         const url = "http://49.234.73.158:8085/v1/qa_service/question/"+ this.props.location.query.foo + "/"+cookie.load("userId")
         var _this = this;
 

@@ -74,7 +74,8 @@ class HistoryItem extends Component {
                     </div>
                 </div>
                 {/* 标题 */}
-                <a className="h1" href={"/question/"+this.state.questionId}>{this.state.title}</a>
+                <Link className="h1" to={{pathname:"/question/"+this.state.questionId,hash:"",query:{foo: this.state.questionId, boo:'boz'}}}>{this.state.title}</Link>
+
                 {/* 按钮工具 */}
                 <div className="tool">
                     <Button className="button reply-butoon" href={"/read/"+this.state.questionId} style={{ display: this.state.full ? 'none' : '' }}>
