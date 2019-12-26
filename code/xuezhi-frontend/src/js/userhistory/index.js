@@ -77,8 +77,6 @@ class Userhistory extends Component {
                 <button id="22"onClick={this._click2}className="btn-2">关注问题</button>
               <div style={{marginLeft:"-50px",marginTop:"30px"}}>
               <div id="1" >{atricleItems}</div>
-              <div id="2"  className="11111" style={{display:"none"}}></div>
-              <div id="3" className="22222" style={{display:"none"}}>内容三</div>
               </div>
             </div>
             <div className="right">

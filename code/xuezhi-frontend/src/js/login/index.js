@@ -52,7 +52,6 @@ class Login extends Component {
           alert(error);
         })
         .then(function () {
-          console.log(code);
           switch (code.status) {
               //成功登录，跳转页面
             case false:alert("登陆失败");break;
@@ -61,15 +60,11 @@ class Login extends Component {
               let date = new Date();
               var user=code.user;
               date.setTime(date.getTime() + (7 * 24 * 60 * 60 * 1000));
-              console.log(user.university);
               cookie.save('userId', user.id, { expires: date ,path: '/'});
               if(user.university!=null)
               {cookie.save('university',user.university);}
               else
               {cookie.save('university','public');}
-              console.log(cookie.loadAll());
-              console.log(cookie.load('userId'));
-              console.log(cookie.load('university'));
               _this.props.history.push('./');
               break;
             default: alert("请输入邮箱和密码");break;

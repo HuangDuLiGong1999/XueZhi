@@ -40,11 +40,9 @@ class Checkschool extends Component {
       let data;
       axios.get(url).then(function (response) {
           data= response.data;
-          console.log(data);
           _this.setState({
               items: data,
           });
-          console.log(data);
           for(var i=0;i<data.length;i++){
               $("#selectbox").append("<option value='"+data[i]+"'>"+data[i]+"</option>")
           }
@@ -54,7 +52,6 @@ class Checkschool extends Component {
   }
   _handleClip = (e) => {
     avatar1.imageClipper((dataurl) => {
-      console.log(dataurl);
     });
   }
   _handleReset = (e) => {
@@ -67,7 +64,6 @@ class Checkschool extends Component {
       name: 'multipartFile',
       data: {userId: cookie.load('userId'),intention:$("#selectbox").val(),remark:$("#inputbox").val()},
       success: function (data) {
-        console.log(data+"123");
         alert("上传成功！")
       },
       error: function (error) {

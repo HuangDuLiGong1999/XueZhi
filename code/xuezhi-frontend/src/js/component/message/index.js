@@ -31,6 +31,7 @@ class MessageComponent extends Component {
     this._clickSend = this._clickSend.bind(this)
     this._getDateDiff = this._getDateDiff.bind(this)
     this._clickReply = this._clickReply.bind(this)
+    this._snackBarOpen = this._snackBarOpen.bind(this)
   }
   // 加载一次，Dom 未加载
   componentWillMount() {

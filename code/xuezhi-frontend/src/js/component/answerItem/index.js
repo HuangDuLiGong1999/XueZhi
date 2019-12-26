@@ -24,7 +24,6 @@ class AnswerItem extends Component {
         //从 marked 提取文本与图片地址
         const data = props.item.description
         //
-        console.log(props.item);
         const likesMap = props.item.likesMap;
         let loginUser = cookie.load("userId");
         let likeBool = false;
@@ -200,7 +199,6 @@ class AnswerItem extends Component {
         data.append('likeUserId', cookie.load("userId"));
 
         axios.put(url, data).then(function (response) {
-            console.log(response.data);
         }).catch(function (e) {
             alert(e);
         })

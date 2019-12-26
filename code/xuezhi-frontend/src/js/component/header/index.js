@@ -66,7 +66,7 @@ class Header extends React.Component {
           id="menuList"
         >
           <MenuItem onClick={this._handleClose.bind(this, 0)}>个人信息</MenuItem>
-          <MenuItem onClick={this._handleClose.bind(this, 1)}>文章</MenuItem>
+          <MenuItem onClick={this._handleClose.bind(this, 1)}>我的提问</MenuItem>
           <MenuItem onClick={this._handleClose.bind(this, 2)}>个人空间</MenuItem>
           <MenuItem onClick={this._handleClose.bind(this, 3)}>退出</MenuItem>
         </Menu>

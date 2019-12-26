@@ -22,10 +22,12 @@ class Question extends React.Component{
         this._answerClick = this._answerClick.bind(this)
         this._submitAnswerClick = this._submitAnswerClick.bind(this)
         this._addquestionClick = this._addquestionClick.bind(this)
+        this._snackBarOpen = this._snackBarOpen.bind(this)
     }
 
     componentWillMount() {
         let _this = this;
+
         if( ('query' in this.props.location) == false){
             _this.props.history.push('/')
             return;
@@ -65,6 +67,14 @@ class Question extends React.Component{
     componentDidMount() {
         var editor = this.refs.editor;
         editor.style.display = "none"
+        var _this = this
+        let answerItem = new Object();
+        answerItem.authorId = cookie.load("userId");
+        answerItem.description = "<p>123123</p>";
+        answerItem.updateTime = "刚刚";
+        _this.state.items.push(answerItem)
+
+
     }
 
     _answerClick(e){
@@ -88,7 +98,15 @@ class Question extends React.Component{
         })
     }
 
+    _snackBarOpen(content, time = 2000) {
+        this.setState({ snackBarOpen: true, content: content })
+        setTimeout(() => {
+            this.setState({ snackBarOpen: false })
+        }, time)
+    }
+
     _submitAnswerClick(e){
+        let _this = this;
         var editor = this.refs.editorContext;
         var answer = editor.state.editor.txt.html();
         const url = "http://49.234.73.158:8085/v1/qa_service/qa/answers"
@@ -98,7 +116,9 @@ class Question extends React.Component{
         data.append('description',answer);
 
         axios.post(url,data).then(function (response) {
-            alert("submit success");
+            alert("评论成功");
+            _this.props.history.push('/')
+
         }).catch(function (e) {
             alert(e);
         })

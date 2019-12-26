@@ -47,11 +47,11 @@ class Me1 extends Component {
       name: 'multipartFile',
       data: {id: cookie.load('userId')},
       success: function (data) {
-        console.log(data);
+
         alert("上传成功！")
       },
       error: function (error) {
-        console.log(error)
+
       }
     });
   }

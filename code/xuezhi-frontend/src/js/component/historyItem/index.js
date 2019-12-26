@@ -103,9 +103,6 @@ class HistoryItem extends Component {
 
         axios.delete(url).then(function (response) {
 
-            console.log(response.data)
-            console.log("22213123123123")
-
             if(response.data)
                 alert("取消关注成功");
             else

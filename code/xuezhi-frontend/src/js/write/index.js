@@ -48,7 +48,17 @@ class Write extends Component {
     this.setState({option:e.target.checked});
   }
 
+  _snackBarOpen(content, time = 2000) {
+    this.setState({ snackBarOpen: true, content: content });
+    setTimeout(() => {
+      this.setState({ snackBarOpen: false })
+    }, time)
+  }
+
   _clickSubmit(e) {
+
+    let _this = this;
+
     const { title} = this.state;
     if (title.length === 0) {
       this._snackBarOpen('没有标题～')
@@ -69,7 +79,8 @@ class Write extends Component {
     if(!this.state.option)school = "public";
     data.append('school',school);
     axios.post(url,data).then(function (response) {
-      alert("submit success");
+      alert('发布成功')
+      _this.props.history.push('/')
     }).catch(function (e) {
       alert(e);
     })

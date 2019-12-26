@@ -206,7 +206,6 @@ class AtricleItem extends Component {
     data.append('likeUserId', cookie.load("userId"));
 
     axios.put(url, data).then(function (response) {
-      console.log(response.data);
     }).catch(function (e) {
       alert(e);
     })
