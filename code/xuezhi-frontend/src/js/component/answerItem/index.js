@@ -10,6 +10,7 @@ import SnackBar from "../snackbar"
 import "github-markdown-css"
 import "./answerItem.css"
 import axios from "axios";
+import cookie from "react-cookies";
 
 
 
@@ -23,7 +24,19 @@ class AnswerItem extends Component {
         //从 marked 提取文本与图片地址
         const data = props.item.description
         //
+        console.log(props.item);
+        const likesMap = props.item.likesMap;
+        let loginUser = cookie.load("userId");
         let likeBool = false;
+        for(var key in likesMap)
+        {
+            if(key == loginUser && likesMap[key] != 0)
+            {
+                likeBool = true;
+            }
+        }
+        const like = props.item.likes;
+
         const answerListLength = props.item.answerComments.length;
 
         let showRead, messagesShow, full;
@@ -38,7 +51,7 @@ class AnswerItem extends Component {
             title,
             userId,
             data,
-            like: 0,
+            like,
             likeBool,
             messageCount: 0, //评论条数
             headUrl: "http://49.234.73.158:8085/v1/user_service/users/avatar/"+userId, //头像图片url
@@ -97,7 +110,7 @@ class AnswerItem extends Component {
                     </div>
                 </div>
                 {/* 标题 */}
-                <h1 className="h1">{this.state.title}</h1>
+                <Link className="h1" to={{pathname:"/question/"+this.state.questionId,hash:"",query:{foo: this.state.questionId, boo:'boz'}}}>{this.state.title}</Link>
                 {/* 内容 */}
                 <div className="content">
                     {this._readInfo()}
@@ -112,9 +125,9 @@ class AnswerItem extends Component {
                         <Message className="g-color-gray-fill" />&nbsp; {this.state.messagesShow ? '收起评论' : this.state.answerListLength + ' 条评论'}
                     </Button>
 
-                    <Button className="button reply-butoon" onClick={this._clickSkitRead} style={{ display: this.state.full ? 'none' : '' }}>
-                        <Read className="g-color-gray-fill" />&nbsp; 全屏阅读
-                    </Button>
+                    <Link className="button reply-butoon" to={{pathname:"/question/"+ this.state.questionId +"/authorId/"+ this.state.userId,hash:"",query:{foo: this.state.questionId, boo:this.state.userId}}} style={{ display: this.state.full ? 'none' : '' }}>
+                        <Read/>&nbsp; 回答详情
+                    </Link>
 
                     {this._cloneButton()}
                 </div>
@@ -175,20 +188,25 @@ class AnswerItem extends Component {
     }
     // 点赞
     _clickGood(e) {
-        if (!AV.User.current()) {
-            this._snackBarOpen('哎～，你忘记登录了耶~')
-            return
-        }
-
         const likeBool = !this.state.likeBool
         let like = likeBool ? this.state.like + 1 : this.state.like - 1
         this.setState({ likeBool, like })
-        const id = this.props.item.id
-        AV.Cloud.run('atricleLike', { id }).then(result => {
-        }).catch(err => {
-            this._snackBarOpen('讨厌，网络错误了')
-            console.log(err)
+
+
+        const url = "http://49.234.73.158:8085/v1/qa_service/qa/likes";
+        let data = new URLSearchParams();
+        data.append('questionId', this.state.questionId);
+        data.append('authorId', this.state.userId);
+        data.append('likeUserId', cookie.load("userId"));
+
+        axios.put(url, data).then(function (response) {
+            console.log(response.data);
+        }).catch(function (e) {
+            alert(e);
         })
+
+
+
     }
     // 展开评论
     _clickMessage(e) {

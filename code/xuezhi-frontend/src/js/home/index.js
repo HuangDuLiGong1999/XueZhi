@@ -28,7 +28,6 @@ class Home extends Component {
   _net(page) {
     this.setState({ progressShow: true });
 
-
     const url = "http://49.234.73.158:8085/v1/qa_service/recommends/public";
 
     let _this = this;

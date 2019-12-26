@@ -32,7 +32,15 @@ class AtricleItem extends Component {
     //从 marked 提取文本与图片地址
     const data = props.item.answer.description;
     //
+
     let likeBool = false;
+    for(var key in likesMap)
+    {
+      if(key == loginUser && likesMap[key] != 0)
+      {
+        likeBool = true;
+      }
+    }
 
     let showRead = false, messagesShow = false, full;
     // 单独页面，默认都打开
@@ -127,7 +135,7 @@ class AtricleItem extends Component {
 
             {this._cloneButton()}
           </div>
-          <this.props.MessageChildren messagesShow={this.state.messagesShow} item={this.props.item} authorId={this.state.userId} questionId={this.props.item.questionId} answerComments = {this.props.item.answer.answerComments}  messageSend={this._messageSend} />
+          <this.props.MessageChildren messagesShow={this.state.messagesShow} item={this.props.item} authorId={this.state.userId} questionId={this.props.item.questionId} answerComments = {this.props.item.answer.answerComments}  messageSend={this._messageSend}/>
         </div>
     )
   }
@@ -186,6 +194,11 @@ class AtricleItem extends Component {
   }
   // 点赞
   _clickGood(e) {
+
+    const likeBool = !this.state.likeBool
+    let like = likeBool ? this.state.like + 1 : this.state.like - 1
+    this.setState({ likeBool, like })
+
 
     const url = "http://49.234.73.158:8085/v1/qa_service/qa/likes";
     let data = new URLSearchParams();

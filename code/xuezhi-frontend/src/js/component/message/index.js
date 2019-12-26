@@ -2,10 +2,7 @@ import React, { Component } from 'react'
 import { Button } from 'material-ui'
 import AV from "leancloud-storage"
 import TextareaAutosize from 'react-autosize-textarea'
-import ReactMarkdown from 'react-markdown'
-import md5 from 'blueimp-md5'
 import "github-markdown-css"
-import { Reply, MessageGood } from "../svg.js"
 import Progress from "../progress"
 import SnackBar from "../snackbar"
 import "./message.css"
@@ -98,6 +95,7 @@ class MessageComponent extends Component {
     }
 
     const message = this.state.message;
+    this.state.message = " "
 
 
 
@@ -108,12 +106,10 @@ class MessageComponent extends Component {
     data.append('commentatorId', cookie.load("userId"));
     data.append('description', message);
 
+    let _this = this;
     axios.put(url, data).then(function (response) {
-    }).catch(function (e) {
-      alert(e);
+      _this._snackBarOpen("评论成功");
     })
-
-
   }
   // 点赞
   _clickGood(index, e) {

@@ -72,9 +72,6 @@ class NoButtonItem extends Component {
 
                 {/* 按钮工具 */}
                 <div className="tool">
-                    {/*<Button className="button reply-butoon" href={"/question/"+this.state.questionId} style={{ display: this.state.full ? 'none' : '' }}>*/}
-                    {/*    <Read className="g-color-gray-fill" />&nbsp; 问题详情*/}
-                    {/*</Button>*/}
                     <Link className="button reply-butoon" to={{pathname:"/question/"+ this.state.questionId +"/authorId/"+ this.state.userId,hash:"",query:{foo: this.state.questionId, boo:this.state.userId}}} style={{ display: this.state.full ? 'none' : '' }}>
                     </Link>
                 </div>

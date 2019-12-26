@@ -40,7 +40,8 @@ class Header extends React.Component {
           <div className="left">
             <Link className="logo" to="/"> 学知 </Link>
             <nav>
-              <Button disabled={!this.state.buttonclick} className="button"><NavLink exact to="/" className="g-color-gray a" activeClassName="selected"> 首页 </NavLink></Button>
+              {/*<Button disabled={!this.state.buttonclick} className="button"><NavLink exact to="/" className="g-color-gray a" activeClassName="selected"> 首页 </NavLink></Button>*/}
+              <Button className="button"><NavLink to="/" className="g-color-gray a" activeClassName="selected"> 首页 </NavLink></Button>
               <Button className="button"><NavLink to="/college" className="g-color-gray a" activeClassName="selected"> 我的校园 </NavLink></Button>
             </nav>
             <input type="input"

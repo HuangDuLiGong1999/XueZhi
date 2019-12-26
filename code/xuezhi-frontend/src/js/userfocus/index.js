@@ -33,8 +33,7 @@ class Userfocus extends Component {
     let data = [];
     axios.get(url).then(function (response) {
       //data = response.data;
-      // console.log(response.data);
-      // console.log("222222222222222222222222222222");
+      //console.log(response.data);
 
       for(let i = 0; i <response.data.length; i++) {
 

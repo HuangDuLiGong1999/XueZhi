@@ -101,12 +101,8 @@ class HistoryItem extends Component {
     _cancelfocus(e){
 
         const url="http://49.234.73.158:8085/v1/user_service/users/followList/"+cookie.load('userId')+"/"+this.state.questionId;
-        // let data = new URLSearchParams();
-        // data.append('questionId',this.state.questionId);
-        // data.append('id',cookie.load('userId')); //todo
 
         axios.delete(url).then(function (response) {
-
 
             console.log(response.data)
             console.log("22213123123123")

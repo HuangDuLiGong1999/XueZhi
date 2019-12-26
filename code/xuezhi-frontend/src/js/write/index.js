@@ -7,6 +7,7 @@ import axios from "axios";
 import cookie from "react-cookies";
 
 import "./write.css"
+import {NavLink} from "react-router-dom";
 
 
 class Write extends Component {
@@ -72,13 +73,7 @@ class Write extends Component {
     }).catch(function (e) {
       alert(e);
     })
-
-
   }
-
-
-
-
 
   // 渲染 Dom
   render() {
@@ -97,7 +92,7 @@ class Write extends Component {
           <FormControlLabel control={<Switch onChange={this._changeSwitch}/>} label="发布到校内" className="switch"/>
         </div>
         <div className="buttondiv">
-          <Button className="button" onClick={this._clickSubmit}>发布</Button>
+          <Button className="button" onClick={this._clickSubmit}><NavLink to="/"> 发布 </NavLink></Button>
         </div>
       </div>
     )
