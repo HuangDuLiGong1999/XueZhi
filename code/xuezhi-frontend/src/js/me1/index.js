@@ -35,7 +35,6 @@ class Me1 extends Component {
   }
   _handleClip = (e) => {
     avatar.imageClipper((dataurl) => {
-      console.log(dataurl);
     });
   }
   _handleReset = (e) => {

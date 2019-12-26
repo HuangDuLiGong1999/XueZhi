@@ -24,26 +24,24 @@ class Userhistory extends Component {
 
   // 加载一次，Dom 未加载
   componentWillMount() {
-    this._net(this.props.match.params.page)
+    this._net()
   }
 
   // 加载一次，这里 Dom 已经加载完成
   componentDidMount() {
 
   }
-  _net(page) {
+  _net() {
     this.setState({ progressShow: true });
     const url = "http://49.234.73.158:8085/v1/user_service/users/history/"+cookie.load('userId');
     let _this = this;
     let data = [];
     axios.get(url).then(function (response) {
-      console.log(response.data)
       for(let i = 0; i <response.data.length; i++) {
         const url = "http://49.234.73.158:8085/v1/qa_service/question/"+response.data[i].id;
         axios.get(url).then(function (response) {
           data[i] = response.data;
           //data.push(response.data);
-          console.log(response.data);
           _this.setState({
             items: data,
             progressShow: false
@@ -64,7 +62,6 @@ class Userhistory extends Component {
   // 渲染 Dom
   render() {
     let _this = this;
-    console.log("检查444", this.state.items)
     const atricleItems = this.state.items.map((item, index) =>
         <NoButtonItem key={item.id} history={this.props.history} item={item} MessageChildren={Message} />
     )

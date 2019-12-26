@@ -36,16 +36,13 @@ class Searchpage extends React.Component {
         let _this = this;
 
         const url = "http://49.234.73.158:8085/v1/qa_service/answers/regex/"+this.props.location.query.foo+"/"+cookie.load('university');
-        console.log(url);
 
-        console.log("123123");
 
 
         let data = [];
 
         axios.get(url).then(function (response) {
             data = response.data;
-            console.log(data);
             _this.setState({
                 items: data,
                 progressShow: false

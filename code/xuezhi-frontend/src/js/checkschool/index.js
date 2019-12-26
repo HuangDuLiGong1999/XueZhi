@@ -67,7 +67,6 @@ class Checkschool extends Component {
         alert("上传成功！")
       },
       error: function (error) {
-          console.log(_this.data+"123");
           console.log(error)
       }
     });

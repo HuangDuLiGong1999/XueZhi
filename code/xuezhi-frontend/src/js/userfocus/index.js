@@ -9,7 +9,7 @@ import HistoryItem from "../component/historyItem";
 
 class Userfocus extends Component {
   // 加载一次，初始化状态
-  constructor(props, context) {
+  constructor(props) {
     super(props);
     this.state = { items: [] };
     this._click1=this._click1.bind(this)
@@ -24,23 +24,20 @@ class Userfocus extends Component {
 
   // 加载一次，这里 Dom 已经加载完成
   componentDidMount() {
-    this._net(this.props.match.params.page)
+    this._net()
   }
-  _net(page) {
+  _net() {
     this.setState({ progressShow: true });
     const url = "http://49.234.73.158:8085/v1/user_service/users/followList/"+cookie.load('userId');
     let _this = this;
     let data = [];
     axios.get(url).then(function (response) {
-      //data = response.data;
-      //console.log(response.data);
 
       for(let i = 0; i <response.data.length; i++) {
 
         const url = "http://49.234.73.158:8085/v1/qa_service/question/"+response.data[i];
         axios.get(url).then(function (response) {
           data.push(response.data);
-          console.log(data);
 
           _this.setState({
             items: data,
@@ -62,7 +59,6 @@ class Userfocus extends Component {
   // 渲染 Dom
   render() {
     let _this = this;
-    console.log("检查444", this.state.items)
     const atricleItems = this.state.items.map((item, index) =>
         <HistoryItem key={item.id} history={this.props.history} item={item}  />
     )

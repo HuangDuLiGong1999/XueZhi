@@ -62,15 +62,12 @@ class Register extends Component {
         .then(function (response) {
           // handle success
           code = response.data;
-          console.log(code);
-          console.log(response);
         })
         .catch(function (error) {
           // handle error
           console.log(error);
         })
         .then(function () {
-          console.log(code);
           if(code=="fail")
           {
             alert("邮箱已经被使用，请更换邮箱！");

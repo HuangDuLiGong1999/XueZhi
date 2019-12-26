@@ -92,20 +92,15 @@ class Me extends Component {
     data.append('age',this.state.age);
     data.append('sex',this.state.sex);
     data.append('signature',this.state.userstate);
-    console.log(this.state.userstate+ "这里是名字");
     axios.put(url, data)
             .then(function (response) {
             // handle success
             code = response.data;
-            console.log(code);
-              console.log(response);
           })
           .catch(function (error) {
             // handle error
-            console.log(error);
           })
           .then(function () {
-            console.log(code);
             switch (code) {
                 //成功登录，跳转页面
               case false:
