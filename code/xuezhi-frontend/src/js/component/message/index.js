@@ -18,6 +18,7 @@ class MessageComponent extends Component {
     const answerListLength = props.answerComments.length;
     const messages = props.answerComments;
 
+
     this.state = {
       progressShow: false,
       snackBarOpen: false,
@@ -27,6 +28,7 @@ class MessageComponent extends Component {
       answerListLength,
       message:''
     }
+
     this._textarea = this._textarea.bind(this)
     this._clickSend = this._clickSend.bind(this)
     this._getDateDiff = this._getDateDiff.bind(this)
@@ -42,7 +44,8 @@ class MessageComponent extends Component {
   _textarea(e) {
     this.setState({ message: e.target.value })
   }
-  render() {
+
+  renderMessagesItems(){
     const messagesItems = this.state.messages.map((item, index) => {
       const headUrl = "http://49.234.73.158:8085/v1/user_service/users/avatar/"+item.commentatorId
       const url = "http://49.234.73.158:8085/v1/user_service/users/" + item.commentatorId;
@@ -57,6 +60,11 @@ class MessageComponent extends Component {
 
       </div>)
     })
+    return messagesItems;
+  }
+
+  render() {
+
 
 
 
@@ -67,8 +75,8 @@ class MessageComponent extends Component {
         <div className="messagesCount">{this.state.answerListLength} 条留言</div>
         <div className="messages">
           {/*  留言 */}
-          <div>
-            {messagesItems}
+          <div ref="comments">
+            {this.renderMessagesItems()}
           </div>
           {/*  /留言 */}
           <div className="replyMessage">
@@ -106,8 +114,13 @@ class MessageComponent extends Component {
     data.append('commentatorId', cookie.load("userId"));
     data.append('description', message);
 
+
     let _this = this;
     axios.put(url, data).then(function (response) {
+      let comment = new Object();
+      comment.commentatorId =cookie.load("userId");
+      comment.comment = message;
+      _this.state.messages.push(comment)
       _this._snackBarOpen("评论成功");
     })
   }
