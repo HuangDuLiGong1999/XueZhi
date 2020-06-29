@@ -11,6 +11,17 @@ public class Administrator {
     private String password;
     private String university;
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Administrator)
+        {
+            Administrator admin = (Administrator) obj;
+            return name.equalsIgnoreCase(admin.getName().trim()) && password.equalsIgnoreCase(admin.getPassword().trim());
+        }
+        return false;
+    }
+
+
     public String getId() {
         return id;
     }

@@ -6,10 +6,10 @@ import java.util.List;
 
 public interface ReportRepository {
     //添加举报
-    void addReport(String type, String questionId, String authorId);
+    boolean addReport(String type, String questionId, String authorId);
     //查看举报
     List<Report> getReports();
 
     //删除举报
-    void deleteReport(String id);
+    boolean deleteReport(String id);
 }
